@@ -8,11 +8,11 @@ OS = $(shell uname -s)
 ifeq ($(OS), Darwin)
     LIBS := -lcheck 
 	APPLICATION = 3dviewer.app 
-	OPEN = open
+	OPEN = open $(APPLICATION)
 else
     LIBS := -lcheck_pic -lrt -lpthread -lsubunit -lm -g
 	APPLICATION = 3dviewer
-	OPEN = ./
+	OPEN = ./$(APPLICATION)
 endif
 
 all: clean s21_viewer.a test
@@ -48,7 +48,7 @@ install:
 	mkdir 3dviewer
 	cd source_code && qmake && make && make clean && rm Makefile && cd ../ && mv source_code/$(APPLICATION) ./3dviewer
 open:
-	cd 3dviewer && $(OPEN) $(APPLICATION)
+	cd 3dviewer && $(OPEN)
 
 uninstall:
 	rm -rf 3dviewer
