@@ -13,12 +13,12 @@ typedef struct {
   int facet_elem;
 } obj_t;
 
-class ReadFile {
+class ParserObj {
   public:
-    ReadFile() = default;
-    ReadFile(const ReadFile&) = delete;
-    ReadFile(ReadFile&&) = delete;
-    ~ReadFile() = default;
+    ParserObj() = default;
+    ParserObj(const ParserObj&) = delete;
+    ParserObj(ParserObj&&) = delete;
+    ~ParserObj() = default;
     int ParseNumVertexFacets(const char* filename, obj_t* obj);
     int InitObjStruct(obj_t* obj);
     int ParseFile(const char* filename, obj_t* obj);

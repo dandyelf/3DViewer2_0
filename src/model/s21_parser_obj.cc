@@ -1,8 +1,8 @@
-#include "s21_viewer.h"
+#include "s21_parser_obj.h"
 
 namespace s21 {
 
-int ReadFile::ParseNumVertexFacets(const char *filename, obj_t *obj) {
+int ParserObj::ParseNumVertexFacets(const char *filename, obj_t *obj) {
   err = 0;
   FILE *fp = fopen(filename, "r");
   if (fp == NULL) {
@@ -24,7 +24,7 @@ int ReadFile::ParseNumVertexFacets(const char *filename, obj_t *obj) {
   return err;
 }
 
-void ReadFile::CountFacets(char *buffer, obj_t *obj) {
+void ParserObj::CountFacets(char *buffer, obj_t *obj) {
   i = 2;
   while (buffer[i] != '\0') {
     char *tok = strtok(buffer, " ");
@@ -38,7 +38,7 @@ void ReadFile::CountFacets(char *buffer, obj_t *obj) {
   }
 }
 
-int ReadFile::InitObjStruct(obj_t *obj) {
+int ParserObj::InitObjStruct(obj_t *obj) {
   err = 0;
   obj->vertexes = (double *)calloc(obj->count_of_vertexes * 3, sizeof(double));
   if (obj->vertexes == NULL) err = 1;
@@ -47,7 +47,7 @@ int ReadFile::InitObjStruct(obj_t *obj) {
   return err;
 }
 
-int ReadFile::ParseFile(const char *filename, obj_t *obj) {
+int ParserObj::ParseFile(const char *filename, obj_t *obj) {
   err = 0;
   FILE *fp = fopen(filename, "r");
   if (fp == NULL) {
@@ -98,7 +98,7 @@ int ReadFile::ParseFile(const char *filename, obj_t *obj) {
   return err;
 }
 
-int ReadFile::StartPars(const char *filename, obj_t *obj) {
+int ParserObj::StartPars(const char *filename, obj_t *obj) {
   err = 0;
   obj->count_of_vertexes = 0;
   obj->count_of_facets = 0;

@@ -2,7 +2,7 @@
 #define CPP_S21_3DVIEWER_V2_SRC_MODEL_AFF_TRANSFORMATION_H_
 
 #include "math.h"
-#include "s21_viewer.h"
+#include "s21_parser_obj.h"
 
 namespace s21 {
 #define RAD_TO_GRAD 0.01745329251994
@@ -12,12 +12,12 @@ typedef enum RESULT {
   ERR_ZERO,  // масштаб с коэффициентом 0
 } RESULT;
 
-class View {
+class AffTransform {
   public:
-    View() = default;
-    View(const View&) = delete;
-    View(View&&) = delete;
-    ~View() = default;
+    AffTransform() = default;
+    AffTransform(const AffTransform&) = delete;
+    AffTransform(AffTransform&&) = delete;
+    ~AffTransform() = default;
     int Scale(obj_t* obj, double koff);
     int ScaleX(obj_t* obj, double koff);
     int ScaleY(obj_t* obj, double koff);
