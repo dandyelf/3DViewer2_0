@@ -1,4 +1,4 @@
-#include "viewer.h"
+#include "s21_viewer.h"
 
 #include <QDebug>
 #include <QFileDialog>
@@ -26,17 +26,17 @@ Viewer::Viewer(QWidget *parent) : QMainWindow(parent), ui(new Ui::Viewer) {
 
   auto shortcut_quit = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Q), this);
   connect(shortcut_quit, &QShortcut::activated, this, &QWidget::close);
-  connect(gif_tmr_, SIGNAL(timeout()), this, SLOT(gif_create()));
-  settings_load();
+  connect(gif_tmr_, SIGNAL(timeout()), this, SLOT(GifCreate()));
+  SettingsLoad();
 }
 
 Viewer::~Viewer() {
   gif_tmr_->~QTimer();
-  settings_save();
+  SettingsSave();
   delete ui;
 }
 
-void Viewer::settings_load() {
+void Viewer::SettingsLoad() {
   //  Загружаем настройки
   qDebug() << "load settings...";
   QSettings settings("s21_3d_viewer.conf", QSettings::IniFormat);
@@ -89,7 +89,7 @@ void Viewer::settings_load() {
   settings.endGroup();
 }
 
-void Viewer::settings_save() {
+void Viewer::SettingsSave() {
   //  Сохраняем настройки
   qDebug() << "save settings...";
   QSettings settings("s21_3d_viewer.conf", QSettings::IniFormat);
@@ -140,46 +140,7 @@ void Viewer::settings_save() {
   settings.endGroup();
 }
 
-void Viewer::on_pushButton_clicked() {
-  fileName = QFileDialog::getOpenFileName(this, tr("Open Obj File"), path_,
-                                          tr("OBJ Files (*.obj)"));
-  if (fileName != "") {
-    qDebug() << fileName;
-    ////updates
-    file_proccessing(fileName);
-  } else {
-    error_message("Нет файла");
-  }
-}
-
-void Viewer::on_pushButton_5_clicked() { QApplication::quit(); }
-
-void Viewer::on_radioButton_4_toggled() {
-  ui->widget->stipple = true;
-  ui->widget->update();
-}
-
-void Viewer::on_radioButton_3_toggled() {
-  ui->widget->stipple = false;
-  ui->widget->update();
-}
-
-void Viewer::on_horizontalScrollBar_valueChanged(int value) {
-  ui->widget->fon_r_ = ((double)value) / 100.0;
-  ui->widget->update();
-}
-
-void Viewer::on_horizontalScrollBar_2_valueChanged(int value) {
-  ui->widget->fon_g_ = ((double)value) / 100.0;
-  ui->widget->update();
-}
-
-void Viewer::on_horizontalScrollBar_3_valueChanged(int value) {
-  ui->widget->fon_b_ = ((double)value) / 100.0;
-  ui->widget->update();
-}
-
-void Viewer::reset_obj() {
+void Viewer::ResetObj() {
   qDebug() << "reset obj...";
   obj.count_of_vertexes = 0;
   obj.count_of_facets = 0;
@@ -190,7 +151,7 @@ void Viewer::reset_obj() {
   obj.polygons = NULL;
 }
 
-void Viewer::file_proccessing(QString fileName) {
+void Viewer::FileProccessing(QString fileName) {
   path_ = fileName;
 
   this->setWindowTitle("3D Viewer ~ " + fileName);
@@ -202,7 +163,7 @@ void Viewer::file_proccessing(QString fileName) {
   QByteArray tmp = fileName.toLocal8Bit();
   char *file = tmp.data();
 
-  reset_obj();
+  ResetObj();
   int err = StartPars(file, &obj);
 
   if (!err) {
@@ -222,84 +183,34 @@ void Viewer::file_proccessing(QString fileName) {
     ui->label_11->setText(QString::number(obj.count_of_facets));
     ////end stats
     ////set main data
-    ui->widget->set_vertex_arr(obj.vertexes);
-    ui->widget->set_facets_arr(obj.polygons);
-    ui->widget->set_lines(obj.facet_elem);
-    ui->widget->set();
+    ui->widget->SetVertexArr(obj.vertexes);
+    ui->widget->SetFacetsArr(obj.polygons);
+    ui->widget->SetLines(obj.facet_elem);
+    ui->widget->Set();
     ui->widget->update();
     ////end data set
   }
 }
 
-void Viewer::on_horizontalScrollBar_7_valueChanged(int value) {
-  ui->widget->line_width = (double)value;
-  ui->widget->update();
-}
-
-void Viewer::on_horizontalScrollBar_4_valueChanged(int value) {
-  ui->widget->line_r_ = ((double)value) / 100.0;
-  ui->widget->update();
-}
-
-void Viewer::on_horizontalScrollBar_5_valueChanged(int value) {
-  ui->widget->line_g_ = ((double)value) / 100.0;
-  ui->widget->update();
-}
-
-void Viewer::on_horizontalScrollBar_6_valueChanged(int value) {
-  ui->widget->line_b_ = ((double)value) / 100.0;
-  ui->widget->update();
-}
-
-void Viewer::on_pushButton_4_clicked() {
-  reset_obj();
-  file_proccessing(fileName);
-}
-
-void Viewer::on_pushButton_2_clicked() {
-  QString file = QFileDialog::getSaveFileName(this, "Save as...", "name.jpg",
-                                              "JPEG (*.jpeg) ;; BMP (*.bmp) ");
-  if (file != "") {
-    QImage image = ui->widget->grabFramebuffer();
-    image.save(file, nullptr, 80);
-  } else {
-    error_message("Нет папки");
-  }
-}
-
-void Viewer::on_pushButton_3_clicked() {
-  QString path2 = path_ + ".gif";
-  fname_gif_ = QFileDialog::getSaveFileName(this, tr("Save GIF"), path2,
-                                            tr("Gif Files (*.gif)"));
-  if (fname_gif_ != "") {
-    ui->pushButton_3->setDisabled(true);
-    gif_img_ = new QGifImage;
-    gif_img_->setDefaultDelay(10);
-    gif_timer();
-  } else {
-    error_message("Нет папки");
-  }
-}
-
-void Viewer::error_message(QString message) {
+void Viewer::ErrorMessage(QString message) {
   QMessageBox messageBox;
   messageBox.setFixedSize(500, 200);
   messageBox.information(0, "Info", message);
 }
 
-void Viewer::gif_timer() {
+void Viewer::GifTimer() {
   gif_tmr_->setInterval(100);
   gif_tmr_->start();
 }
 
-void Viewer::gif_create() {
+void Viewer::GifCreate() {
   QImage image = ui->widget->grabFramebuffer();
   gif_img_->addFrame(image);
   if (time_ == 50) {
     gif_tmr_->stop();
     gif_img_->save(fname_gif_);
     time_ = 0;
-    error_message("Gif saved.");
+    ErrorMessage("Gif saved.");
     gif_img_->~QGifImage();
     ui->pushButton_3->setText("Старт запись");
     ui->pushButton_3->setEnabled(true);
@@ -309,27 +220,202 @@ void Viewer::gif_create() {
     ui->pushButton_3->setText(QString::number(time_ / 10));
 }
 
-void Viewer::on_horizontalScrollBar_8_valueChanged(int value) {
+void Viewer::OnHorizontalScrollBarValueChanged_1(int value) {
+  ui->widget->fon_r_ = ((double)value) / 100.0;
+  ui->widget->update();
+}
+
+void Viewer::OnHorizontalScrollBarValueChanged_2(int value) {
+  ui->widget->fon_g_ = ((double)value) / 100.0;
+  ui->widget->update();
+}
+
+void Viewer::OnHorizontalScrollBarValueChanged_3(int value) {
+  ui->widget->fon_b_ = ((double)value) / 100.0;
+  ui->widget->update();
+}
+
+void Viewer::OnHorizontalScrollBarValueChanged_4(int value) {
+  ui->widget->line_r_ = ((double)value) / 100.0;
+  ui->widget->update();
+}
+
+void Viewer::OnHorizontalScrollBarValueChanged_5(int value) {
+  ui->widget->line_g_ = ((double)value) / 100.0;
+  ui->widget->update();
+}
+
+void Viewer::OnHorizontalScrollBarValueChanged_6(int value) {
+  ui->widget->line_b_ = ((double)value) / 100.0;
+  ui->widget->update();
+}
+
+void Viewer::OnHorizontalScrollBarValueChanged_7(int value) {
+  ui->widget->line_width = (double)value;
+  ui->widget->update();
+}
+
+void Viewer::OnHorizontalScrollBarValueChanged_8(int value) {
   ui->widget->dot_r_ = (double)value / 100.0;
   ui->widget->update();
 }
 
-void Viewer::on_horizontalScrollBar_11_valueChanged(int value) {
-  ui->widget->dot_width = value;
-  ui->widget->update();
-}
-
-void Viewer::on_horizontalScrollBar_9_valueChanged(int value) {
+void Viewer::OnHorizontalScrollBarValueChanged_9(int value) {
   ui->widget->dot_g_ = (double)value / 100.0;
   ui->widget->update();
 }
 
-void Viewer::on_horizontalScrollBar_10_valueChanged(int value) {
+void Viewer::OnHorizontalScrollBarValueChanged_10(int value) {
   ui->widget->dot_b_ = (double)value / 100.0;
   ui->widget->update();
 }
 
-void Viewer::on_pushButton_16_clicked() {
+void Viewer::OnHorizontalScrollBarValueChanged_11(int value) {
+  ui->widget->dot_width = value;
+  ui->widget->update();
+}
+
+void Viewer::OnPushButtonClicked_1() {
+  fileName = QFileDialog::getOpenFileName(this, tr("Open Obj File"), path_,
+                                          tr("OBJ Files (*.obj)"));
+  if (fileName != "") {
+    qDebug() << fileName;
+    ////updates
+    FileProccessing(fileName);
+  } else {
+    ErrorMessage("Нет файла");
+  }
+}
+
+void Viewer::OnPushButtonClicked_2() {
+  QString file = QFileDialog::getSaveFileName(this, "Save as...", "name.jpg",
+                                              "JPEG (*.jpeg) ;; BMP (*.bmp) ");
+  if (file != "") {
+    QImage image = ui->widget->grabFramebuffer();
+    image.save(file, nullptr, 80);
+  } else {
+    ErrorMessage("Нет папки");
+  }
+}
+
+void Viewer::OnPushButtonClicked_3() {
+  QString path2 = path_ + ".gif";
+  fname_gif_ = QFileDialog::getSaveFileName(this, tr("Save GIF"), path2,
+                                            tr("Gif Files (*.gif)"));
+  if (fname_gif_ != "") {
+    ui->pushButton_3->setDisabled(true);
+    gif_img_ = new QGifImage;
+    gif_img_->setDefaultDelay(10);
+    GifTimer();
+  } else {
+    ErrorMessage("Нет папки");
+  }
+}
+
+void Viewer::OnPushButtonClicked_4() {
+  ResetObj();
+  FileProccessing(fileName);
+}
+
+void Viewer::OnPushButtonClicked_5() { QApplication::quit(); }
+
+void Viewer::OnPushButtonClicked_6() {
+  double kx = ui->lineEdit->text().toDouble();
+  double ky = ui->lineEdit_2->text().toDouble();
+  double kz = ui->lineEdit_3->text().toDouble();
+  if (!kx || !ky || !kz) {
+    ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
+  } else {
+    ScaleX(&obj, kx);
+    ScaleY(&obj, ky);
+    ScaleZ(&obj, kz);
+    ui->statusbar->clearMessage();
+  }
+  ui->widget->SetVertexArr(obj.vertexes);
+  ui->widget->update();
+}
+
+void Viewer::OnPushButtonClicked_7() {
+  double koff = ui->lineEdit->text().toDouble();
+  if (ScaleX(&obj, koff)) {
+    ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
+  } else {
+    ui->statusbar->clearMessage();
+  }
+  ui->widget->SetVertexArr(obj.vertexes);
+  ui->widget->update();
+}
+
+void Viewer::OnPushButtonClicked_8() {
+  double koff = ui->lineEdit_2->text().toDouble();
+  if (ScaleY(&obj, koff)) {
+    ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
+  } else {
+    ui->statusbar->clearMessage();
+  }
+  ui->widget->SetVertexArr(obj.vertexes);
+  ui->widget->update();
+}
+
+void Viewer::OnPushButtonClicked_9() {
+  double koff = ui->lineEdit_3->text().toDouble();
+  if (ScaleZ(&obj, koff)) {
+    ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
+  } else {
+    ui->statusbar->clearMessage();
+  }
+  ui->widget->SetVertexArr(obj.vertexes);
+  ui->widget->update();
+}
+
+void Viewer::OnPushButtonClicked_10() {
+  double ax = ui->lineEdit_4->text().toDouble();
+  double ay = ui->lineEdit_5->text().toDouble();
+  double az = ui->lineEdit_6->text().toDouble();
+  TurnX(&obj, ax);
+  TurnY(&obj, ay);
+  TurnZ(&obj, az);
+  ui->widget->SetVertexArr(obj.vertexes);
+  ui->widget->update();
+}
+
+void Viewer::OnPushButtonClicked_11() {
+  double angle = ui->lineEdit_4->text().toDouble();
+  TurnX(&obj, angle);
+  ui->widget->SetVertexArr(obj.vertexes);
+  ui->widget->update();
+}
+
+void Viewer::OnPushButtonClicked_12() {
+  double angle = ui->lineEdit_5->text().toDouble();
+  TurnY(&obj, angle);
+  ui->widget->SetVertexArr(obj.vertexes);
+  ui->widget->update();
+}
+
+void Viewer::OnPushButtonClicked_13() {
+  double angle = ui->lineEdit_6->text().toDouble();
+  TurnZ(&obj, angle);
+  ui->widget->SetVertexArr(obj.vertexes);
+  ui->widget->update();
+}
+
+void Viewer::OnPushButtonClicked_14() {
+  double mv = ui->lineEdit_7->text().toDouble();
+  MoveY(&obj, mv);
+  ui->widget->SetVertexArr(obj.vertexes);
+  ui->widget->update();
+}
+
+void Viewer::OnPushButtonClicked_15() {
+  double mv = ui->lineEdit_8->text().toDouble();
+  mv *= -1;
+  MoveZ(&obj, mv);
+  ui->widget->SetVertexArr(obj.vertexes);
+  ui->widget->update();
+}
+
+void Viewer::OnPushButtonClicked_16() {
   double mv_xpos = ui->lineEdit_12->text().toDouble();
   double mv_xneg = ui->lineEdit_11->text().toDouble();
   double mv_ypos = ui->lineEdit_7->text().toDouble();
@@ -339,165 +425,79 @@ void Viewer::on_pushButton_16_clicked() {
   mv_xneg *= -1;
   mv_yneg *= -1;
   mv_zneg *= -1;
-  move_x(&obj, mv_xpos);
-  move_x(&obj, mv_xneg);
-  move_y(&obj, mv_ypos);
-  move_y(&obj, mv_yneg);
-  move_z(&obj, mv_zpos);
-  move_z(&obj, mv_zneg);
-  ui->widget->set_vertex_arr(obj.vertexes);
+  MoveX(&obj, mv_xpos);
+  MoveX(&obj, mv_xneg);
+  MoveY(&obj, mv_ypos);
+  MoveY(&obj, mv_yneg);
+  MoveZ(&obj, mv_zpos);
+  MoveZ(&obj, mv_zneg);
+  ui->widget->SetVertexArr(obj.vertexes);
   ui->widget->update();
 }
 
-void Viewer::on_pushButton_20_clicked() {
-  double mv = ui->lineEdit_12->text().toDouble();
-  move_x(&obj, mv);
-  ui->widget->set_vertex_arr(obj.vertexes);
+void Viewer::OnPushButtonClicked_17() {
+  double mv = ui->lineEdit_9->text().toDouble();
+  MoveZ(&obj, mv);
+  ui->widget->SetVertexArr(obj.vertexes);
   ui->widget->update();
 }
 
-void Viewer::on_pushButton_19_clicked() {
-  double mv = ui->lineEdit_11->text().toDouble();
-  mv *= -1;
-  move_x(&obj, mv);
-  ui->widget->set_vertex_arr(obj.vertexes);
-  ui->widget->update();
-}
-
-void Viewer::on_pushButton_14_clicked() {
-  double mv = ui->lineEdit_7->text().toDouble();
-  move_y(&obj, mv);
-  ui->widget->set_vertex_arr(obj.vertexes);
-  ui->widget->update();
-}
-
-void Viewer::on_pushButton_18_clicked() {
+void Viewer::OnPushButtonClicked_18() {
   double mv = ui->lineEdit_10->text().toDouble();
   mv *= -1;
-  move_y(&obj, mv);
-  ui->widget->set_vertex_arr(obj.vertexes);
+  MoveY(&obj, mv);
+  ui->widget->SetVertexArr(obj.vertexes);
   ui->widget->update();
 }
 
-void Viewer::on_pushButton_17_clicked() {
-  double mv = ui->lineEdit_9->text().toDouble();
-  move_z(&obj, mv);
-  ui->widget->set_vertex_arr(obj.vertexes);
-  ui->widget->update();
-}
-
-void Viewer::on_pushButton_15_clicked() {
-  double mv = ui->lineEdit_8->text().toDouble();
+void Viewer::OnPushButtonClicked_19() {
+  double mv = ui->lineEdit_11->text().toDouble();
   mv *= -1;
-  move_z(&obj, mv);
-  ui->widget->set_vertex_arr(obj.vertexes);
+  MoveX(&obj, mv);
+  ui->widget->SetVertexArr(obj.vertexes);
   ui->widget->update();
 }
 
-void Viewer::on_pushButton_6_clicked() {
-  double kx = ui->lineEdit->text().toDouble();
-  double ky = ui->lineEdit_2->text().toDouble();
-  double kz = ui->lineEdit_3->text().toDouble();
-  if (!kx || !ky || !kz) {
-    ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
-  } else {
-    scale_x(&obj, kx);
-    scale_y(&obj, ky);
-    scale_z(&obj, kz);
-    ui->statusbar->clearMessage();
-  }
-  ui->widget->set_vertex_arr(obj.vertexes);
+void Viewer::OnPushButtonClicked_20() {
+  double mv = ui->lineEdit_12->text().toDouble();
+  MoveX(&obj, mv);
+  ui->widget->SetVertexArr(obj.vertexes);
   ui->widget->update();
 }
 
-void Viewer::on_pushButton_7_clicked() {
-  double koff = ui->lineEdit->text().toDouble();
-  if (scale_x(&obj, koff)) {
-    ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
-  } else {
-    ui->statusbar->clearMessage();
-  }
-  ui->widget->set_vertex_arr(obj.vertexes);
+void Viewer::OnRadioButtonToggled_1() {
+  ui->widget->SetPersp();
   ui->widget->update();
 }
 
-void Viewer::on_pushButton_8_clicked() {
-  double koff = ui->lineEdit_2->text().toDouble();
-  if (scale_y(&obj, koff)) {
-    ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
-  } else {
-    ui->statusbar->clearMessage();
-  }
-  ui->widget->set_vertex_arr(obj.vertexes);
+void Viewer::OnRadioButtonToggled_2() {
+  ui->widget->SetOrtho();
   ui->widget->update();
 }
 
-void Viewer::on_pushButton_9_clicked() {
-  double koff = ui->lineEdit_3->text().toDouble();
-  if (scale_z(&obj, koff)) {
-    ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
-  } else {
-    ui->statusbar->clearMessage();
-  }
-  ui->widget->set_vertex_arr(obj.vertexes);
+void Viewer::OnRadioButtonToggled_3() {
+  ui->widget->stipple = false;
   ui->widget->update();
 }
 
-void Viewer::on_pushButton_10_clicked() {
-  double ax = ui->lineEdit_4->text().toDouble();
-  double ay = ui->lineEdit_5->text().toDouble();
-  double az = ui->lineEdit_6->text().toDouble();
-  turn_x(&obj, ax);
-  turn_y(&obj, ay);
-  turn_z(&obj, az);
-  ui->widget->set_vertex_arr(obj.vertexes);
+void Viewer::OnRadioButtonToggled_4() {
+  ui->widget->stipple = true;
   ui->widget->update();
 }
 
-void Viewer::on_pushButton_11_clicked() {
-  double angle = ui->lineEdit_4->text().toDouble();
-  turn_x(&obj, angle);
-  ui->widget->set_vertex_arr(obj.vertexes);
-  ui->widget->update();
-}
-
-void Viewer::on_pushButton_12_clicked() {
-  double angle = ui->lineEdit_5->text().toDouble();
-  turn_y(&obj, angle);
-  ui->widget->set_vertex_arr(obj.vertexes);
-  ui->widget->update();
-}
-
-void Viewer::on_pushButton_13_clicked() {
-  double angle = ui->lineEdit_6->text().toDouble();
-  turn_z(&obj, angle);
-  ui->widget->set_vertex_arr(obj.vertexes);
-  ui->widget->update();
-}
-
-void Viewer::on_radioButton_2_toggled() {
-  ui->widget->set_ortho();
-  ui->widget->update();
-}
-
-void Viewer::on_radioButton_toggled() {
-  ui->widget->set_persp();
-  ui->widget->update();
-}
-
-void Viewer::on_radioButton_5_toggled() {
+void Viewer::OnRadioButtonToggled_5() {
   ui->widget->points = false;
   ui->widget->update();
 }
 
-void Viewer::on_radioButton_7_toggled() {
+void Viewer::OnRadioButtonToggled_6() {
   ui->widget->points = true;
-  ui->widget->smooth = false;
+  ui->widget->smooth = true;
   ui->widget->update();
 }
 
-void Viewer::on_radioButton_6_toggled() {
+void Viewer::OnRadioButtonToggled_7() {
   ui->widget->points = true;
-  ui->widget->smooth = true;
+  ui->widget->smooth = false;
   ui->widget->update();
 }

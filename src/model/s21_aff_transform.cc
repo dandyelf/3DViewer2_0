@@ -1,9 +1,10 @@
-#include "aff_transformation.h"
+#include "s21_aff_transform.h"
 
-int scale(obj_t *obj, double koff) {
-  int res = OK;
+namespace s21 {
+
+int View::Scale(obj_t *obj, double koff) {
   if (koff != 0.0) {
-    for (int i = 0; i < obj->count_of_vertexes * 3; i++) {
+    for (i = 0; i < obj->count_of_vertexes * 3; i++) {
       obj->vertexes[i] *= koff;
     }
   } else {
@@ -12,10 +13,9 @@ int scale(obj_t *obj, double koff) {
   return res;
 }
 
-int scale_x(obj_t *obj, double koff) {
-  int res = OK;
+int View::ScaleX(obj_t *obj, double koff) {
   if (koff != 0.0) {
-    for (int i = 0; i < obj->count_of_vertexes * 3; i += 3) {
+    for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
       obj->vertexes[i] *= koff;
     }
   } else {
@@ -24,10 +24,9 @@ int scale_x(obj_t *obj, double koff) {
   return res;
 }
 
-int scale_y(obj_t *obj, double koff) {
-  int res = OK;
+int View::ScaleY(obj_t *obj, double koff) {
   if (koff != 0.0) {
-    for (int i = 1; i < obj->count_of_vertexes * 3; i += 3) {
+    for (i = 1; i < obj->count_of_vertexes * 3; i += 3) {
       obj->vertexes[i] *= koff;
     }
   } else {
@@ -36,10 +35,9 @@ int scale_y(obj_t *obj, double koff) {
   return res;
 }
 
-int scale_z(obj_t *obj, double koff) {
-  int res = OK;
+int View::ScaleZ(obj_t *obj, double koff) {
   if (koff != 0.0) {
-    for (int i = 2; i < obj->count_of_vertexes * 3; i += 3) {
+    for (i = 2; i < obj->count_of_vertexes * 3; i += 3) {
       obj->vertexes[i] *= koff;
     }
   } else {
@@ -48,25 +46,25 @@ int scale_z(obj_t *obj, double koff) {
   return res;
 }
 
-void move_x(obj_t *obj, double mv) {
+void View::MoveX(obj_t *obj, double mv) {
   if (mv != 0.0) {
-    for (int i = 0; i < obj->count_of_vertexes * 3; i += 3) {
+    for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
       obj->vertexes[i] += mv;
     }
   }
 }
 
-void move_y(obj_t *obj, double mv) {
+void View::MoveY(obj_t *obj, double mv) {
   if (mv != 0.0) {
-    for (int i = 1; i < obj->count_of_vertexes * 3; i += 3) {
+    for (i = 1; i < obj->count_of_vertexes * 3; i += 3) {
       obj->vertexes[i] += mv;
     }
   }
 }
 
-void move_z(obj_t *obj, double mv) {
+void View::MoveZ(obj_t *obj, double mv) {
   if (mv != 0.0) {
-    for (int i = 2; i < obj->count_of_vertexes * 3; i += 3) {
+    for (i = 2; i < obj->count_of_vertexes * 3; i += 3) {
       obj->vertexes[i] += mv;
     }
   }
@@ -80,38 +78,40 @@ void move_z(obj_t *obj, double mv) {
 //   }
 // }
 
-void turn_x(obj_t *obj, double angle) {
+void View::TurnX(obj_t *obj, double angle) {
   if (angle != 0.0) {
     angle *= RAD_TO_GRAD;
-    for (int i = 0; i < obj->count_of_vertexes * 3; i += 3) {
-      double temp_y = obj->vertexes[i + 1];
-      double temp_z = obj->vertexes[i + 2];
+    for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
+      temp_y = obj->vertexes[i + 1];
+      temp_z = obj->vertexes[i + 2];
       obj->vertexes[i + 1] = temp_y * cos(angle) + temp_z * sin(angle);
       obj->vertexes[i + 2] = -temp_y * sin(angle) + temp_z * cos(angle);
     }
   }
 }
 
-void turn_y(obj_t *obj, double angle) {
+void View::TurnY(obj_t *obj, double angle) {
   if (angle != 0.0) {
     angle *= -RAD_TO_GRAD;
-    for (int i = 0; i < obj->count_of_vertexes * 3; i += 3) {
-      double temp_x = obj->vertexes[i];
-      double temp_z = obj->vertexes[i + 2];
+    for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
+      temp_x = obj->vertexes[i];
+      temp_z = obj->vertexes[i + 2];
       obj->vertexes[i] = temp_x * cos(angle) + temp_z * sin(angle);
       obj->vertexes[i + 2] = -temp_x * sin(angle) + temp_z * cos(angle);
     }
   }
 }
 
-void turn_z(obj_t *obj, double angle) {
+void View::TurnZ(obj_t *obj, double angle) {
   if (angle != 0.0) {
     angle *= RAD_TO_GRAD;
-    for (int i = 0; i < obj->count_of_vertexes * 3; i += 3) {
-      double temp_x = obj->vertexes[i];
-      double temp_y = obj->vertexes[i + 1];
+    for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
+      temp_x = obj->vertexes[i];
+      temp_y = obj->vertexes[i + 1];
       obj->vertexes[i] = temp_x * cos(angle) + temp_y * sin(angle);
       obj->vertexes[i + 1] = -temp_x * sin(angle) + temp_y * cos(angle);
     }
   }
+}
+
 }

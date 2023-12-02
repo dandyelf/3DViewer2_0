@@ -1,6 +1,6 @@
 #include <QApplication>
 
-#include "viewer.h"
+#include "view/s21_viewer.h"
 
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);

@@ -1,22 +1,22 @@
-#include "scene.h"
+#include "s21_scene.h"
 
 #include <QDebug>
 #include <QtMath>
 
 #include "QMouseEvent"
 
-scene::scene(QWidget *parent) : QOpenGLWidget(parent) {
+Scene::Scene(QWidget *parent) : QOpenGLWidget(parent) {
   fon_r_ = 0.30, fon_g_ = 0.30, fon_b_ = 0.30;
   perspective = true;
   stipple = false;
   points = true;
 }
 
-void scene::initializeGL() { glEnable(GL_DEPTH_TEST); }
+void Scene::initializeGL() { glEnable(GL_DEPTH_TEST); }
 
-void scene::resizeGL(int w, int h) { glViewport(0, 0, w, h); }
+void Scene::resizeGL(int w, int h) { glViewport(0, 0, w, h); }
 
-void scene::paintGL() {
+void Scene::paintGL() {
   glClearColor(fon_r_, fon_g_, fon_b_, 0.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -37,27 +37,27 @@ void scene::paintGL() {
   draw();
 }
 
-void scene::set_ortho() {
+void Scene::SetOrtho() {
   perspective = false;
   update();
 }
-void scene::set_persp() {
+void Scene::SetPersp() {
   perspective = true;
   update();
 }
-void scene::set() { data_loaded_ = 1; }
-void scene::set_vertex_arr(double *arr) { vertex_arr_ = arr; }
-void scene::set_facets_arr(int *arr) { facets_arr_ = arr; }
-void scene::set_lines(int lines) { lines_ = lines; }
-void scene::mousePressEvent(QMouseEvent *e) { mPos_ = e->pos(); }
+void Scene::Set() { data_loaded_ = 1; }
+void Scene::SetVertexArr(double *arr) { vertex_arr_ = arr; }
+void Scene::SetFacetsArr(int *arr) { facets_arr_ = arr; }
+void Scene::SetLines(int lines) { lines_ = lines; }
+void Scene::MousePressEvent(QMouseEvent *e) { mPos_ = e->pos(); }
 
-void scene::mouseMoveEvent(QMouseEvent *e) {
+void Scene::MouseMoveEvent(QMouseEvent *e) {
   xRot_ = 1 / M_PI * (e->pos().y() - mPos_.y());
   yRot_ = 1 / M_PI * (e->pos().x() - mPos_.x());
   update();
 }
 
-void scene::draw() {
+void Scene::Draw() {
   if (data_loaded_) {
     if (smooth) {
       glEnable(GL_POINT_SMOOTH);
