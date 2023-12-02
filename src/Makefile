@@ -27,7 +27,7 @@ build_s21_viewer:
 unit_tests.o:
 	$(CC) $(FLAGS) -c tests/3DViewer_test.c
 
-test: $(STLIB)
+tests: $(STLIB)
 	$(CC) $(FLAGS) tests/3DViewer_test.cc $(STLIB) -o $(UNIT) $(LIBS)
 	./$(UNIT)
 
