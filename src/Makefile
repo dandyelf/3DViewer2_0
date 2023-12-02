@@ -1,10 +1,15 @@
 CC = gcc
-FLAGS = -Wall -Werror -Wextra -std=c++17
+CXXFLAGS = -std=c++17 -lstdc++ -Wall -Werror -Wextra
 GCOV = --coverage
 UNIT = unit_tests
 STLIB = s21_viewer.a
 OS = $(shell uname -s)
+GT_FLAGS = -lgtest -lgtest_main -lm
+
+#  Project files and directories
+BUILD_DIR = build
 FOLDERS = controller/*.h model/*.cc tests/*.cc view/*.cc
+
 
 ifeq ($(OS), Darwin)
     LIBS := -lcheck 
@@ -27,7 +32,7 @@ uninstall:
 	rm -rf 3dviewer
 
 clean:
-	rm -rf *.o *.a *.gc* *.info tests report *dSYM $(UNIT) Archive_3dviewer1.0 *tgz 3dviewer
+	rm -rf *.o *.a *.gc* *.info build report *dSYM $(UNIT) Archive_3dviewer1.0 *tgz 3dviewer
 
 dvi:
 	open dvi.html
@@ -40,7 +45,7 @@ dist:
 	rm -rf Archive_3dviewer1.0/
 
 tests: $(STLIB)
-	$(CC) $(FLAGS) tests/3DViewer_test.cc $(STLIB) -o $(UNIT) $(LIBS)
+	$(CC) $(CXXFLAGS) tests/3DViewer_test.cc $(STLIB) -o $(UNIT) $(LIBS)
 	./$(UNIT)
 
 s21_viewer.a: build_s21_viewer
@@ -51,14 +56,14 @@ build_s21_viewer:
 	ranlib $(STLIB)
 
 gcov_report: $(STLIB) unit_tests.o
-	$(CC) $(FLAGS) $(GCOV) 3DViewer_test.o model/s21_viewer.cc model/s21_aff_transform.cc -o $(UNIT) $(LIBS)
+	$(CC) $(CXXFLAGS) $(GCOV) 3DViewer_test.o model/s21_viewer.cc model/s21_aff_transform.cc -o $(UNIT) $(LIBS)
 	./$(UNIT)
 	lcov -t "tests" -o tests.info -c -d .
 	genhtml -o report tests.info
 	open report/index.html
 
 unit_tests.o:
-	$(CC) $(FLAGS) -c tests/3DViewer_test.c
+	$(CC) $(CXXFLAGS) -c tests/3DViewer_test.c
 
 clang:
 	clang-format -style=file:../materials/linters/.clang-format -n ./*.cc $(FOLDERS)
@@ -69,3 +74,8 @@ open:
 
 coverage:
 	open report/index.html
+
+model_tests:
+	mkdir -p $(BUILD_DIR)
+	$(CC) $(CXXFLAGS) $(GT_FLAGS) model/*.cc tests/s21_model_tests.cc -o $(BUILD_DIR)/model_tests.out
+	./$(BUILD_DIR)/model_tests.out
