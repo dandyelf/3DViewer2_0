@@ -39,16 +39,16 @@ dist:
 	tar cvzf Archive_3dviewer1.0.tgz Archive_3dviewer1.0/
 	rm -rf Archive_3dviewer1.0/
 
+tests: $(STLIB)
+	$(CC) $(FLAGS) tests/3DViewer_test.cc $(STLIB) -o $(UNIT) $(LIBS)
+	./$(UNIT)
+
 s21_viewer.a: build_s21_viewer
 
 build_s21_viewer:
 	$(CC) -c model/s21_viewer.cc model/s21_aff_transform.cc
 	ar rcs $(STLIB) s21_*.o s21_aff*.o
 	ranlib $(STLIB)
-
-tests: $(STLIB)
-	$(CC) $(FLAGS) tests/3DViewer_test.cc $(STLIB) -o $(UNIT) $(LIBS)
-	./$(UNIT)
 
 gcov_report: $(STLIB) unit_tests.o
 	$(CC) $(FLAGS) $(GCOV) 3DViewer_test.o model/s21_viewer.cc model/s21_aff_transform.cc -o $(UNIT) $(LIBS)
