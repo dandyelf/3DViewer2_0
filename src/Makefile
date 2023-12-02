@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -Wall -Werror -Wextra -std=c11
+FLAGS = -Wall -Werror -Wextra -std=c++17
 GCOV = --coverage
 UNIT = unit_tests
 STLIB = s21_viewer.a
@@ -10,7 +10,7 @@ ifeq ($(OS), Darwin)
 	APPLICATION = 3dviewer.app 
 	OPEN = open $(APPLICATION)
 else
-    LIBS := -lcheck_pic -lrt -lpthread -lsubunit -lm -g
+    LIBS := -lstdc++ -lcheck_pic -lrt -lpthread -lsubunit -lm -g
 	APPLICATION = 3dviewer
 	OPEN = ./$(APPLICATION)
 endif
@@ -20,19 +20,19 @@ all: clean s21_viewer.a test
 s21_viewer.a: build_s21_viewer
 
 build_s21_viewer:
-	$(CC) -c source_code/s21_viewer.c source_code/aff_transformation.c
-	ar rcs $(STLIB) s21_*.o aff*.o
+	$(CC) -c model/s21_viewer.cc model/s21_aff_transform.cc
+	ar rcs $(STLIB) s21_*.o s21_aff*.o
 	ranlib $(STLIB)
 
 unit_tests.o:
-	$(CC) $(FLAGS) -c source_code/3DViewer_test.c
+	$(CC) $(FLAGS) -c tests/3DViewer_test.c
 
 test: $(STLIB)
-	$(CC) $(FLAGS) source_code/3DViewer_test.c $(STLIB) -o $(UNIT) $(LIBS)
+	$(CC) $(FLAGS) tests/3DViewer_test.cc $(STLIB) -o $(UNIT) $(LIBS)
 	./$(UNIT)
 
 gcov_report: $(STLIB) unit_tests.o
-	$(CC) $(FLAGS) $(GCOV) 3DViewer_test.o source_code/s21_viewer.c source_code/aff_transformation.c -o $(UNIT) $(LIBS)
+	$(CC) $(FLAGS) $(GCOV) 3DViewer_test.o model/s21_viewer.cc model/s21_aff_transform.cc -o $(UNIT) $(LIBS)
 	./$(UNIT)
 	lcov -t "test" -o test.info -c -d .
 	genhtml -o report test.info

@@ -5,15 +5,18 @@
 
 #include <check.h>
 
-#include "aff_transformation.h"
-#include "s21_viewer.h"
+#include "../model/s21_aff_transform.h"
+#include "../model/s21_viewer.h"
+
+namespace s21 {
 
 #define EPS 0.00001
 
 START_TEST(parser_test_1) {
-  char *file = "source_code/obj/easyCube.obj";
-  obj_t obj;
-  StartPars(file, &obj);
+  const char* file = "obj/Low-Poly-Racing-Car.obj";
+  s21::obj_t obj;
+  s21::ReadFile ReadFile;
+  ReadFile.StartPars(file, &obj);
   int facets_count_test = 72;
   int vertex_count_test = 9;
   int facet_line_test = 12;
@@ -39,12 +42,13 @@ START_TEST(parser_test_1) {
 END_TEST
 
 START_TEST(aff_scale_test_1) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  int res = scale(&obj, 1.2);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  int res = view.Scale(&obj, 1.2);
   double test[24] = {1.2,  2.4,   3.6,  4.8,  6.0,  7.2,   8.4,   9.6,
                      10.8, -1.2,  -2.4, -3.6, -4.8, -6.0,  -7.2,  -8.4,
                      -9.6, -10.8, 1.8,  2.88, 4.56, -6.84, -1.68, -2.76};
@@ -56,12 +60,13 @@ START_TEST(aff_scale_test_1) {
 END_TEST
 
 START_TEST(aff_scale_test_2) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  int res = scale_x(&obj, 1.2);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  int res = view.ScaleX(&obj, 1.2);
   double test[24] = {1.2,  2.0,  3.0,  4.8,  5.0,  6.0,   8.4,  8.0,
                      9.0,  -1.2, -2.0, -3.0, -4.8, -5.0,  -6.0, -8.4,
                      -8.0, -9.0, 1.8,  2.4,  3.8,  -6.84, -1.4, -2.3};
@@ -73,12 +78,13 @@ START_TEST(aff_scale_test_2) {
 END_TEST
 
 START_TEST(aff_scale_test_3) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  int res = scale_y(&obj, 1.2);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  int res = view.ScaleY(&obj, 1.2);
   double test[24] = {1.0,  2.4,  3.0,  4.0,  6.0,  6.0,  7.0,   9.6,
                      9.0,  -1.0, -2.4, -3.0, -4.0, -6.0, -6.0,  -7.0,
                      -9.6, -9.0, 1.5,  2.88, 3.8,  -5.7, -1.68, -2.3};
@@ -90,12 +96,13 @@ START_TEST(aff_scale_test_3) {
 END_TEST
 
 START_TEST(aff_scale_test_4) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  int res = scale_z(&obj, 1.2);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  int res = view.ScaleZ(&obj, 1.2);
   double test[24] = {1.0,  2.0,   3.6,  4.0,  5.0,  7.2,  7.0,  8.0,
                      10.8, -1.0,  -2.0, -3.6, -4.0, -5.0, -7.2, -7.0,
                      -8.0, -10.8, 1.5,  2.4,  4.56, -5.7, -1.4, -2.76};
@@ -107,12 +114,13 @@ START_TEST(aff_scale_test_4) {
 END_TEST
 
 START_TEST(aff_scale_test_5) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  int res = scale(&obj, 0);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  int res = view.Scale(&obj, 0);
   double test[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                      9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                      -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
@@ -124,12 +132,13 @@ START_TEST(aff_scale_test_5) {
 END_TEST
 
 START_TEST(aff_scale_test_6) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  int res = scale_x(&obj, 0);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  int res = view.ScaleX(&obj, 0);
   double test[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                      9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                      -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
@@ -141,12 +150,13 @@ START_TEST(aff_scale_test_6) {
 END_TEST
 
 START_TEST(aff_scale_test_7) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  int res = scale_y(&obj, 0);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  int res = view.ScaleY(&obj, 0);
   double test[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                      9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                      -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
@@ -158,12 +168,13 @@ START_TEST(aff_scale_test_7) {
 END_TEST
 
 START_TEST(aff_scale_test_8) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  int res = scale_z(&obj, 0);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  int res = view.ScaleZ(&obj, 0);
   double test[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                      9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                      -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
@@ -175,12 +186,13 @@ START_TEST(aff_scale_test_8) {
 END_TEST
 
 START_TEST(aff_move_test_1) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  move_x(&obj, 2.3);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  view.MoveX(&obj, 2.3);
   double test[24] = {3.3,  2.0,  3.0,  6.3,  5.0,  6.0,  9.3,  8.0,
                      9.0,  1.3,  -2.0, -3.0, -1.7, -5.0, -6.0, -4.7,
                      -8.0, -9.0, 3.8,  2.4,  3.8,  -3.4, -1.4, -2.3};
@@ -191,12 +203,13 @@ START_TEST(aff_move_test_1) {
 END_TEST
 
 START_TEST(aff_move_test_2) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  move_y(&obj, 2.3);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  view.MoveY(&obj, 2.3);
   double test[24] = {1.0,  4.3,  3.0, 4.0,  7.3,  6.0,  7.0,  10.3,
                      9.0,  -1.0, 0.3, -3.0, -4.0, -2.7, -6.0, -7.0,
                      -5.7, -9.0, 4.7, 4.7,  3.8,  -5.7, -0.9, -2.3};
@@ -207,12 +220,13 @@ START_TEST(aff_move_test_2) {
 END_TEST
 
 START_TEST(aff_move_test_3) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  move_z(&obj, 2.3);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  view.MoveZ(&obj, 2.3);
   double test[24] = {1.0,  2.0,  5.3,  4.0,  5.0,  8.3,  7.0,  8.0,
                      11.3, -1.0, -2.0, -0.7, -4.0, -5.0, -3.7, -7.0,
                      -8.0, -6.7, 1.5,  2.4,  6.1,  -5.7, -1.4, 0.0};
@@ -223,12 +237,13 @@ START_TEST(aff_move_test_3) {
 END_TEST
 
 START_TEST(aff_turn_test_1) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  turn_x(&obj, 60);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  view.TurnX(&obj, 60);
   double test[24] = {1.0,  3.598076, -0.23205, 4.0,  7.696152, -1.33013,
                      7.0,  11.79423, -2.4282,  -1.0, -3.59808, 0.232051,
                      -4.0, -7.69615, 1.330127, -7.0, -11.7942, 2.428203,
@@ -240,12 +255,13 @@ START_TEST(aff_turn_test_1) {
 END_TEST
 
 START_TEST(aff_turn_test_2) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  turn_y(&obj, 60);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  view.TurnY(&obj, 60);
   double test[24] = {-2.09808, 2.0,  2.366025, -3.19615, 5.0,  6.464102,
                      -4.29423, 8.0,  10.56218, 2.098076, -2.0, -2.36603,
                      3.196152, -5.0, 6.4641,   4.294229, -8.0, -10.5622,
@@ -257,12 +273,13 @@ START_TEST(aff_turn_test_2) {
 END_TEST
 
 START_TEST(aff_turn_test_3) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  turn_z(&obj, 60);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  view.TurnZ(&obj, 60);
   double test[24] = {2.232051, 0.133975, 3.0,  6.330127, -0.9641,  6.0,
                      10.4282,  -2.06218, 9.0,  -2.23205, -0.13397, -3.0,
                      -6.33013, 0.964102, -6.0, -10.4282, 2.062178, -9.0,
@@ -274,12 +291,13 @@ START_TEST(aff_turn_test_3) {
 END_TEST
 
 START_TEST(aff_turn_test_4) {
+  s21::View view;
   int count_of_vertexes = 8;
   double vertexes[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                          9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                          -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
-  obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
-  turn_z(&obj, 0);
+  s21::obj_t obj = {count_of_vertexes, vertexes, 0, NULL, 0};
+  view.TurnZ(&obj, 0);
   double test[24] = {1.0,  2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
                      9.0,  -1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0,
                      -8.0, -9.0, 1.5,  2.4,  3.8,  -5.7, -1.4, -2.3};
@@ -325,4 +343,6 @@ int main(void) {
   srunner_free(sr);
 
   return nf == 0 ? 0 : 1;
+}
+
 }

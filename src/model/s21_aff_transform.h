@@ -12,18 +12,11 @@ typedef enum RESULT {
   ERR_ZERO,  // масштаб с коэффициентом 0
 } RESULT;
 
-// typedef struct dot {
-//  double delta_x;
-//  double delta_y;
-//  double delta_z;
-//} dot_t;
-
 class View {
   public:
     View() = default;
     View(const View&) = delete;
     View(View&&) = delete;
-    View(const View&) = delete;
     ~View() = default;
     int Scale(obj_t* obj, double koff);
     int ScaleX(obj_t* obj, double koff);
@@ -41,9 +34,6 @@ class View {
     double temp_x = 0;
     double temp_y = 0;
     double temp_z = 0;
-
-// void shift_dot(obj_t* obj, dot_t dot);
-
 };
 }
 

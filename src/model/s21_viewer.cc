@@ -27,7 +27,7 @@ int ReadFile::ParseNumVertexFacets(const char *filename, obj_t *obj) {
 void ReadFile::CountFacets(char *buffer, obj_t *obj) {
   i = 2;
   while (buffer[i] != '\0') {
-    *tok = strtok(buffer, " ");
+    char *tok = strtok(buffer, " ");
     while (tok != NULL) {
       if (*(tok) != 'f' && *(tok) != '\n') {
         obj->facet_elem++;
@@ -55,7 +55,6 @@ int ReadFile::ParseFile(const char *filename, obj_t *obj) {
   } else {
     char buffer[255];
     countvertex = 0, v_count = 0, countfacets = 0, cur_index = 0;
-    *temp_str, *token, *str1, *str2, *subtoken, *saveptr2;
     temp_f = 0, temp_ind = 0;
 
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
