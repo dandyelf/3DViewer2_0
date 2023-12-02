@@ -52,4 +52,4 @@ class Controller {
 };
 }  // namespace s21
 
-#endif // CPP_S21_3DVIEWER_V2_SRC_CONTROLLER_CONTROLLER_H_
+#endif  // CPP_S21_3DVIEWER_V2_SRC_CONTROLLER_CONTROLLER_H_

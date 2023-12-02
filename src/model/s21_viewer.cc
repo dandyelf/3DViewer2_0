@@ -115,4 +115,4 @@ int ReadFile::StartPars(const char *filename, obj_t *obj) {
   return err;
 }
 
-}
+}  // namespace s21

@@ -114,4 +114,4 @@ void View::TurnZ(obj_t *obj, double angle) {
   }
 }
 
-}
+}  // namespace s21

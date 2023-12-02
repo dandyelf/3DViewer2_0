@@ -4,6 +4,7 @@ GCOV = --coverage
 UNIT = unit_tests
 STLIB = s21_viewer.a
 OS = $(shell uname -s)
+FOLDERS = controller/*.h model/*.cc tests/*.cc view/*.cc
 
 ifeq ($(OS), Darwin)
     LIBS := -lcheck 
@@ -17,15 +18,33 @@ endif
 
 all: clean s21_viewer.a test
 
+install:
+	make clean
+	mkdir 3dviewer
+	cd src && qmake && make && make clean && rm Makefile && cd ../ && mv src/$(APPLICATION) ./3dviewer
+
+uninstall:
+	rm -rf 3dviewer
+
+clean:
+	rm -rf *.o *.a *.gc* *.info test report *dSYM $(UNIT) Archive_3dviewer1.0 *tgz 3dviewer
+
+dvi:
+	open dvi.html
+
+dist:
+	rm -rf Archive_3dviewer1.0/
+	mkdir -p Archive_3dviewer1.0/
+	mv ./3dviewer/$(APPLICATION) Archive_3dviewer1.0/src/
+	tar cvzf Archive_3dviewer1.0.tgz Archive_3dviewer1.0/
+	rm -rf Archive_3dviewer1.0/
+
 s21_viewer.a: build_s21_viewer
 
 build_s21_viewer:
 	$(CC) -c model/s21_viewer.cc model/s21_aff_transform.cc
 	ar rcs $(STLIB) s21_*.o s21_aff*.o
 	ranlib $(STLIB)
-
-unit_tests.o:
-	$(CC) $(FLAGS) -c tests/3DViewer_test.c
 
 tests: $(STLIB)
 	$(CC) $(FLAGS) tests/3DViewer_test.cc $(STLIB) -o $(UNIT) $(LIBS)
@@ -38,33 +57,15 @@ gcov_report: $(STLIB) unit_tests.o
 	genhtml -o report test.info
 	open report/index.html
 
-clang:
-	cp ../materials/linters/.clang-format ./source_code
-	clang-format -n source_code/*.c source_code/*.cpp
-	rm source_code/.clang-format
+unit_tests.o:
+	$(CC) $(FLAGS) -c tests/3DViewer_test.c
 
-install:
-	make clean
-	mkdir 3dviewer
-	cd source_code && qmake && make && make clean && rm Makefile && cd ../ && mv source_code/$(APPLICATION) ./3dviewer
+clang:
+	clang-format -style=file:../materials/linters/.clang-format -n ./*.cc $(FOLDERS)
+	clang-format -style=file:../materials/linters/.clang-format -i ./*.cc $(FOLDERS)
+
 open:
 	cd 3dviewer && $(OPEN)
 
-uninstall:
-	rm -rf 3dviewer
-
-dvi:
-	open dvi.html
-
-dist:
-	rm -rf Archive_3dviewer1.0/
-	mkdir -p Archive_3dviewer1.0/
-	mv ./3dviewer/$(APPLICATION) Archive_3dviewer1.0/src/
-	tar cvzf Archive_3dviewer1.0.tgz Archive_3dviewer1.0/
-	rm -rf Archive_3dviewer1.0/
-
 coverage:
 	open report/index.html
-
-clean:
-	rm -rf *.o *.a *.gc* *.info test report *dSYM $(UNIT) Archive_3dviewer1.0 *tgz 3dviewer

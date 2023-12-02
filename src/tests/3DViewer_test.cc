@@ -13,7 +13,7 @@ namespace s21 {
 #define EPS 0.00001
 
 START_TEST(parser_test_1) {
-  const char* file = "obj/Low-Poly-Racing-Car.obj";
+  const char *file = "obj/Low-Poly-Racing-Car.obj";
   s21::obj_t obj;
   s21::ReadFile ReadFile;
   ReadFile.StartPars(file, &obj);
@@ -345,4 +345,4 @@ int main(void) {
   return nf == 0 ? 0 : 1;
 }
 
-}
+}  // namespace s21
