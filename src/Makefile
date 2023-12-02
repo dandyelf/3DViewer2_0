@@ -16,7 +16,7 @@ else
 	OPEN = ./$(APPLICATION)
 endif
 
-all: clean s21_viewer.a test
+all: clean s21_viewer.a tests
 
 install:
 	make clean
@@ -27,7 +27,7 @@ uninstall:
 	rm -rf 3dviewer
 
 clean:
-	rm -rf *.o *.a *.gc* *.info test report *dSYM $(UNIT) Archive_3dviewer1.0 *tgz 3dviewer
+	rm -rf *.o *.a *.gc* *.info tests report *dSYM $(UNIT) Archive_3dviewer1.0 *tgz 3dviewer
 
 dvi:
 	open dvi.html
@@ -53,8 +53,8 @@ build_s21_viewer:
 gcov_report: $(STLIB) unit_tests.o
 	$(CC) $(FLAGS) $(GCOV) 3DViewer_test.o model/s21_viewer.cc model/s21_aff_transform.cc -o $(UNIT) $(LIBS)
 	./$(UNIT)
-	lcov -t "test" -o test.info -c -d .
-	genhtml -o report test.info
+	lcov -t "tests" -o tests.info -c -d .
+	genhtml -o report tests.info
 	open report/index.html
 
 unit_tests.o:
