@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../model/s21_facade.h"
+#include "../model/s21_facade_obj.h"
 #include "gtest/gtest.h"
 
 TEST(FacadeTest, GetDataObj) {
