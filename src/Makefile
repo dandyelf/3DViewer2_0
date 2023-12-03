@@ -51,12 +51,12 @@ tests: $(STLIB)
 s21_viewer.a: build_s21_viewer
 
 build_s21_viewer:
-	$(CC) -c model/s21_viewer.cc model/s21_aff_transform.cc
+	$(CC) -c model/s21_parser_obj.cc model/s21_aff_transform.cc
 	ar rcs $(STLIB) s21_*.o s21_aff*.o
 	ranlib $(STLIB)
 
 gcov_report: $(STLIB) unit_tests.o
-	$(CC) $(CXXFLAGS) $(GCOV) 3DViewer_test.o model/s21_viewer.cc model/s21_aff_transform.cc -o $(UNIT) $(LIBS)
+	$(CC) $(CXXFLAGS) $(GCOV) 3DViewer_test.o model/s21_parser_obj.cc model/s21_aff_transform.cc -o $(UNIT) $(LIBS)
 	./$(UNIT)
 	lcov -t "tests" -o tests.info -c -d .
 	genhtml -o report tests.info

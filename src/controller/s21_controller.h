@@ -1,7 +1,7 @@
-#ifndef CPP_S21_3DVIEWER_V2_SRC_CONTROLLER_CONTROLLER_H_
-#define CPP_S21_3DVIEWER_V2_SRC_CONTROLLER_CONTROLLER_H_
+#ifndef CPP_3DVIEWER_V2_SRC_CONTROLLER_CONTROLLER_H_
+#define CPP_3DVIEWER_V2_SRC_CONTROLLER_CONTROLLER_H_
 
-#include "../model/s21_aff_transform.h"
+#include "../model/transform.h"
 
 namespace s21 {
 class Controller {
@@ -29,10 +29,10 @@ class Controller {
       correct_ = false;
     }
   }
-  Object* GetObject() const { return model_; }
-  void MoveX(double x) { transform_->MoveX(x); };
-  void MoveY(double y) { transform_->MoveY(y); };
-  void MoveZ(double z) { transform_->MoveZ(z); };
+  Object* getObject() const { return model_; }
+  void moveX(double x) { transform_->moveX(x); };
+  void moveY(double y) { transform_->moveY(y); };
+  void moveZ(double z) { transform_->moveZ(z); };
   void rotationX(double rotate) { transform_->rotationX(rotate); };
   void rotationY(double rotate) { transform_->rotationY(rotate); };
   void rotationZ(double rotate) { transform_->rotationZ(rotate); };
@@ -52,4 +52,4 @@ class Controller {
 };
 }  // namespace s21
 
-#endif  // CPP_S21_3DVIEWER_V2_SRC_CONTROLLER_CONTROLLER_H_
+#endif  //  CPP_3DVIEWER_V2_SRC_CONTROLLER_CONTROLLER_H_

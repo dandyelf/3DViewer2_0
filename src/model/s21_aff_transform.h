@@ -18,16 +18,16 @@ class AffTransform {
     AffTransform(const AffTransform&) = delete;
     AffTransform(AffTransform&&) = delete;
     ~AffTransform() = default;
-    int Scale(obj_t* obj, double koff);
-    int ScaleX(obj_t* obj, double koff);
-    int ScaleY(obj_t* obj, double koff);
-    int ScaleZ(obj_t* obj, double koff);
-    void MoveX(obj_t* obj, double mv);
-    void MoveY(obj_t* obj, double mv);
-    void MoveZ(obj_t* obj, double mv);
-    void TurnX(obj_t* obj, double angle);
-    void TurnY(obj_t* obj, double angle);
-    void TurnZ(obj_t* obj, double angle);
+    int Scale(Object* obj, double koff);
+    int ScaleX(Object* obj, double koff);
+    int ScaleY(Object* obj, double koff);
+    int ScaleZ(Object* obj, double koff);
+    void MoveX(Object* obj, double mv);
+    void MoveY(Object* obj, double mv);
+    void MoveZ(Object* obj, double mv);
+    void TurnX(Object* obj, double angle);
+    void TurnY(Object* obj, double angle);
+    void TurnZ(Object* obj, double angle);
   private:
     int res = OK;
     int i = 0;

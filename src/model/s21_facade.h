@@ -12,8 +12,8 @@ class Facade {
 public:
   void OpenObj(){}
 private:
-  s21::obj_t main_obj_;
-  s21::obj_t ratate_obj_;
+  s21::Object main_obj_;
+  s21::Object ratate_obj_;
   s21::ParserObj parcer_obj_;
   s21::AffTransform aff_transform;
 };
