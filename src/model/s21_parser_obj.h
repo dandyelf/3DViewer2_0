@@ -30,7 +30,7 @@ public:
     void allocatePolygons() { polygons_ = new int[count_of_facets_]; }
     void pushVertex(double value, int index) { vertexes_[index] = value; }
     void pushPolygon(int value, int index) { polygons_[index] = value; }
-    const double* getVertexes() const { return vertexes_; }
+    double* getVertexes() { return vertexes_; }
     const int* getPolygons() const { return polygons_; }
     int getCountVertexes() const { return count_of_vertexes_; }
     int getCountFacets() const { return count_of_facets_; }
