@@ -13,30 +13,33 @@ public:
     Object() = default;
     Object(const Object&) = delete;
     Object(Object&&) = delete;
-    ~Object() = default;
+    ~Object() {
+        delete[] vertexes_;
+        delete[] polygons_;
+    }
 
-    void setCountVertex(int count) { count_of_vertexes_ = count; }
-    void setCountPoligons(int count) { count_of_facets_ = count; }
+    void setCountVertexes(int count) { count_of_vertexes_ = count; }
+    void setCountFacets(int count) { count_of_facets_ = count; }
     void clear() {
-        vertexes_.clear();
-        polygons_.clear();
+        delete[] vertexes_;
+        delete[] polygons_;
+        vertexes_ = nullptr;
+        polygons_ = nullptr;
     }
-    void pushVetrexesPoint(double x, double y, double z) {
-        vertexes_.push_back(x);
-        vertexes_.push_back(y);
-        vertexes_.push_back(z);
-    }
-    void pushPoligonsPoint(int num) { polygons_.push_back(num); }
-    const std::vector<double>& getVertexes() const { return vertexes_; }
-    const std::vector<int>& getPolygons() const { return polygons_; }
+    void allocateVertexes() { vertexes_ = new double[count_of_vertexes_]; }
+    void allocatePolygons() { polygons_ = new int[count_of_facets_]; }
+    void pushVertex(double value, int index) { vertexes_[index] = value; }
+    void pushPolygon(int value, int index) { polygons_[index] = value; }
+    const double* getVertexes() const { return vertexes_; }
+    const int* getPolygons() const { return polygons_; }
     int getCountVertexes() const { return count_of_vertexes_; }
     int getCountFacets() const { return count_of_facets_; }
 
 private:
     int count_of_vertexes_ = 0;
     int count_of_facets_ = 0;
-    std::vector<double> vertexes_;
-    std::vector<int> polygons_;
+    double* vertexes_ = nullptr;
+    int* polygons_ = nullptr;
 };
 
 class ParserObj {

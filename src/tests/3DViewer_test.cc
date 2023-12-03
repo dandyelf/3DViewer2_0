@@ -12,7 +12,7 @@
 namespace s21 {
 
 TEST(MainTest, Cube) {
-  s21::obj_t obj;
+  s21::Object obj;
   s21::ParserObj parser;
   s21::AffTransform transform;
   parser.setObj("tests/cube.txt", &obj);
@@ -22,7 +22,7 @@ TEST(MainTest, Cube) {
 }
 
 TEST(MainTest, EmptyCube) {
-  s21::obj_t obj;
+  s21::Object obj;
   s21::ParserObj parser;
   s21::AffTransform transform;
   parser.setObj("tests/empty_cube.txt", &obj);
@@ -32,7 +32,7 @@ TEST(MainTest, EmptyCube) {
 }
 
 TEST(AffTransformTest, MoveX) {
-  s21::obj_t obj;
+  s21::Object obj;
   s21::AffTransform transform(&obj);
   obj.pushVetrexesPoint(1.0, 2.0, 3.0);
   obj.pushVetrexesPoint(-1.0, -2.0, -3.0);
@@ -47,7 +47,7 @@ TEST(AffTransformTest, MoveX) {
 }
 
 TEST(AffTransformTest, MoveY) {
-  s21::obj_t obj;
+  s21::Object obj;
   s21::AffTransform transform(&obj);
   obj.pushVetrexesPoint(1.0, 2.0, 3.0);
   obj.pushVetrexesPoint(-1.0, -2.0, -3.0);
@@ -62,7 +62,7 @@ TEST(AffTransformTest, MoveY) {
 }
 
 TEST(AffTransformTest, MoveZ) {
-  s21::obj_t obj;
+  s21::Object obj;
   s21::AffTransform transform(&obj);
   obj.pushVetrexesPoint(1.0, 2.0, 3.0);
   obj.pushVetrexesPoint(-1.0, -2.0, -3.0);
@@ -77,7 +77,7 @@ TEST(AffTransformTest, MoveZ) {
 }
 
 TEST(AffTransformTest, RotationX) {
-  s21::obj_t obj;
+  s21::Object obj;
   s21::AffTransform transform(&obj);
   obj.pushVetrexesPoint(1.0, 0.0, 0.0);
   obj.pushVetrexesPoint(0.0, 1.0, 0.0);
@@ -92,7 +92,7 @@ TEST(AffTransformTest, RotationX) {
 }
 
 TEST(AffTransformTest, RotationY) {
-  s21::obj_t obj;
+  s21::Object obj;
   s21::AffTransform transform(&obj);
   obj.pushVetrexesPoint(1.0, 0.0, 0.0);
   obj.pushVetrexesPoint(0.0, 0.0, 1.0);
@@ -107,7 +107,7 @@ TEST(AffTransformTest, RotationY) {
 }
 
 TEST(AffTransformTest, RotationZ) {
-  s21::obj_t obj;
+  s21::Object obj;
   s21::AffTransform transform(&obj);
   obj.pushVetrexesPoint(1.0, 0.0, 0.0);
   obj.pushVetrexesPoint(0.0, 1.0, 0.0);
@@ -122,7 +122,7 @@ TEST(AffTransformTest, RotationZ) {
 }
 
 TEST(AffTransformTest, ChangeSize) {
-  s21::obj_t obj;
+  s21::Object obj;
   s21::AffTransform transform(&obj);
   obj.pushVetrexesPoint(1.0, 2.0, 3.0);
   obj.pushVetrexesPoint(-1.0, -2.0, -3.0);
@@ -137,7 +137,7 @@ TEST(AffTransformTest, ChangeSize) {
 }
 
 TEST(AffTransformTest, Normalization) {
-  s21::obj_t obj;
+  s21::Object obj;
 
   obj.pushVetrexesPoint(1.0, 2.0, 3.0);
   obj.pushVetrexesPoint(2.0, 3.0, 4.0);

@@ -1,5 +1,9 @@
 #include "s21_parser_obj.h"
 
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+
 namespace s21 {
 
 int ParserObj::ParseNumVertexFacets(const char* filename, Object* obj) {
@@ -11,15 +15,15 @@ int ParserObj::ParseNumVertexFacets(const char* filename, Object* obj) {
     char buffer[255];
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
       if (buffer[0] == 'v' && buffer[1] == ' ') {
-        obj->setCountVertex(obj->getCountVertexes() + 1);
+        obj->setCountVertexes(obj->getCountVertexes() + 1);
       }
       if (buffer[0] == 'f' && buffer[1] == ' ') {
-        obj->setCountPoligons(obj->getCountFacets() + 1);
+        obj->setCountFacets(obj->getCountFacets() + 1);
         CountFacets(buffer, obj);
       }
     }
   }
-  obj->setCountFacets(obj->getCountFacets() * 2);
+  obj->allocatePolygons();
   fclose(fp);
   return err;
 }
@@ -29,8 +33,8 @@ void ParserObj::CountFacets(char* buffer, Object* obj) {
   while (buffer[i] != '\0') {
     char* tok = strtok(buffer, " ");
     while (tok != NULL) {
-      if (*(tok) != 'f' && *(tok) != '\n') {
-        obj->setCountFacets(obj->getCountFacets() + 1);
+      if (*tok != 'f' && *tok != '\n') {
+        obj->pushPolygon(obj->getCountFacets(), obj->getCountFacets() - 1);
       }
       tok = strtok(NULL, " ");
     }
@@ -40,12 +44,8 @@ void ParserObj::CountFacets(char* buffer, Object* obj) {
 
 int ParserObj::InitObjStruct(Object* obj) {
   err = 0;
-  obj->clear();
-  obj->setCountFacets(obj->getCountFacets() * 2);
-  obj->setCountVertex(0);
-  obj->pushVetrexesPoint(0.0, 0.0, 0.0);
-  obj->pushPoligonsPoint(0);
-  obj->pushPoligonsPoint(0);
+  obj->allocateVertexes();
+  if (obj->getVertexes() == nullptr) err = 1;
   return err;
 }
 
@@ -61,20 +61,21 @@ int ParserObj::ParseFile(const char* filename, Object* obj) {
 
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
       if (buffer[0] == 'v' && buffer[1] == ' ') {
-        double x, y, z;
-        sscanf(buffer + 2, "%lf %lf %lf", &x, &y, &z);
-        obj->pushVetrexesPoint(x, y, z);
+        sscanf(buffer + 2, "%lf %lf %lf", &obj->getVertexes()[countvertex],
+               &obj->getVertexes()[countvertex + 1],
+               &obj->getVertexes()[countvertex + 2]);
+        countvertex += 3;
       }
 
       if (buffer[0] == 'f' && buffer[1] == ' ') {
         for (temp_ind = 0, str1 = buffer + 2;; str1 = NULL, temp_ind++) {
           token = strtok_r(str1, " ", &temp_str);
           if (token == NULL) {
-            obj->pushPoligonsPoint(temp_f);
+            obj->pushPolygon(temp_f, countfacets++);
             break;
           }
           if (!strpbrk(token, "0123456789")) {
-            obj->pushPoligonsPoint(temp_f);
+            obj->pushPolygon(temp_f, countfacets++);
             break;
           }
           for (str2 = token, v_count = 0;; str2 = NULL, v_count++) {
@@ -83,11 +84,11 @@ int ParserObj::ParseFile(const char* filename, Object* obj) {
               break;
             } else if (v_count == 0) {
               cur_index = atoi(subtoken) - 1;
-              obj->pushPoligonsPoint(cur_index);
+              obj->pushPolygon(cur_index, countfacets++);
               if (temp_ind == 0) {
                 temp_f = cur_index;
               } else {
-                obj->pushPoligonsPoint(cur_index);
+                obj->pushPolygon(cur_index, countfacets++);
               }
             }
           }
@@ -101,8 +102,8 @@ int ParserObj::ParseFile(const char* filename, Object* obj) {
 
 int ParserObj::StartPars(const char* filename, Object* obj) {
   err = 0;
-  obj->setCountVertex(0);
-  obj->setCountPoligons(0);
+  obj->setCountVertexes(0);
+  obj->setCountFacets(0);
 
   err = ParseNumVertexFacets(filename, obj);
 
