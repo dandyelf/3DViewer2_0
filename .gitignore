@@ -2,3 +2,4 @@
 3dviewer/3dviewer
 3dviewer/s21_3d_viewer.conf
 src/build
+*.a *.o unit_tests
