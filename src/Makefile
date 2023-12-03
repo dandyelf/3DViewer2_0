@@ -16,7 +16,7 @@ ifeq ($(OS), Darwin)
 	APPLICATION = 3dviewer.app 
 	OPEN = open $(APPLICATION)
 else
-    LIBS := -lstdc++ -lcheck_pic -lrt -lpthread -lsubunit -lm -g
+    LIBS := -lgtest -lstdc++ -lcheck_pic -lrt -lpthread -lsubunit -lm -g
 	APPLICATION = 3dviewer
 	OPEN = ./$(APPLICATION)
 endif
