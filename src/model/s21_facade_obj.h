@@ -14,7 +14,8 @@ public:
   void ResetObj(){}
   void RotateObj(){}
   void ScaleObj(){}
-  
+  void ScaleObj(){}
+
 private:
   s21::Object main_obj_;
   s21::Object ratate_obj_;
