@@ -20,9 +20,9 @@ class Controller {
   }
   void OpenObj(std::string addres){facade_.OpenObj(addres);}
   void ResetObj(){facade_.ResetObj();}
-  void RotateObj(char vector, double value){facade_.RotateObj(vector, value);}
-  void ScaleObj(char vector, double value){facade_.ScaleObj(vector, value);}
-  void MoveObj(char vector, double value){facade_.MoveObj(vector, value);}
+  void RotateObj(char axis, double value){facade_.RotateObj(axis, value);}
+  void ScaleObj(char axis, double value){facade_.ScaleObj(axis, value);}
+  void MoveObj(char axis, double value){facade_.MoveObj(axis, value);}
  private:
   Controller() = default;
   static Controller* controller_;
