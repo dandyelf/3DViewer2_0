@@ -1,40 +1,36 @@
 #include "s21_parser_obj.h"
 
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-
 namespace s21 {
 
-int ParserObj::ParseNumVertexFacets(const char* filename, Object* obj) {
+int ParserObj::ParseNumVertexFacets(const char *filename, obj_t *obj) {
   err = 0;
-  FILE* fp = fopen(filename, "r");
+  FILE *fp = fopen(filename, "r");
   if (fp == NULL) {
     err = 1;
   } else {
     char buffer[255];
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
       if (buffer[0] == 'v' && buffer[1] == ' ') {
-        obj->setCountVertexes(obj->getCountVertexes() + 1);
+        obj->count_of_vertexes += 1;
       }
       if (buffer[0] == 'f' && buffer[1] == ' ') {
-        obj->setCountFacets(obj->getCountFacets() + 1);
+        obj->count_of_facets += 1;
         CountFacets(buffer, obj);
       }
     }
   }
-  obj->allocatePolygons();
+  obj->facet_elem *= 2;
   fclose(fp);
   return err;
 }
 
-void ParserObj::CountFacets(char* buffer, Object* obj) {
+void ParserObj::CountFacets(char *buffer, obj_t *obj) {
   i = 2;
   while (buffer[i] != '\0') {
-    char* tok = strtok(buffer, " ");
+    char *tok = strtok(buffer, " ");
     while (tok != NULL) {
-      if (*tok != 'f' && *tok != '\n') {
-        obj->pushPolygon(obj->getCountFacets(), obj->getCountFacets() - 1);
+      if (*(tok) != 'f' && *(tok) != '\n') {
+        obj->facet_elem++;
       }
       tok = strtok(NULL, " ");
     }
@@ -42,16 +38,18 @@ void ParserObj::CountFacets(char* buffer, Object* obj) {
   }
 }
 
-int ParserObj::InitObjStruct(Object* obj) {
+int ParserObj::InitObjStruct(obj_t *obj) {
   err = 0;
-  obj->allocateVertexes();
-  if (obj->getVertexes() == nullptr) err = 1;
+  obj->vertexes = (double *)calloc(obj->count_of_vertexes * 3, sizeof(double));
+  if (obj->vertexes == NULL) err = 1;
+  obj->polygons = (int *)calloc(obj->facet_elem, sizeof(int));
+  if (obj->polygons == NULL) err = 1;
   return err;
 }
 
-int ParserObj::ParseFile(const char* filename, Object* obj) {
+int ParserObj::ParseFile(const char *filename, obj_t *obj) {
   err = 0;
-  FILE* fp = fopen(filename, "r");
+  FILE *fp = fopen(filename, "r");
   if (fp == NULL) {
     err = 1;
   } else {
@@ -61,9 +59,9 @@ int ParserObj::ParseFile(const char* filename, Object* obj) {
 
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
       if (buffer[0] == 'v' && buffer[1] == ' ') {
-        sscanf(buffer + 2, "%lf %lf %lf", &obj->getVertexes()[countvertex],
-               &obj->getVertexes()[countvertex + 1],
-               &obj->getVertexes()[countvertex + 2]);
+        sscanf(buffer + 2, "%lf %lf %lf", &obj->vertexes[countvertex],
+               &obj->vertexes[countvertex + 1],
+               &obj->vertexes[countvertex + 2]);
         countvertex += 3;
       }
 
@@ -71,11 +69,11 @@ int ParserObj::ParseFile(const char* filename, Object* obj) {
         for (temp_ind = 0, str1 = buffer + 2;; str1 = NULL, temp_ind++) {
           token = strtok_r(str1, " ", &temp_str);
           if (token == NULL) {
-            obj->pushPolygon(temp_f, countfacets++);
+            obj->polygons[countfacets++] = temp_f;
             break;
           }
           if (!strpbrk(token, "0123456789")) {
-            obj->pushPolygon(temp_f, countfacets++);
+            obj->polygons[countfacets++] = temp_f;
             break;
           }
           for (str2 = token, v_count = 0;; str2 = NULL, v_count++) {
@@ -84,11 +82,11 @@ int ParserObj::ParseFile(const char* filename, Object* obj) {
               break;
             } else if (v_count == 0) {
               cur_index = atoi(subtoken) - 1;
-              obj->pushPolygon(cur_index, countfacets++);
+              obj->polygons[countfacets++] = cur_index;
               if (temp_ind == 0) {
                 temp_f = cur_index;
               } else {
-                obj->pushPolygon(cur_index, countfacets++);
+                obj->polygons[countfacets++] = cur_index;
               }
             }
           }
@@ -100,10 +98,11 @@ int ParserObj::ParseFile(const char* filename, Object* obj) {
   return err;
 }
 
-int ParserObj::StartPars(const char* filename, Object* obj) {
+int ParserObj::StartPars(const char *filename, obj_t *obj) {
   err = 0;
-  obj->setCountVertexes(0);
-  obj->setCountFacets(0);
+  obj->count_of_vertexes = 0;
+  obj->count_of_facets = 0;
+  obj->facet_elem = 0;
 
   err = ParseNumVertexFacets(filename, obj);
 

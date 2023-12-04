@@ -28,7 +28,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
-     <widget class="scene" name="widget" native="true"/>
+     <widget class="Scene" name="widget" native="true"/>
     </item>
     <item>
      <widget class="QGroupBox" name="groupBox">
@@ -908,7 +908,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>scene</class>
+   <class>Scene</class>
    <extends>QWidget</extends>
    <header>s21_scene.h</header>
    <container>1</container>

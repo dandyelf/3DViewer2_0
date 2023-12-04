@@ -2,11 +2,10 @@
 
 namespace s21 {
 
-int AffTransform::Scale(Object* obj, double koff) {
-  int res = 0;
+int AffTransform::Scale(obj_t *obj, double koff) {
   if (koff != 0.0) {
-    for (int i = 0; i < obj->getCountVertexes() * 3; i++) {
-      obj->pushVertex(obj->getVertexes()[i] * koff, i);
+    for (i = 0; i < obj->count_of_vertexes * 3; i++) {
+      obj->vertexes[i] *= koff;
     }
   } else {
     res = ERR_ZERO;
@@ -14,11 +13,10 @@ int AffTransform::Scale(Object* obj, double koff) {
   return res;
 }
 
-int AffTransform::ScaleX(Object* obj, double koff) {
-  int res = 0;
+int AffTransform::ScaleX(obj_t *obj, double koff) {
   if (koff != 0.0) {
-    for (int i = 0; i < obj->getCountVertexes() * 3; i += 3) {
-      obj->pushVertex(obj->getVertexes()[i] * koff, i);
+    for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
+      obj->vertexes[i] *= koff;
     }
   } else {
     res = ERR_ZERO;
@@ -26,11 +24,10 @@ int AffTransform::ScaleX(Object* obj, double koff) {
   return res;
 }
 
-int AffTransform::ScaleY(Object* obj, double koff) {
-  int res = 0;
+int AffTransform::ScaleY(obj_t *obj, double koff) {
   if (koff != 0.0) {
-    for (int i = 1; i < obj->getCountVertexes() * 3; i += 3) {
-      obj->pushVertex(obj->getVertexes()[i] * koff, i);
+    for (i = 1; i < obj->count_of_vertexes * 3; i += 3) {
+      obj->vertexes[i] *= koff;
     }
   } else {
     res = ERR_ZERO;
@@ -38,11 +35,10 @@ int AffTransform::ScaleY(Object* obj, double koff) {
   return res;
 }
 
-int AffTransform::ScaleZ(Object* obj, double koff) {
-  int res = 0;
+int AffTransform::ScaleZ(obj_t *obj, double koff) {
   if (koff != 0.0) {
-    for (int i = 2; i < obj->getCountVertexes() * 3; i += 3) {
-      obj->pushVertex(obj->getVertexes()[i] * koff, i);
+    for (i = 2; i < obj->count_of_vertexes * 3; i += 3) {
+      obj->vertexes[i] *= koff;
     }
   } else {
     res = ERR_ZERO;
@@ -50,62 +46,70 @@ int AffTransform::ScaleZ(Object* obj, double koff) {
   return res;
 }
 
-void AffTransform::MoveX(Object* obj, double mv) {
+void AffTransform::MoveX(obj_t *obj, double mv) {
   if (mv != 0.0) {
-    for (int i = 0; i < obj->getCountVertexes() * 3; i += 3) {
-      obj->pushVertex(obj->getVertexes()[i] + mv, i);
+    for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
+      obj->vertexes[i] += mv;
     }
   }
 }
 
-void AffTransform::MoveY(Object* obj, double mv) {
+void AffTransform::MoveY(obj_t *obj, double mv) {
   if (mv != 0.0) {
-    for (int i = 1; i < obj->getCountVertexes() * 3; i += 3) {
-      obj->pushVertex(obj->getVertexes()[i] + mv, i);
+    for (i = 1; i < obj->count_of_vertexes * 3; i += 3) {
+      obj->vertexes[i] += mv;
     }
   }
 }
 
-void AffTransform::MoveZ(Object* obj, double mv) {
+void AffTransform::MoveZ(obj_t *obj, double mv) {
   if (mv != 0.0) {
-    for (int i = 2; i < obj->getCountVertexes() * 3; i += 3) {
-      obj->pushVertex(obj->getVertexes()[i] + mv, i);
+    for (i = 2; i < obj->count_of_vertexes * 3; i += 3) {
+      obj->vertexes[i] += mv;
     }
   }
 }
 
-void AffTransform::TurnX(Object* obj, double angle) {
+// void shift_dot(obj_t* obj, dot_t dot) {
+//   for (int i = 0; i < obj->count_of_vertexes * 3; i += 3) {
+//     obj->vertexes[i] += dot.delta_x;
+//     obj->vertexes[i + 1] += dot.delta_y;
+//     obj->vertexes[i + 2] += dot.delta_z;
+//   }
+// }
+
+void AffTransform::TurnX(obj_t *obj, double angle) {
   if (angle != 0.0) {
     angle *= RAD_TO_GRAD;
-    for (int i = 0; i < obj->getCountVertexes() * 3; i += 3) {
-      double temp_y = obj->getVertexes()[i + 1];
-      double temp_z = obj->getVertexes()[i + 2];
-      obj->pushVertex(temp_y * cos(angle) + temp_z * sin(angle), i + 1);
-      obj->pushVertex(-temp_y * sin(angle) + temp_z * cos(angle), i + 2);
+    for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
+      temp_y = obj->vertexes[i + 1];
+      temp_z = obj->vertexes[i + 2];
+      obj->vertexes[i + 1] = temp_y * cos(angle) + temp_z * sin(angle);
+      obj->vertexes[i + 2] = -temp_y * sin(angle) + temp_z * cos(angle);
     }
   }
 }
 
-void AffTransform::TurnY(Object* obj, double angle) {
+void AffTransform::TurnY(obj_t *obj, double angle) {
   if (angle != 0.0) {
     angle *= -RAD_TO_GRAD;
-    for (int i = 0; i < obj->getCountVertexes() * 3; i += 3) {
-      double temp_x = obj->getVertexes()[i];
-      double temp_z = obj->getVertexes()[i + 2];
-      obj->pushVertex(temp_x * cos(angle) + temp_z * sin(angle), i);
-      obj->pushVertex(-temp_x * sin(angle) + temp_z * cos(angle), i + 2);
+    for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
+      temp_x = obj->vertexes[i];
+      temp_z = obj->vertexes[i + 2];
+      obj->vertexes[i] = temp_x * cos(angle) + temp_z * sin(angle);
+      obj->vertexes[i + 2] = -temp_x * sin(angle) + temp_z * cos(angle);
     }
   }
 }
 
-void AffTransform::TurnZ(Object* obj, double angle) {
+void AffTransform::TurnZ(obj_t *obj, double angle) {
   if (angle != 0.0) {
     angle *= RAD_TO_GRAD;
-    for (int i = 0; i < obj->getCountVertexes() * 3; i += 3) {
-      double temp_x = obj->getVertexes()[i];
-      double temp_y = obj->getVertexes()[i + 1];
-      obj->pushVertex(temp_x * cos(angle) + temp_y * sin(angle), i);
-      obj->pushVertex(-temp_x * sin(angle) + temp_y * cos(angle), i + 1);
+    for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
+      temp_x = obj->vertexes[i];
+      temp_y = obj->vertexes[i + 1];
+      obj->vertexes[i] = temp_x * cos(angle) + temp_y * sin(angle);
+      obj->vertexes[i + 1] = -temp_x * sin(angle) + temp_y * cos(angle);
     }
   }
 }

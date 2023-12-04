@@ -1,10 +1,9 @@
-#ifndef CPP_S21_3DVIEWER_V2_SRC_VIEW_VIEWER_H
-#define CPP_S21_3DVIEWER_V2_SRC_VIEW_VIEWER_H
+#ifndef VIEWER_H
+#define VIEWER_H
 
 #include <QMainWindow>
+
 #include "./qtgifimage/gifimage/qgifimage.h"
-#include "../model/s21_aff_transform.h"
-#include "../controller/s21_controller.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -12,117 +11,113 @@ class Viewer;
 }
 QT_END_NAMESPACE
 
+#include "../model/s21_aff_transform.h"
+#include "../model/s21_parser_obj.h"
+
 class Viewer : public QMainWindow {
-  Q_OBJECT
+    Q_OBJECT
 
- public:
-  Viewer(QWidget *parent = nullptr);
-  ~Viewer();
+public:
+    Viewer(QWidget *parent = nullptr);
+    ~Viewer();
 
-  s21::Object obj;
+    s21::obj_t obj;
 
- private slots:
- 
-  void OnPushButtonClicked_1();
+private slots:
+    void on_pushButton_clicked();
 
-  void OnPushButtonClicked_2();
+    void on_pushButton_5_clicked();
 
-  void OnPushButtonClicked_3();
+    void on_radioButton_4_toggled();
 
-  void OnPushButtonClicked_4();
+    void on_radioButton_3_toggled();
 
-  void OnPushButtonClicked_5();
+    void on_horizontalScrollBar_valueChanged(int value);
 
-  void OnPushButtonClicked_6();
+    void on_horizontalScrollBar_2_valueChanged(int value);
 
-  void OnPushButtonClicked_7();
+    void on_horizontalScrollBar_3_valueChanged(int value);
 
-  void OnPushButtonClicked_8();
+    void on_horizontalScrollBar_7_valueChanged(int value);
 
-  void OnPushButtonClicked_9();
+    void on_horizontalScrollBar_4_valueChanged(int value);
 
-  void OnPushButtonClicked_10();
+    void on_horizontalScrollBar_5_valueChanged(int value);
 
-  void OnPushButtonClicked_11();
+    void on_horizontalScrollBar_6_valueChanged(int value);
 
-  void OnPushButtonClicked_12();
+    void on_pushButton_4_clicked();
 
-  void OnPushButtonClicked_13();
+    void on_pushButton_2_clicked();
 
-  void OnPushButtonClicked_14();
+    void on_pushButton_3_clicked();
 
-  void OnPushButtonClicked_15();
+    void on_horizontalScrollBar_8_valueChanged(int value);
 
-  void OnPushButtonClicked_16();
+    void on_horizontalScrollBar_11_valueChanged(int value);
 
-  void OnPushButtonClicked_17();
+    void on_horizontalScrollBar_9_valueChanged(int value);
 
-  void OnPushButtonClicked_18();
+    void on_horizontalScrollBar_10_valueChanged(int value);
 
-  void OnPushButtonClicked_19();
+    void on_pushButton_16_clicked();
 
-  void OnPushButtonClicked_20();
+    void on_pushButton_20_clicked();
 
-  void OnHorizontalScrollBarValueChanged_1(int value);
+    void on_pushButton_19_clicked();
 
-  void OnHorizontalScrollBarValueChanged_2(int value);
+    void on_pushButton_14_clicked();
 
-  void OnHorizontalScrollBarValueChanged_3(int value);
+    void on_pushButton_18_clicked();
 
-  void OnHorizontalScrollBarValueChanged_4(int value);
+    void on_pushButton_17_clicked();
 
-  void OnHorizontalScrollBarValueChanged_5(int value);
+    void on_pushButton_15_clicked();
 
-  void OnHorizontalScrollBarValueChanged_6(int value);
+    void on_pushButton_6_clicked();
 
-  void OnHorizontalScrollBarValueChanged_7(int value);
+    void on_pushButton_7_clicked();
 
-  void OnHorizontalScrollBarValueChanged_8(int value);
+    void on_pushButton_8_clicked();
 
-  void OnHorizontalScrollBarValueChanged_9(int value);
+    void on_pushButton_9_clicked();
 
-  void OnHorizontalScrollBarValueChanged_10(int value);
+    void on_pushButton_10_clicked();
 
-  void OnHorizontalScrollBarValueChanged_11(int value);
+    void on_pushButton_11_clicked();
 
-  void OnRadioButtonToggled_1();
+    void on_pushButton_12_clicked();
 
-  void OnRadioButtonToggled_2();
+    void on_pushButton_13_clicked();
 
-  void OnRadioButtonToggled_3();
+    void gif_create();
 
-  void OnRadioButtonToggled_4();
+    void on_radioButton_2_toggled();
 
-  void OnRadioButtonToggled_5();
+    void on_radioButton_toggled();
 
-  void OnPushButtonToggled_1();
+    void on_radioButton_5_toggled();
 
-  void OnPushButtonToggled_2();
+    void on_radioButton_7_toggled();
 
-  void GifCreate();
+    void on_radioButton_6_toggled();
 
 private:
+    Ui::Viewer *ui;
 
-  s21::Controller * controller_obj_;
-  Ui::Viewer *ui;
+    int dots_{}, lines_{};
+    QString path_{};
+    QTimer *gif_tmr_{};
+    int time_{};
+    QGifImage *gif_img_{};
+    QString fileName;
+    QString fname_gif_{};
 
-  int dots_{}, lines_{};
-  QString path_{};
-  QTimer *gif_tmr_{};
-  int time_{};
-  QGifImage *gif_img_{};
-  QString fileName;
-  QString fname_gif_{};
-
-  void UpdateObj() {
-    auto CountVertex = controller_obj_->GetObject().getCountVertexes();
-  }
-  void GifTimer();
-  void SettingsLoad();
-  void SettingsSave();
-  void ResetObj();
-  void FileProccessing(QString file_name);
-  void ErrorMessage(QString message);
+    void gif_timer();
+    void settings_load();
+    void settings_save();
+    void reset_obj();
+    void file_proccessing(QString file_name);
+    void error_message(QString message);
 };
-
-#endif  // CPP_S21_3DVIEWER_V2_SRC_VIEW_VIEWER_H
+#endif  // VIEWER_H
