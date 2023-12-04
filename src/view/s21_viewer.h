@@ -21,7 +21,7 @@ public:
     Viewer(QWidget *parent = nullptr);
     ~Viewer();
 
-    s21::obj_t obj;
+    s21::ObjT obj;
 
 private slots:
     void on_pushButton_clicked();

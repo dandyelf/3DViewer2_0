@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <vector>
-
+#include <string>
 namespace s21 {
 
 typedef struct {
@@ -14,7 +14,7 @@ typedef struct {
   int count_of_facets;
   int* polygons;
   int facet_elem;
-} obj_t;
+} ObjT;
 
 class ParserObj {
 public:
@@ -23,11 +23,11 @@ public:
     ParserObj(ParserObj&&) = delete;
     ~ParserObj() = default;
 
-    int ParseNumVertexFacets(const char* filename, obj_t* obj);
-    int InitObjStruct(obj_t* obj);
-    int ParseFile(const char* filename, obj_t* obj);
-    int StartPars(const char* filename, obj_t* obj);
-    void CountFacets(char* buffer, obj_t* obj);
+    int ParseNumVertexFacets(const std::string &file_name, ObjT* obj);
+    int InitObjStruct(ObjT* obj);
+    int ParseFile(const char* file_name, ObjT* obj);
+    int StartPars(const std::string &file_name, ObjT* obj);
+    void CountFacets(char* buffer, ObjT* obj);
 
 private:
     int err = 0;
