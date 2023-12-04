@@ -1,10 +1,10 @@
 #include "s21_parser_obj.h"
-
+#include <string>
 namespace s21 {
 
-int ParserObj::ParseNumVertexFacets(const char *filename, ObjT *obj) {
+int ParserObj::ParseNumVertexFacets(const std::string &file_name, ObjT *obj) {
   err = 0;
-  FILE *fp = fopen(filename, "r");
+  FILE *fp = fopen(file_name.c_str(), "r");
   if (fp == NULL) {
     err = 1;
   } else {
@@ -47,9 +47,9 @@ int ParserObj::InitObjStruct(ObjT *obj) {
   return err;
 }
 
-int ParserObj::ParseFile(const char *filename, ObjT *obj) {
+int ParserObj::ParseFile(const char *file_name, ObjT *obj) {
   err = 0;
-  FILE *fp = fopen(filename, "r");
+  FILE *fp = fopen(file_name, "r");
   if (fp == NULL) {
     err = 1;
   } else {
@@ -98,19 +98,20 @@ int ParserObj::ParseFile(const char *filename, ObjT *obj) {
   return err;
 }
 
-int ParserObj::StartPars(const char *filename, ObjT *obj) {
+int ParserObj::StartPars(const std::string &file_name, ObjT *obj) {
+  
   err = 0;
   obj->count_of_vertexes = 0;
   obj->count_of_facets = 0;
   obj->facet_elem = 0;
 
-  err = ParseNumVertexFacets(filename, obj);
+  err = ParseNumVertexFacets(file_name, obj);
 
   if (!err) {
     err = InitObjStruct(obj);
   }
   if (!err) {
-    err = ParseFile(filename, obj);
+    err = ParseFile(file_name.c_str(), obj);
   }
   return err;
 }

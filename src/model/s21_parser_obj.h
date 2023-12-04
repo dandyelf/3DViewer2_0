@@ -23,10 +23,10 @@ public:
     ParserObj(ParserObj&&) = delete;
     ~ParserObj() = default;
 
-    int ParseNumVertexFacets(const char* filename, ObjT* obj);
+    int ParseNumVertexFacets(const std::string &file_name, ObjT* obj);
     int InitObjStruct(ObjT* obj);
-    int ParseFile(const char* filename, ObjT* obj);
-    int StartPars(const char* filename, ObjT* obj);
+    int ParseFile(const char* file_name, ObjT* obj);
+    int StartPars(const std::string &file_name, ObjT* obj);
     void CountFacets(char* buffer, ObjT* obj);
 
 private:

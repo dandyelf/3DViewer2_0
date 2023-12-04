@@ -2,7 +2,7 @@
 #ifndef SRC_S21_FACADE_H_
 #define SRC_S21_FACADE_H_
 
-// Подключение необходимых заголовочных файлов
+#include <string>
 #include "../model/s21_aff_transform.h"
 #include "../model/s21_parser_obj.h"
 namespace s21 {
@@ -10,7 +10,7 @@ namespace s21 {
 // Фасад
 class Facade {
 public:
-  void OpenObj(std::string file_addres){}
+  void OpenObj(const std::string &file_name);
   void ResetObj(){}
   void RotateObj(char axis, double value){}
   void ScaleObj(char axis, double value){}
