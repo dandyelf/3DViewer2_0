@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "./qtgifimage/gifimage/qgifimage.h"
-// #include "../model/s21_aff_transform.h"
+#include "../model/s21_aff_transform.h"
 #include "../controller/s21_controller.h"
 
 QT_BEGIN_NAMESPACE

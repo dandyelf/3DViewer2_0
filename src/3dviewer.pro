@@ -19,7 +19,7 @@ SOURCES += main.cc \
 
 HEADERS += controller/s21_controller.h\
     model/s21_aff_transform.h \
-    view/s21_scene.h \
+    view/scene.h \
     view/s21_viewer.h
 
 FORMS += \

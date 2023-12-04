@@ -19,6 +19,10 @@ class Scene : public QOpenGLWidget {
   void SetFacetsArr(int *);
   void SetLines(int);
 
+  void InitializeGL();
+  void ResizeGL(int w, int h);
+  void PaintGL();
+
   double fon_r_{}, fon_g_{}, fon_b_{};
   double line_r_{}, line_g_{}, line_b_{};
   double dot_r_{}, dot_g_{}, dot_b_{};
@@ -28,10 +32,6 @@ class Scene : public QOpenGLWidget {
   double dot_width;
 
  private:
-  void InitializeGL() override;
-  void ResizeGL(int w, int h) override;
-  void PaintGL() override;
-
   int data_loaded_{};
   int lines_{};
 
@@ -41,8 +41,8 @@ class Scene : public QOpenGLWidget {
   double *vertex_arr_ = nullptr;
   int *facets_arr_ = nullptr;
 
-  void MousePressEvent(QMouseEvent *) override;
-  void MouseMoveEvent(QMouseEvent *) override;
+  void MousePressEvent(QMouseEvent *);
+  void MouseMoveEvent(QMouseEvent *);
 
   void Draw();
 };
