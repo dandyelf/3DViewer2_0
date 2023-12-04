@@ -9,9 +9,10 @@
 #include <QtMath>
 
 #include "QKeyEvent"
-#include "Ui_s21_Viewer.h"
+#include "ui_s21_viewer.h"
 
 Viewer::Viewer(QWidget *parent) : QMainWindow(parent), ui(new Ui::Viewer) {
+  controller_obj_ = s21::Controller::getInstance();
   setlocale(LC_ALL, "en_US.UTF-8");
   ui->setupUi(this);
   obj.count_of_vertexes = 0;
