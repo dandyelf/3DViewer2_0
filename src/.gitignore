@@ -6,4 +6,4 @@ src/build
 *.o 
 unit_tests
 build-3dviewer-Desktop_Qt_6_6_1_GCC_64bit-Debug
-.vscode/launch.json
+3dviewer.pro.us*

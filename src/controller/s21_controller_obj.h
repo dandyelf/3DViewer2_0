@@ -15,18 +15,19 @@ class Controller {
     static Controller controller;
     return &controller;
   }
-  const s21::Object& GetObject() {
-    return facade_.GetObject();
+  void SetModel(s21::Facade * facade){facade_ = facade;}
+  const s21::ObjT &GetObject() {
+    return facade_->GetObject();
   }
-  void OpenObj(std::string addres){facade_.OpenObj(addres);}
-  void ResetObj(){facade_.ResetObj();}
-  void RotateObj(char vector, double value){facade_.RotateObj(vector, value);}
-  void ScaleObj(char vector, double value){facade_.ScaleObj(vector, value);}
-  void MoveObj(char vector, double value){facade_.MoveObj(vector, value);}
+  void OpenObj(std::string file_name){facade_->OpenObj(file_name);}
+  void ResetObj(){facade_->ResetObj();}
+  void RotateObj(char axis, double value){facade_->RotateObj(axis, value);}
+  void ScaleObj(char axis, double value){facade_->ScaleObj(axis, value);}
+  void MoveObj(char axis, double value){facade_->MoveObj(axis, value);}
  private:
   Controller() = default;
   static Controller* controller_;
-  s21::Facade facade_;
+  s21::Facade * facade_;
 };
 }  // namespace s21
 
