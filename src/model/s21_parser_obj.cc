@@ -1,5 +1,5 @@
 #include "s21_parser_obj.h"
-#include <string>
+
 namespace s21 {
 
 int ParserObj::ParseNumVertexFacets(const std::string &file_name, ObjT *obj) {

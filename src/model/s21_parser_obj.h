@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <vector>
-
+#include <string>
 namespace s21 {
 
 typedef struct {
