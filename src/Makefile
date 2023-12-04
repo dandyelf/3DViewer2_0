@@ -4,7 +4,7 @@ GCOV = --coverage
 UNIT = unit_tests
 STLIB = s21_viewer.a
 OS = $(shell uname -s)
-GT_FLAGS = -lgtest -lgtest_main -lm
+GT_FLAGS = -lgtest_main -lgtest -lm -lstdc++ -pthread -lm -g
 
 #  Project files and directories
 BUILD_DIR = build
@@ -77,5 +77,5 @@ coverage:
 
 model_tests:
 	mkdir -p $(BUILD_DIR)
-	$(CC) $(CXXFLAGS) $(GT_FLAGS) model/*.cc tests/s21_model_tests.cc -o $(BUILD_DIR)/model_tests.out
+	$(CC) -std=c++17 -lstdc++ -Wall -Wextra $(GT_FLAGS) model/*.cc tests/s21_model_tests.cc tests/s21_controller_tests.cc -o $(BUILD_DIR)/model_tests.out
 	./$(BUILD_DIR)/model_tests.out

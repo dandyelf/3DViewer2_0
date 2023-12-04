@@ -5,5 +5,5 @@
 
 TEST(FacadeTest, GetDataObj) {
     s21::Facade a;
-    a.OpenObj();
+    a.OpenObj("");
 }

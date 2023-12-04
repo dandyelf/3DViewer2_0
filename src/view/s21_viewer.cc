@@ -9,13 +9,12 @@
 #include <QtMath>
 
 #include "QKeyEvent"
-#include "ui_viewer.h"
+#include "ui_s21_viewer.h"
 
 Viewer::Viewer(QWidget *parent) : QMainWindow(parent), ui(new Ui::Viewer) {
+  controller_obj_ = s21::Controller::getInstance();
   setlocale(LC_ALL, "en_US.UTF-8");
-
   ui->setupUi(this);
-
   obj.count_of_vertexes = 0;
   obj.count_of_facets = 0;
   obj.facet_elem = 0;

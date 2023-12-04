@@ -14,13 +14,11 @@ include (view/qtgifimage/gifimage/qtgifimage.pri)
 
 SOURCES += main.cc \
     model/s21_aff_transform.cc \
-    model/s21_viewer.cc \
     view/s21_scene.cc \
     view/s21_viewer.cc
 
 HEADERS += controller/s21_controller.h\
     model/s21_aff_transform.h \
-    model/s21_viewer.h \
     view/s21_scene.h \
     view/s21_viewer.h
 

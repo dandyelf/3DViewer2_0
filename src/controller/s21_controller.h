@@ -1,8 +1,10 @@
 #ifndef CPP_S21_3DVIEWER_V2_SRC_CONTROLLER_CONTROLLER_H_
 #define CPP_S21_3DVIEWER_V2_SRC_CONTROLLER_CONTROLLER_H_
 
+#include <string>
 #include "../model/s21_parser_obj.h"
 #include "../model/s21_aff_transform.h"
+#include "../model/s21_facade_obj.h"
 
 namespace s21 {
 class Controller {
@@ -21,7 +23,7 @@ class Controller {
     parser_ = parser;
     transform_ = transform;
   }
-  void setFilepath(const std::string& filepath) {
+  void setFilepath(const std::string & filepath) {
     parser_->StartPars(filepath.c_str(), model_);
     if (parser_->ParseNumVertexFacets(filepath.c_str(), model_) == 0) {
       transform_->InitObjStruct(model_);
@@ -41,7 +43,9 @@ class Controller {
   bool getCorrect() { return correct_; };
   int getCountVertexes() { return model_->getCountVertexes(); };
   int getCountLines() { return model_->getCountFacets(); };
-
+  const s21::Object& GetObject() {
+    return facade_.GetObject();
+  }
  private:
   Controller() = default;
   static Controller* controller_;
@@ -50,6 +54,7 @@ class Controller {
   ParserObj* parser_ = nullptr;
   AffTransform* transform_ = nullptr;
   bool correct_ = false;
+  s21::Facade facade_;
 };
 }  // namespace s21
 
