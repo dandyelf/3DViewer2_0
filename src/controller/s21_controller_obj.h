@@ -18,7 +18,7 @@ class Controller {
   const s21::ObjT &GetObject() {
     return facade_.GetObject();
   }
-  void OpenObj(std::string addres){facade_.OpenObj(addres);}
+  void OpenObj(std::string file_addres){facade_.OpenObj(file_addres);}
   void ResetObj(){facade_.ResetObj();}
   void RotateObj(char axis, double value){facade_.RotateObj(axis, value);}
   void ScaleObj(char axis, double value){facade_.ScaleObj(axis, value);}
