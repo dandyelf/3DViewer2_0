@@ -18,9 +18,9 @@ int ParserObj::ParseNumVertexFacets(const std::string &file_name, ObjT *obj) {
         CountFacets(buffer, obj);
       }
     }
+    fclose(fp);
   }
   obj->facet_elem *= 2;
-  fclose(fp);
   return err;
 }
 
