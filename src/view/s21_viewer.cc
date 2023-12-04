@@ -9,7 +9,7 @@
 #include <QtMath>
 
 #include "QKeyEvent"
-#include "ui_s21_viewer.h"
+#include "Ui_s21_Viewer.h"
 
 Viewer::Viewer(QWidget *parent) : QMainWindow(parent), ui(new Ui::Viewer) {
   setlocale(LC_ALL, "en_US.UTF-8");
