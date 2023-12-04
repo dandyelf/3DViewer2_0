@@ -4,15 +4,12 @@
 #include <QMainWindow>
 #include "./qtgifimage/gifimage/qgifimage.h"
 #include "../model/s21_aff_transform.h"
-#include "s21_viewer.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class Viewer;
+  class Viewer;
 }
 QT_END_NAMESPACE
-
-namespace s21 {
 
 class Viewer : public QMainWindow {
   Q_OBJECT
@@ -21,7 +18,7 @@ class Viewer : public QMainWindow {
   Viewer(QWidget *parent = nullptr);
   ~Viewer();
 
-  Object obj;
+  s21::Object obj;
 
  private slots:
  
@@ -121,6 +118,5 @@ private:
   void FileProccessing(QString file_name);
   void ErrorMessage(QString message);
 };
-}
 
 #endif  // CPP_S21_3DVIEWER_V2_SRC_VIEW_VIEWER_H

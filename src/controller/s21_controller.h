@@ -4,6 +4,7 @@
 #include <string>
 #include "../model/s21_parser_obj.h"
 #include "../model/s21_aff_transform.h"
+#include "../model/s21_facade_obj.h"
 
 namespace s21 {
 class Controller {
@@ -42,7 +43,9 @@ class Controller {
   bool getCorrect() { return correct_; };
   int getCountVertexes() { return model_->getCountVertexes(); };
   int getCountLines() { return model_->getCountFacets(); };
-
+  const s21::Object& GetObject() {
+    return facade_.GetObject();
+  }
  private:
   Controller() = default;
   static Controller* controller_;
@@ -51,6 +54,7 @@ class Controller {
   ParserObj* parser_ = nullptr;
   AffTransform* transform_ = nullptr;
   bool correct_ = false;
+  s21::Facade facade_;
 };
 }  // namespace s21
 
