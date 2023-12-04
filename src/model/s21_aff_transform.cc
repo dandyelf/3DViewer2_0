@@ -2,7 +2,7 @@
 
 namespace s21 {
 
-int AffTransform::Scale(obj_t *obj, double koff) {
+int AffTransform::Scale(ObjT *obj, double koff) {
   if (koff != 0.0) {
     for (i = 0; i < obj->count_of_vertexes * 3; i++) {
       obj->vertexes[i] *= koff;
@@ -13,7 +13,7 @@ int AffTransform::Scale(obj_t *obj, double koff) {
   return res;
 }
 
-int AffTransform::ScaleX(obj_t *obj, double koff) {
+int AffTransform::ScaleX(ObjT *obj, double koff) {
   if (koff != 0.0) {
     for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
       obj->vertexes[i] *= koff;
@@ -24,7 +24,7 @@ int AffTransform::ScaleX(obj_t *obj, double koff) {
   return res;
 }
 
-int AffTransform::ScaleY(obj_t *obj, double koff) {
+int AffTransform::ScaleY(ObjT *obj, double koff) {
   if (koff != 0.0) {
     for (i = 1; i < obj->count_of_vertexes * 3; i += 3) {
       obj->vertexes[i] *= koff;
@@ -35,7 +35,7 @@ int AffTransform::ScaleY(obj_t *obj, double koff) {
   return res;
 }
 
-int AffTransform::ScaleZ(obj_t *obj, double koff) {
+int AffTransform::ScaleZ(ObjT *obj, double koff) {
   if (koff != 0.0) {
     for (i = 2; i < obj->count_of_vertexes * 3; i += 3) {
       obj->vertexes[i] *= koff;
@@ -46,7 +46,7 @@ int AffTransform::ScaleZ(obj_t *obj, double koff) {
   return res;
 }
 
-void AffTransform::MoveX(obj_t *obj, double mv) {
+void AffTransform::MoveX(ObjT *obj, double mv) {
   if (mv != 0.0) {
     for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
       obj->vertexes[i] += mv;
@@ -54,7 +54,7 @@ void AffTransform::MoveX(obj_t *obj, double mv) {
   }
 }
 
-void AffTransform::MoveY(obj_t *obj, double mv) {
+void AffTransform::MoveY(ObjT *obj, double mv) {
   if (mv != 0.0) {
     for (i = 1; i < obj->count_of_vertexes * 3; i += 3) {
       obj->vertexes[i] += mv;
@@ -62,7 +62,7 @@ void AffTransform::MoveY(obj_t *obj, double mv) {
   }
 }
 
-void AffTransform::MoveZ(obj_t *obj, double mv) {
+void AffTransform::MoveZ(ObjT *obj, double mv) {
   if (mv != 0.0) {
     for (i = 2; i < obj->count_of_vertexes * 3; i += 3) {
       obj->vertexes[i] += mv;
@@ -70,7 +70,7 @@ void AffTransform::MoveZ(obj_t *obj, double mv) {
   }
 }
 
-// void shift_dot(obj_t* obj, dot_t dot) {
+// void shift_dot(ObjT* obj, dot_t dot) {
 //   for (int i = 0; i < obj->count_of_vertexes * 3; i += 3) {
 //     obj->vertexes[i] += dot.delta_x;
 //     obj->vertexes[i + 1] += dot.delta_y;
@@ -78,7 +78,7 @@ void AffTransform::MoveZ(obj_t *obj, double mv) {
 //   }
 // }
 
-void AffTransform::TurnX(obj_t *obj, double angle) {
+void AffTransform::TurnX(ObjT *obj, double angle) {
   if (angle != 0.0) {
     angle *= RAD_TO_GRAD;
     for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
@@ -90,7 +90,7 @@ void AffTransform::TurnX(obj_t *obj, double angle) {
   }
 }
 
-void AffTransform::TurnY(obj_t *obj, double angle) {
+void AffTransform::TurnY(ObjT *obj, double angle) {
   if (angle != 0.0) {
     angle *= -RAD_TO_GRAD;
     for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {
@@ -102,7 +102,7 @@ void AffTransform::TurnY(obj_t *obj, double angle) {
   }
 }
 
-void AffTransform::TurnZ(obj_t *obj, double angle) {
+void AffTransform::TurnZ(ObjT *obj, double angle) {
   if (angle != 0.0) {
     angle *= RAD_TO_GRAD;
     for (i = 0; i < obj->count_of_vertexes * 3; i += 3) {

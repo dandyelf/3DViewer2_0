@@ -2,7 +2,7 @@
 
 namespace s21 {
 
-int ParserObj::ParseNumVertexFacets(const char *filename, obj_t *obj) {
+int ParserObj::ParseNumVertexFacets(const char *filename, ObjT *obj) {
   err = 0;
   FILE *fp = fopen(filename, "r");
   if (fp == NULL) {
@@ -24,7 +24,7 @@ int ParserObj::ParseNumVertexFacets(const char *filename, obj_t *obj) {
   return err;
 }
 
-void ParserObj::CountFacets(char *buffer, obj_t *obj) {
+void ParserObj::CountFacets(char *buffer, ObjT *obj) {
   i = 2;
   while (buffer[i] != '\0') {
     char *tok = strtok(buffer, " ");
@@ -38,7 +38,7 @@ void ParserObj::CountFacets(char *buffer, obj_t *obj) {
   }
 }
 
-int ParserObj::InitObjStruct(obj_t *obj) {
+int ParserObj::InitObjStruct(ObjT *obj) {
   err = 0;
   obj->vertexes = (double *)calloc(obj->count_of_vertexes * 3, sizeof(double));
   if (obj->vertexes == NULL) err = 1;
@@ -47,7 +47,7 @@ int ParserObj::InitObjStruct(obj_t *obj) {
   return err;
 }
 
-int ParserObj::ParseFile(const char *filename, obj_t *obj) {
+int ParserObj::ParseFile(const char *filename, ObjT *obj) {
   err = 0;
   FILE *fp = fopen(filename, "r");
   if (fp == NULL) {
@@ -98,7 +98,7 @@ int ParserObj::ParseFile(const char *filename, obj_t *obj) {
   return err;
 }
 
-int ParserObj::StartPars(const char *filename, obj_t *obj) {
+int ParserObj::StartPars(const char *filename, ObjT *obj) {
   err = 0;
   obj->count_of_vertexes = 0;
   obj->count_of_facets = 0;

@@ -18,7 +18,7 @@
 //     static Controller controller;
 //     return &controller;
 //   }
-//   void setData(s21::obj_t* mod, ParserObj* parser, AffTransform* transform) {
+//   void setData(s21::ObjT* mod, ParserObj* parser, AffTransform* transform) {
 //     model_ = mod;
 //     parser_ = parser;
 //     transform_ = transform;
@@ -32,7 +32,7 @@
 //       correct_ = false;
 //     }
 //   }
-//   obj_t GetObject() const { return model_; }
+//   ObjT GetObject() const { return model_; }
 //   void MoveX(double x) { transform_->MoveX(model_, x); };
 //   void MoveY(double y) { transform_->MoveY(model_, y); };
 //   void MoveZ(double z) { transform_->MoveZ(model_, z); };
@@ -47,7 +47,7 @@
 //   Controller() = default;
 //   static Controller* controller_;
 
-//   s21::obj_t model_ = std::nullptr_t;
+//   s21::ObjT model_ = std::nullptr_t;
 //   ParserObj* parser_ = nullptr;
 //   AffTransform* transform_ = nullptr;
 //   bool correct_ = false;

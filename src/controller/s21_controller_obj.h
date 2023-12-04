@@ -15,7 +15,7 @@ class Controller {
     static Controller controller;
     return &controller;
   }
-  const s21::Object& GetObject() {
+  const s21::ObjT &GetObject() {
     return facade_.GetObject();
   }
   void OpenObj(std::string addres){facade_.OpenObj(addres);}
