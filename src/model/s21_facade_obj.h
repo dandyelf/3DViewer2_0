@@ -15,10 +15,14 @@ public:
   void RotateObj(){}
   void ScaleObj(){}
   void ScaleObj(){}
+  const s21::Object& GetObject() {
+    const s21::Object& ref_obj = rotate_obj_;
+    return ref_obj;
+  }
 
 private:
   s21::Object main_obj_;
-  s21::Object ratate_obj_;
+  s21::Object rotate_obj_;
   s21::ParserObj parcer_obj_;
   s21::AffTransform aff_transform;
 };

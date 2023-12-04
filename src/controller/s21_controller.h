@@ -1,6 +1,7 @@
 #ifndef CPP_S21_3DVIEWER_V2_SRC_CONTROLLER_CONTROLLER_H_
 #define CPP_S21_3DVIEWER_V2_SRC_CONTROLLER_CONTROLLER_H_
 
+#include <string>
 #include "../model/s21_parser_obj.h"
 #include "../model/s21_aff_transform.h"
 
@@ -21,7 +22,7 @@ class Controller {
     parser_ = parser;
     transform_ = transform;
   }
-  void setFilepath(const std::string& filepath) {
+  void setFilepath(const std::string & filepath) {
     parser_->StartPars(filepath.c_str(), model_);
     if (parser_->ParseNumVertexFacets(filepath.c_str(), model_) == 0) {
       transform_->InitObjStruct(model_);
