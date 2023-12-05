@@ -23,10 +23,10 @@ endif
 
 all: clean s21_viewer.a tests
 
-install:
-	make clean
-	mkdir 3dviewer
-	cd src && qmake && make && make clean && rm Makefile && cd ../ && mv src/$(APPLICATION) ./3dviewer
+install: clean
+	mkdir -p $(BUILD_DIR)
+	cd $(BUILD_DIR) && qmake CONFIG+=qtquickcompiler ../view/3dviewer.pro && make
+	make open
 
 uninstall:
 	rm -rf 3dviewer
@@ -70,7 +70,7 @@ clang:
 	clang-format -style=file:../materials/linters/.clang-format -i ./*.cc $(FOLDERS)
 
 open:
-	cd 3dviewer && $(OPEN)
+	cd $(BUILD_DIR) && $(OPEN)
 
 coverage:
 	open report/index.html
