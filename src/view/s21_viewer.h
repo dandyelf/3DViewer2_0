@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+#include "../controller/s21_controller_obj.h"
 #include "./qtgifimage/gifimage/qgifimage.h"
 
 QT_BEGIN_NAMESPACE
@@ -17,7 +18,9 @@ class Viewer : public QMainWindow {
 public:
     Viewer(QWidget *parent = nullptr);
     ~Viewer();
-
+    void SetControllerObj(s21::Controller *controller_obj) {
+        controller_obj_ = controller_obj;
+    }
 //    s21::ObjT obj;
 
 private slots:
@@ -101,7 +104,7 @@ private slots:
 
 private:
     Ui::Viewer *ui;
-
+    s21::Controller *controller_obj_;
     int dots_{}, lines_{};
     QString path_{};
     QTimer *gif_tmr_{};

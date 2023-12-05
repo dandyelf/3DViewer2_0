@@ -1,10 +1,16 @@
 #include <QApplication>
 
 #include "view/s21_viewer.h"
+#include "controller/s21_controller_obj.h"
+#include "model/s21_facade_obj.h"
 
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
-  Viewer w;
-  w.show();
+  Viewer wiew;
+  s21::Controller *controller_obj = s21::Controller::getInstance();
+  s21::Facade model_facade;
+  controller_obj->SetModel(&model_facade);
+  wiew.SetControllerObj(controller_obj);
+  wiew.show();
   return a.exec();
 }
