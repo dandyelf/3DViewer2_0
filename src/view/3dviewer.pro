@@ -1,6 +1,6 @@
 QT       += core gui opengl
 mac: QT += openglwidgets
-linux: QT += opengl openglwidgets
+#linux: QT += opengl openglwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,11 +15,18 @@ include (qtgifimage/gifimage/qtgifimage.pri)
 SOURCES += \
     ../main.cc \
     s21_scene.cc \
-    s21_viewer.cc
+    s21_viewer.cc \
+    ../model/s21_aff_transform.cc \
+    ../model/s21_facade_obj.cc \
+    ../model/s21_parser_obj.cc
 
 HEADERS += \
     s21_scene.h \
-    s21_viewer.h
+    s21_viewer.h \
+    ../controller/s21_controller_obj.h \
+    ../model/s21_aff_transform.h \
+    ../model/s21_facade_obj.h \
+    ../model/s21_parser_obj.h
 
 FORMS += \
     s21_viewer.ui
