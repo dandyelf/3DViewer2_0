@@ -1,11 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-
-#include <cctype>
-#include <cmath>
-#include <cstring>
-#include <string>
-
 #include "../controller/s21_controller_obj.h"
 #include <gtest/gtest.h>
 
@@ -14,7 +6,7 @@ namespace s21 {
 TEST(MainTest, Cube) {
     s21::ObjT obj;
     s21::ParserObj parser;
-    const char *file = "/home/s21/3DViewer2_0/src/tests/obj/Low-Poly-Racing-Car.obj";
+    const char *file = "./tests/obj/Low-Poly-Racing-Car.obj";
     parser.StartPars(file, &obj);
     EXPECT_EQ(obj.count_of_vertexes, 1485);
     EXPECT_EQ(obj.count_of_facets, 2718);
@@ -155,6 +147,75 @@ TEST(AffTransformTest, TurnZ) {
   EXPECT_NEAR(vertexes[3], 0.0, 1e-6);
   EXPECT_NEAR(vertexes[4], 0.0, 1e-6);
   EXPECT_NEAR(vertexes[5], 1.0, 1e-6);
+  delete[] obj.vertexes;
+}
+
+TEST(AffTransformTest, ScaleX) {
+  s21::ObjT obj;
+  s21::AffTransform transform;
+  obj.count_of_vertexes = 6;
+  obj.count_of_facets = 0;
+  obj.vertexes = new double[obj.count_of_vertexes];
+  obj.vertexes[0] = 1.0;
+  obj.vertexes[1] = 0.0;
+  obj.vertexes[2] = 0.0;
+  obj.vertexes[3] = 0.0;
+  obj.vertexes[4] = 0.0;
+  obj.vertexes[5] = 1.0;
+  transform.ScaleX(&obj, M_PI / 2.0);
+  const double* vertexes = obj.vertexes;
+  EXPECT_NEAR(vertexes[0], 1.570796326, 1e-6);
+  EXPECT_NEAR(vertexes[1], 0.0, 1e-6);
+  EXPECT_NEAR(vertexes[2], 0.0, 1e-6);
+  EXPECT_NEAR(vertexes[3], 0.0, 1e-6);
+  EXPECT_NEAR(vertexes[4], 0.0, 1e-6);
+  EXPECT_NEAR(vertexes[5], 1.0, 1e-6);
+  delete[] obj.vertexes;
+}
+
+TEST(AffTransformTest, ScaleY) {
+  s21::ObjT obj;
+  s21::AffTransform transform;
+  obj.count_of_vertexes = 6;
+  obj.count_of_facets = 0;
+  obj.vertexes = new double[obj.count_of_vertexes];
+  obj.vertexes[0] = 1.0;
+  obj.vertexes[1] = 0.0;
+  obj.vertexes[2] = 0.0;
+  obj.vertexes[3] = 0.0;
+  obj.vertexes[4] = 0.0;
+  obj.vertexes[5] = 1.0;
+  transform.ScaleY(&obj, M_PI / 2.0);
+  const double* vertexes = obj.vertexes;
+  EXPECT_NEAR(vertexes[0], 1.0, 1e-6);
+  EXPECT_NEAR(vertexes[1], 0.0, 1e-6);
+  EXPECT_NEAR(vertexes[2], 0.0, 1e-6);
+  EXPECT_NEAR(vertexes[3], 0.0, 1e-6);
+  EXPECT_NEAR(vertexes[4], 0.0, 1e-6);
+  EXPECT_NEAR(vertexes[5], 1.0, 1e-6);
+  delete[] obj.vertexes;
+}
+
+TEST(AffTransformTest, ScaleZ) {
+  s21::ObjT obj;
+  s21::AffTransform transform;
+  obj.count_of_vertexes = 6;
+  obj.count_of_facets = 0;
+  obj.vertexes = new double[obj.count_of_vertexes];
+  obj.vertexes[0] = 1.0;
+  obj.vertexes[1] = 0.0;
+  obj.vertexes[2] = 0.0;
+  obj.vertexes[3] = 0.0;
+  obj.vertexes[4] = 0.0;
+  obj.vertexes[5] = 1.0;
+  transform.ScaleZ(&obj, M_PI / 2.0);
+  const double* vertexes = obj.vertexes;
+  EXPECT_NEAR(vertexes[0], 1, 1e-6);
+  EXPECT_NEAR(vertexes[1], 0, 1e-6);
+  EXPECT_NEAR(vertexes[2], 0.0, 1e-6);
+  EXPECT_NEAR(vertexes[3], 0.0, 1e-6);
+  EXPECT_NEAR(vertexes[4], 0.0, 1e-6);
+  EXPECT_NEAR(vertexes[5], 1.570796326, 1e-6);
   delete[] obj.vertexes;
 }
 
