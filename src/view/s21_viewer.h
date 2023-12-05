@@ -1,5 +1,5 @@
-#ifndef VIEWER_H
-#define VIEWER_H
+#ifndef SRC_VIEW_SRC_VIEWER_H_
+#define SRC_VIEW_SRC_VIEWER_H_
 
 #include <QMainWindow>
 
@@ -11,9 +11,6 @@ class Viewer;
 }
 QT_END_NAMESPACE
 
-#include "../model/s21_aff_transform.h"
-#include "../model/s21_parser_obj.h"
-
 class Viewer : public QMainWindow {
     Q_OBJECT
 
@@ -21,7 +18,7 @@ public:
     Viewer(QWidget *parent = nullptr);
     ~Viewer();
 
-    s21::ObjT obj;
+//    s21::ObjT obj;
 
 private slots:
     void on_pushButton_clicked();
@@ -120,4 +117,4 @@ private:
     void file_proccessing(QString file_name);
     void error_message(QString message);
 };
-#endif  // VIEWER_H
+#endif  // SRC_VIEW_SRC_VIEWER_H_
