@@ -6,13 +6,14 @@
 #include <cstring>
 #include <string>
 
-#include "../controller/s21_controller.h"
+#include "../model/s21_aff_transform.h"
+#include "../model/s21_parser_obj.h"
 #include <gtest/gtest.h>
 
 namespace s21 {
 
 TEST(MainTest, Cube) {
-  s21::Object obj;
+  s21::ObjT obj;
   s21::ParserObj parser;
   s21::AffTransform transform;
   parser.StartPars("obj/Low-Poly-Racing-Car.obj", &obj);
@@ -22,7 +23,7 @@ TEST(MainTest, Cube) {
 }
 
 TEST(MainTest, EmptyCube) {
-  s21::Object obj;
+  s21::ObjT obj;
   s21::ParserObj parser;
   s21::AffTransform transform;
   parser.StartPars("obj/Low-Poly-Racing-Car.obj", &obj);
@@ -32,7 +33,7 @@ TEST(MainTest, EmptyCube) {
 }
 
 TEST(AffTransformTest, MoveX) {
-  s21::Object obj;
+  s21::ObjT obj;
   s21::AffTransform transform;
   transform.MoveX(&obj, 2.0);
   obj.setCountVertexes(6);
@@ -55,7 +56,7 @@ TEST(AffTransformTest, MoveX) {
 }
 
 TEST(AffTransformTest, MoveZ) {
-  s21::Object obj;
+  s21::ObjT obj;
   s21::AffTransform transform;
   transform.MoveZ(&obj, 2.0);
   obj.setCountVertexes(6);
@@ -78,7 +79,7 @@ TEST(AffTransformTest, MoveZ) {
 }
 
 TEST(AffTransformTest, TurnX) {
-  s21::Object obj;
+  s21::ObjT obj;
   s21::AffTransform transform;
   transform.TurnX(&obj, 2.0);
   obj.setCountVertexes(6);
@@ -101,7 +102,7 @@ TEST(AffTransformTest, TurnX) {
 }
 
 TEST(AffTransformTest, TurnY) {
-  s21::Object obj;
+  s21::ObjT obj;
   s21::AffTransform transform;
   transform.TurnY(&obj, 2.0);
   obj.setCountVertexes(6);
@@ -124,7 +125,7 @@ TEST(AffTransformTest, TurnY) {
 }
 
 TEST(AffTransformTest, TurnZ) {
-  s21::Object obj;
+  s21::ObjT obj;
   s21::AffTransform transform;
   transform.TurnZ(&obj, 2.0);
   obj.setCountVertexes(6);
@@ -147,7 +148,7 @@ TEST(AffTransformTest, TurnZ) {
 }
 
 TEST(AffTransformTest, ChangeSize) {
-  s21::Object obj;
+  s21::ObjT obj;
   s21::AffTransform transform;
   transform.Scale(&obj, 2.0);
   obj.setCountVertexes(6);

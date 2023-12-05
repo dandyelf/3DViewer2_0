@@ -10,11 +10,11 @@ namespace s21 {
 // Фасад
 class Facade {
 public:
-  void OpenObj(const std::string &file_name);
-  void ResetObj(){}
-  void RotateObj(char axis, double value){}
-  void ScaleObj(char axis, double value){}
-  void MoveObj(char axis, double value){}
+  void OpenObj(const char *file_name);
+  void ResetObj();
+  void RotateObj(char axis, double value);
+  void ScaleObj(char axis, double value);
+  void MoveObj(char axis, double value);
   const s21::ObjT& GetObject() {
     const s21::ObjT& ref_obj = rotate_obj_;
     return ref_obj;

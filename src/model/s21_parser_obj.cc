@@ -2,9 +2,9 @@
 
 namespace s21 {
 
-int ParserObj::ParseNumVertexFacets(const std::string &file_name, ObjT *obj) {
+int ParserObj::ParseNumVertexFacets(const char *file_name, ObjT *obj) {
   err = 0;
-  FILE *fp = fopen(file_name.c_str(), "r");
+  FILE *fp = fopen(file_name, "r");
   if (fp == NULL) {
     err = 1;
   } else {
@@ -98,7 +98,7 @@ int ParserObj::ParseFile(const char *file_name, ObjT *obj) {
   return err;
 }
 
-int ParserObj::StartPars(const std::string &file_name, ObjT *obj) {
+int ParserObj::StartPars(const char *file_name, ObjT *obj) {
   
   err = 0;
   obj->count_of_vertexes = 0;
@@ -111,7 +111,7 @@ int ParserObj::StartPars(const std::string &file_name, ObjT *obj) {
     err = InitObjStruct(obj);
   }
   if (!err) {
-    err = ParseFile(file_name.c_str(), obj);
+    err = ParseFile(file_name, obj);
   }
   return err;
 }
