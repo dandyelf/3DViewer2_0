@@ -1,8 +1,8 @@
 #include <QApplication>
 
-#include "view/s21_viewer.h"
 #include "controller/s21_controller_obj.h"
 #include "model/s21_facade_obj.h"
+#include "view/s21_viewer.h"
 
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);

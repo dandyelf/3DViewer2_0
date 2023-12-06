@@ -1,15 +1,16 @@
-#include "../controller/s21_controller_obj.h"
 #include <gtest/gtest.h>
+
+#include "../controller/s21_controller_obj.h"
 
 namespace s21 {
 
 TEST(MainTest, Cube) {
-    s21::ObjT obj;
-    s21::ParserObj parser;
-    const std::string file = "./tests/obj/Low-Poly-Racing-Car.obj";
-    parser.StartPars(file, &obj);
-    EXPECT_EQ(obj.count_of_vertexes, 1485);
-    EXPECT_EQ(obj.count_of_facets, 2718);
+  s21::ObjT obj;
+  s21::ParserObj parser;
+  const std::string file = "./tests/obj/Low-Poly-Racing-Car.obj";
+  parser.StartPars(file, &obj);
+  EXPECT_EQ(obj.count_of_vertexes, 1485);
+  EXPECT_EQ(obj.count_of_facets, 2718);
 }
 
 TEST(AffTransformTest, MoveX) {
@@ -34,8 +35,6 @@ TEST(AffTransformTest, MoveX) {
   EXPECT_DOUBLE_EQ(vertexes[5], -3.0);
   delete[] obj.vertexes;
 }
-
-
 
 TEST(AffTransformTest, MoveY) {
   s21::ObjT obj;
@@ -244,9 +243,9 @@ TEST(AffTransformTest, ChangeSize) {
   delete[] obj.vertexes;
 }
 
-}
+}  // namespace s21
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

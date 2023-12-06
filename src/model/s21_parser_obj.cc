@@ -50,8 +50,6 @@ int ParserObj::InitObjStruct(ObjT *obj) {
   return err;
 }
 
-
-
 int ParserObj::ParseFile(const std::string &file_name, ObjT *obj) {
   err = 0;
   FILE *fp = fopen(file_name.c_str(), "r");
@@ -63,14 +61,14 @@ int ParserObj::ParseFile(const std::string &file_name, ObjT *obj) {
     int temp_f = 0, temp_ind = 0;
 
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
-      if (buffer[0] == 'v' && buffer[1] == ' ')  {
+      if (buffer[0] == 'v' && buffer[1] == ' ') {
         sscanf(buffer + 2, "%lf %lf %lf", &obj->vertexes[countvertex],
                &obj->vertexes[countvertex + 1],
                &obj->vertexes[countvertex + 2]);
         countvertex += 3;
       }
 
-      if (buffer[0] == 'f' && buffer[1] == ' ')  {
+      if (buffer[0] == 'f' && buffer[1] == ' ') {
         for (temp_ind = 0, str1 = buffer + 2;; str1 = NULL, temp_ind++) {
           token = strtok_r(str1, " ", &temp_str);
           if (token == NULL) {

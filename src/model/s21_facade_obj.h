@@ -10,6 +10,12 @@ namespace s21 {
 // Фасад
 class Facade {
 public:
+  Facade() = default;
+  Facade(const Facade&) = delete;
+  Facade(Facade&&) = delete;
+  ~Facade() = default;
+  Facade& operator=(const Facade&) = delete;
+  Facade& operator=(Facade&&) = delete;
   void OpenObj(const std::string &file_name);
   void ResetObj();
   void RotateObj(char axis, double value);
