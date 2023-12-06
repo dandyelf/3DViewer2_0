@@ -21,7 +21,6 @@ public:
     void SetControllerObj(s21::Controller *controller_obj) {
         controller_obj_ = controller_obj;
     }
-//    s21::ObjT obj;
 
 private slots:
     void on_pushButton_clicked();
