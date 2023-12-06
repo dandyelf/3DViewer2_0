@@ -13,7 +13,7 @@ public:
   Facade() = default;
   Facade(const Facade&) = delete;
   Facade(Facade&&) = delete;
-  ~Facade() = default;
+  ~Facade();
   Facade& operator=(const Facade&) = delete;
   Facade& operator=(Facade&&) = delete;
   void OpenObj(const std::string &file_name);

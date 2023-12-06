@@ -1,7 +1,7 @@
 CC = gcc
 CXXFLAGS = -std=c++17 -lstdc++ -Wall -Werror -Wextra
 GCOV = --coverage
-UNIT = unit_tests
+UNIT = model_tests.out
 STLIB = s21_viewer.a
 OS = $(shell uname -s)
 GT_FLAGS = -lgtest_main -lgtest -lm -lstdc++ -pthread -lm -g
@@ -45,8 +45,9 @@ dist:
 	rm -rf Archive_3dviewer1.0/
 
 tests: $(STLIB)
-	$(CC) $(CXXFLAGS) tests/3DViewer_test.cc $(STLIB) -o $(UNIT) $(LIBS)
-	./$(UNIT)
+	mkdir -p $(BUILD_DIR)
+	$(CC) $(CXXFLAGS) tests/3DViewer_test.cc $(STLIB) -o $(BUILD_DIR)/$(UNIT) $(LIBS)
+	./$(BUILD_DIR)/$(UNIT)
 
 valgrind: tests
 	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(UNIT)
@@ -80,8 +81,8 @@ coverage:
 
 model_tests:
 	mkdir -p $(BUILD_DIR)
-	$(CC) -std=c++17 -lstdc++ -Wall -Wextra $(GT_FLAGS) model/*.cc tests/s21_model_tests.cc tests/s21_controller_tests.cc -o $(BUILD_DIR)/model_tests.out
+	$(CC) -std=c++17 -lstdc++ -Wall -Wextra $(GT_FLAGS) model/*.cc tests/*.cc -o $(BUILD_DIR)/model_tests.out
 	./$(BUILD_DIR)/model_tests.out
 
-model_valgrind: tests
+model_valgrind: model_tests
 	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(BUILD_DIR)/model_tests.out

@@ -1,6 +1,14 @@
 #include "s21_facade_obj.h"
 
 namespace s21 {
+Facade::~Facade() {
+  if(main_obj_.polygons != nullptr) {
+    delete [] main_obj_.polygons;
+  }
+  if(main_obj_.vertexes != nullptr) {
+    delete [] main_obj_.vertexes;
+  }
+}
 
 void Facade::OpenObj(const std::string &file_name) {
   parcer_obj_.StartPars(file_name, &main_obj_);

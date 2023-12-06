@@ -9,11 +9,11 @@
 namespace s21 {
 
 typedef struct {
-  int count_of_vertexes;
-  double* vertexes;
-  int count_of_facets;
-  int* polygons;
-  int facet_elem;
+  int count_of_vertexes{};
+  double* vertexes{};
+  int count_of_facets{};
+  int* polygons{};
+  int facet_elem{};
 } ObjT;
 
 class ParserObj {
