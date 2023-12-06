@@ -1,4 +1,4 @@
-.vscode
+.vscode/settings.json
 3dviewer/3dviewer
 3dviewer/s21_3d_viewer.conf
 src/build
@@ -6,4 +6,4 @@ src/build
 *.o 
 unit_tests
 build-3dviewer-Desktop_Qt_6_6_1_GCC_64bit-Debug
-src/build-3dviewer-Desktop-Debug/
+3dviewer.pro.us*

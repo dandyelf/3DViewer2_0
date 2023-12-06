@@ -1,8 +1,10 @@
-#include "s21_viewer.h"
+#include "s21_parser_obj.h"
 
-int parse_num_vertex_facets(const char *filename, obj_t *obj) {
-  int err = 0;
-  FILE *fp = fopen(filename, "r");
+namespace s21 {
+
+int ParserObj::ParseNumVertexFacets(const char *file_name, ObjT *obj) {
+  err = 0;
+  FILE *fp = fopen(file_name, "r");
   if (fp == NULL) {
     err = 1;
   } else {
@@ -13,17 +15,17 @@ int parse_num_vertex_facets(const char *filename, obj_t *obj) {
       }
       if (buffer[0] == 'f' && buffer[1] == ' ') {
         obj->count_of_facets += 1;
-        count_facets(buffer, obj);
+        CountFacets(buffer, obj);
       }
     }
+    fclose(fp);
   }
   obj->facet_elem *= 2;
-  fclose(fp);
   return err;
 }
 
-void count_facets(char *buffer, obj_t *obj) {
-  int i = 2;
+void ParserObj::CountFacets(char *buffer, ObjT *obj) {
+  i = 2;
   while (buffer[i] != '\0') {
     char *tok = strtok(buffer, " ");
     while (tok != NULL) {
@@ -36,8 +38,8 @@ void count_facets(char *buffer, obj_t *obj) {
   }
 }
 
-int init_obj_struct(obj_t *obj) {
-  int err = 0;
+int ParserObj::InitObjStruct(ObjT *obj) {
+  err = 0;
   obj->vertexes = (double *)calloc(obj->count_of_vertexes * 3, sizeof(double));
   if (obj->vertexes == NULL) err = 1;
   obj->polygons = (int *)calloc(obj->facet_elem, sizeof(int));
@@ -45,16 +47,15 @@ int init_obj_struct(obj_t *obj) {
   return err;
 }
 
-int parse_file(const char *filename, obj_t *obj) {
-  int err = 0;
-  FILE *fp = fopen(filename, "r");
+int ParserObj::ParseFile(const char *file_name, ObjT *obj) {
+  err = 0;
+  FILE *fp = fopen(file_name, "r");
   if (fp == NULL) {
     err = 1;
   } else {
     char buffer[255];
-    int countvertex = 0, v_count = 0, countfacets = 0, cur_index = 0;
-    char *temp_str, *token, *str1, *str2, *subtoken, *saveptr2;
-    int temp_f = 0, temp_ind = 0;
+    countvertex = 0, v_count = 0, countfacets = 0, cur_index = 0;
+    temp_f = 0, temp_ind = 0;
 
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
       if (buffer[0] == 'v' && buffer[1] == ' ') {
@@ -97,19 +98,22 @@ int parse_file(const char *filename, obj_t *obj) {
   return err;
 }
 
-int StartPars(const char *filename, obj_t *obj) {
-  int err = 0;
+int ParserObj::StartPars(const char *file_name, ObjT *obj) {
+  
+  err = 0;
   obj->count_of_vertexes = 0;
   obj->count_of_facets = 0;
   obj->facet_elem = 0;
 
-  err = parse_num_vertex_facets(filename, obj);
+  err = ParseNumVertexFacets(file_name, obj);
 
   if (!err) {
-    err = init_obj_struct(obj);
+    err = InitObjStruct(obj);
   }
   if (!err) {
-    err = parse_file(filename, obj);
+    err = ParseFile(file_name, obj);
   }
   return err;
 }
+
+}  // namespace s21

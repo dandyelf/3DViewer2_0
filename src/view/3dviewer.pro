@@ -1,6 +1,6 @@
 QT       += core gui opengl
 mac: QT += openglwidgets
-linux: QT += openglwidgets
+#linux: QT += opengl openglwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,20 +13,23 @@ CONFIG += c++17
 include (qtgifimage/gifimage/qtgifimage.pri)
 
 SOURCES += \
-    aff_transformation.c \
-    main.cpp \
-    s21_viewer.c \
-    scene.cpp \
-    viewer.cpp
+    ../main.cc \
+    s21_scene.cc \
+    s21_viewer.cc \
+    ../model/s21_aff_transform.cc \
+    ../model/s21_facade_obj.cc \
+    ../model/s21_parser_obj.cc
 
 HEADERS += \
-    aff_transformation.h \
+    s21_scene.h \
     s21_viewer.h \
-    scene.h \
-    viewer.h
+    ../controller/s21_controller_obj.h \
+    ../model/s21_aff_transform.h \
+    ../model/s21_facade_obj.h \
+    ../model/s21_parser_obj.h
 
 FORMS += \
-    viewer.ui
+    s21_viewer.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
