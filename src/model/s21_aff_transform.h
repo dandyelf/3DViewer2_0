@@ -20,23 +20,24 @@ class AffTransform {
     AffTransform(ObjT* obj) : ObjT_(obj){};
     ~AffTransform() = default;
     void InitObjStruct(ObjT* obj) { ObjT_ = obj; };
-    int Scale(ObjT* obj, double koff);
-    int ScaleX(ObjT* obj, double koff);
-    int ScaleY(ObjT* obj, double koff);
-    int ScaleZ(ObjT* obj, double koff);
-    void MoveX(ObjT* obj, double mv);
-    void MoveY(ObjT* obj, double mv);
-    void MoveZ(ObjT* obj, double mv);
-    void TurnX(ObjT* obj, double angle);
-    void TurnY(ObjT* obj, double angle);
-    void TurnZ(ObjT* obj, double angle);
+    int Scale(double koff);
+    int ScaleX(double koff);
+    int ScaleY(double koff);
+    int ScaleZ(double koff);
+    void MoveX(double mv);
+    void MoveY(double mv);
+    void MoveZ(double mv);
+    void TurnX(double angle);
+    void TurnY(double angle);
+    void TurnZ(double angle);
+    void clear();
+
   private:
     ObjT* ObjT_;
-    int res = OK;
-    int i = 0;
-    double temp_x = 0;
-    double temp_y = 0;
-    double temp_z = 0;
+    int res_ = OK;
+    double temp_x_ = 0;
+    double temp_y_ = 0;
+    double temp_z_ = 0;
 };
 }
 

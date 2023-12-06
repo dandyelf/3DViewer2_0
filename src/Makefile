@@ -48,6 +48,9 @@ tests: $(STLIB)
 	$(CC) $(CXXFLAGS) tests/3DViewer_test.cc $(STLIB) -o $(UNIT) $(LIBS)
 	./$(UNIT)
 
+valgrind: tests
+	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(UNIT)
+
 s21_viewer.a: build_s21_viewer
 
 build_s21_viewer:
@@ -79,3 +82,6 @@ model_tests:
 	mkdir -p $(BUILD_DIR)
 	$(CC) -std=c++17 -lstdc++ -Wall -Wextra $(GT_FLAGS) model/*.cc tests/s21_model_tests.cc tests/s21_controller_tests.cc -o $(BUILD_DIR)/model_tests.out
 	./$(BUILD_DIR)/model_tests.out
+
+model_valgrind: tests
+	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(BUILD_DIR)/model_tests.out
