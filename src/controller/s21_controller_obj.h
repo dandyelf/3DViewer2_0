@@ -16,7 +16,7 @@ class Controller {
     return &controller;
   }
   void SetModel(s21::Facade * facade){facade_ = facade;}
-  s21::ObjT &GetObject() {
+  const s21::ObjT &GetObject() {
     return facade_->GetObject();
   }
   void OpenObj(const char *file_name){facade_->OpenObj(file_name);}

@@ -16,11 +16,11 @@ Viewer::Viewer(QWidget *parent) : QMainWindow(parent), ui(new Ui::Viewer) {
 
     ui->setupUi(this);
 
-//    obj.count_of_vertexes = 0;
-//    obj.count_of_facets = 0;
-//    obj.facet_elem = 0;
-//    obj.vertexes = nullptr;
-//    obj.polygons = nullptr;
+    // controller_obj_->GetObject().count_of_vertexes = 0;
+    // controller_obj_->GetObject().count_of_facets = 0;
+    // controller_obj_->GetObject().facet_elem = 0;
+    // controller_obj_->GetObject().vertexes = nullptr;
+    // controller_obj_->GetObject().polygons = nullptr;
     path_ = "/Users/";
     gif_tmr_ = new QTimer();
 
@@ -145,7 +145,7 @@ void Viewer::on_pushButton_clicked() {
                                             tr("OBJ Files (*.obj)"));
     if (fileName != "") {
         qDebug() << fileName;
-        ////updates
+        //updates
         file_proccessing(fileName);
     } else {
         error_message("Нет файла");
@@ -180,18 +180,17 @@ void Viewer::on_horizontalScrollBar_3_valueChanged(int value) {
 }
 
 void Viewer::reset_obj() {
-    qDebug() << "reset obj...";
-//    obj.count_of_vertexes = 0;
-//    obj.count_of_facets = 0;
-//    obj.facet_elem = 0;
-//    if (obj.vertexes != NULL) free(obj.vertexes);
-//    if (obj.polygons != NULL) free(obj.polygons);
-//    obj.vertexes = NULL;
-//    obj.polygons = NULL;
+   qDebug() << "reset obj...";
+   // controller_obj_->GetObject().count_of_vertexes = 0;
+   // controller_obj_->GetObject().count_of_facets = 0;
+   // controller_obj_->GetObject().facet_elem = 0;
+   if (controller_obj_->GetObject().vertexes != NULL) free(controller_obj_->GetObject().vertexes);
+   if (controller_obj_->GetObject().polygons != NULL) free(controller_obj_->GetObject().polygons);
+   // controller_obj_->GetObject().vertexes = NULL;
+   // controller_obj_->GetObject().polygons = NULL;
 }
 
 void Viewer::file_proccessing(QString fileName) {
-//    s21::ParserObj set;
     path_ = fileName;
 
     this->setWindowTitle("3D Viewer ~ " + fileName);
@@ -204,32 +203,33 @@ void Viewer::file_proccessing(QString fileName) {
     char *file = tmp.data();
 
     reset_obj();
-//    int err = set.StartPars(file, &obj);
+    /*int err = */controller_obj_->OpenObj(file);
 
-//    if (!err) {
-//        ////scaling block
-//        double max_el = 0.0;
-//        for (int i = 0; i < obj.count_of_vertexes; i++) {
-//            if (max_el < obj.vertexes[i]) max_el = obj.vertexes[i];
-//        }
+ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
+   // if (!err) {
+       //scaling block
+       double max_el = 0.0;
+       for (int i = 0; i < controller_obj_->GetObject().count_of_vertexes; i++) {
+           if (max_el < controller_obj_->GetObject().vertexes[i]) max_el = controller_obj_->GetObject().vertexes[i];
+       }
 
-//        for (int i = 0; i < (obj.count_of_vertexes) * 3; i++) {
-//            obj.vertexes[i] /= max_el;
-//        }
+       for (int i = 0; i < (controller_obj_->GetObject().count_of_vertexes) * 3; i++) {
+           controller_obj_->GetObject().vertexes[i] /= max_el;
+       }
 
-//        ////end scaling block
-//        ////set stats
-//        ui->label_9->setText(QString::number(obj.count_of_vertexes));
-//        ui->label_11->setText(QString::number(obj.count_of_facets));
-//        ////end stats
-//        ////set main data
-//        ui->widget->SetVertexArr(obj.vertexes);
-//        ui->widget->SetFacetsArr(obj.polygons);
-//        ui->widget->SetLines(obj.facet_elem);
-//        ui->widget->Set();
-//        ui->widget->update();
-//        ////end data set
-//    }
+       //end scaling block
+       //set stats
+       ui->label_9->setText(QString::number(controller_obj_->GetObject().count_of_vertexes));
+       ui->label_11->setText(QString::number(controller_obj_->GetObject().count_of_facets));
+       //end stats
+       //set main data
+       ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
+       ui->widget->SetFacetsArr(controller_obj_->GetObject().polygons);
+       ui->widget->SetLines(controller_obj_->GetObject().facet_elem);
+       ui->widget->Set();
+       ui->widget->update();
+       //end data set
+   // }
 }
 
 void Viewer::on_horizontalScrollBar_7_valueChanged(int value) {
@@ -274,7 +274,7 @@ void Viewer::on_pushButton_3_clicked() {
 //                                              tr("Gif Files (*.gif)"));
 //    if (fname_gif_ != "") {
 //        ui->pushButton_3->setDisabled(true);
-////        gif_img_ = new QGifImage;
+//        gif_img_ = new QGifImage;
 //        gif_img_->setDefaultDelay(10);
 //        gif_timer();
 //    } else {
@@ -294,20 +294,20 @@ void Viewer::gif_timer() {
 }
 
 void Viewer::gif_create() {
-//    QImage image = ui->widget->grabFramebuffer();
-//    gif_img_->addFrame(image);
-//    if (time_ == 50) {
-//        gif_tmr_->stop();
-//        gif_img_->save(fname_gif_);
-//        time_ = 0;
-//        error_message("Gif saved.");
-//        gif_img_->~QGifImage();
-//        ui->pushButton_3->setText("Старт запись");
-//        ui->pushButton_3->setEnabled(true);
-//    }
-//    ++time_;
-//    if (!ui->pushButton_3->isEnabled())
-//        ui->pushButton_3->setText(QString::number(time_ / 10));
+   // QImage image = ui->widget->grabFramebuffer();
+   // gif_img_->addFrame(image);
+   // if (time_ == 50) {
+   //     gif_tmr_->stop();
+   //     gif_img_->save(fname_gif_);
+   //     time_ = 0;
+   //     error_message("Gif saved.");
+   //     gif_img_->~QGifImage();
+   //     ui->pushButton_3->setText("Старт запись");
+   //     ui->pushButton_3->setEnabled(true);
+   // }
+   // ++time_;
+   // if (!ui->pushButton_3->isEnabled())
+   //     ui->pushButton_3->setText(QString::number(time_ / 10));
 }
 
 void Viewer::on_horizontalScrollBar_8_valueChanged(int value) {
@@ -331,7 +331,6 @@ void Viewer::on_horizontalScrollBar_10_valueChanged(int value) {
 }
 
 void Viewer::on_pushButton_16_clicked() {
-//    s21::AffTransform transform;
     double mv_xpos = ui->lineEdit_12->text().toDouble();
     double mv_xneg = ui->lineEdit_11->text().toDouble();
     double mv_ypos = ui->lineEdit_7->text().toDouble();
@@ -341,153 +340,139 @@ void Viewer::on_pushButton_16_clicked() {
     mv_xneg *= -1;
     mv_yneg *= -1;
     mv_zneg *= -1;
-//    transform.MoveX(&obj, mv_xpos);
-//    transform.MoveX(&obj, mv_xneg);
-//    transform.MoveY(&obj, mv_ypos);
-//    transform.MoveY(&obj, mv_yneg);
-//    transform.MoveZ(&obj, mv_zpos);
-//    transform.MoveZ(&obj, mv_zneg);
-//    ui->widget->SetVertexArr(obj.vertexes);
+    controller_obj_->MoveObj('x', mv_xpos);
+    controller_obj_->MoveObj('x', mv_xneg);
+    controller_obj_->MoveObj('y', mv_ypos);
+    controller_obj_->MoveObj('y', mv_yneg);
+    controller_obj_->MoveObj('z', mv_zpos);
+    controller_obj_->MoveObj('z', mv_zneg);
+    ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
     ui->widget->update();
 }
 
 void Viewer::on_pushButton_20_clicked() {
-//    s21::AffTransform transform;
-//    double mv = ui->lineEdit_12->text().toDouble();
-//    transform.MoveX(&obj, mv);
-//    ui->widget->SetVertexArr(obj.vertexes);
-    ui->widget->update();
+   double mv = ui->lineEdit_12->text().toDouble();
+   controller_obj_->MoveObj('x', mv);
+   ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
+   ui->widget->update();
 }
 
 void Viewer::on_pushButton_19_clicked() {
-//    s21::AffTransform transform;
-//    double mv = ui->lineEdit_11->text().toDouble();
-//    mv *= -1;
-//    transform.MoveX(&obj, mv);
-//    ui->widget->SetVertexArr(obj.vertexes);
-    ui->widget->update();
+   double mv = ui->lineEdit_11->text().toDouble();
+   mv *= -1;
+   controller_obj_->MoveObj('x', mv);
+   ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
+   ui->widget->update();
 }
 
 void Viewer::on_pushButton_14_clicked() {
-//    s21::AffTransform transform;
-//    double mv = ui->lineEdit_7->text().toDouble();
-//    transform.MoveY(&obj, mv);
-//    ui->widget->SetVertexArr(obj.vertexes);
-    ui->widget->update();
+   double mv = ui->lineEdit_7->text().toDouble();
+   controller_obj_->MoveObj('y', mv);
+   ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
+   ui->widget->update();
 }
 
 void Viewer::on_pushButton_18_clicked() {
-//    s21::AffTransform transform;
-//    double mv = ui->lineEdit_10->text().toDouble();
-//    mv *= -1;
-//    transform.MoveY(&obj, mv);
-//    ui->widget->SetVertexArr(obj.vertexes);
-    ui->widget->update();
+   double mv = ui->lineEdit_10->text().toDouble();
+   mv *= -1;
+   controller_obj_->MoveObj('y', mv);
+   ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
+   ui->widget->update();
 }
 
 void Viewer::on_pushButton_17_clicked() {
-//    s21::AffTransform transform;
-//    double mv = ui->lineEdit_9->text().toDouble();
-//    transform.MoveZ(&obj, mv);
-//    ui->widget->SetVertexArr(obj.vertexes);
-    ui->widget->update();
+   double mv = ui->lineEdit_9->text().toDouble();
+   controller_obj_->MoveObj('z', mv);
+   ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
+   ui->widget->update();
 }
 
 void Viewer::on_pushButton_15_clicked() {
-//    s21::AffTransform transform;
-//    double mv = ui->lineEdit_8->text().toDouble();
-//    mv *= -1;
-//    transform.MoveZ(&obj, mv);
-//    ui->widget->SetVertexArr(obj.vertexes);
-    ui->widget->update();
+   double mv = ui->lineEdit_8->text().toDouble();
+   mv *= -1;
+   controller_obj_->MoveObj('z', mv);
+   ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
+   ui->widget->update();
 }
 
 void Viewer::on_pushButton_6_clicked() {
-//    s21::AffTransform transform;
     double kx = ui->lineEdit->text().toDouble();
     double ky = ui->lineEdit_2->text().toDouble();
     double kz = ui->lineEdit_3->text().toDouble();
     if (!kx || !ky || !kz) {
         ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
     } else {
-//        transform.ScaleX(&obj, kx);
-//        transform.ScaleY(&obj, ky);
-//        transform.ScaleZ(&obj, kz);
+        controller_obj_->ScaleObj('x', kx);
+        controller_obj_->ScaleObj('y', ky);
+        controller_obj_->ScaleObj('z', kz);
         ui->statusbar->clearMessage();
     }
-//    ui->widget->SetVertexArr(obj.vertexes);
+    ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
     ui->widget->update();
 }
 
 void Viewer::on_pushButton_7_clicked() {
-//    s21::AffTransform transform;
     double koff = ui->lineEdit->text().toDouble();
-//    if (transform.ScaleX(&obj, koff)) {
-//        ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
-//    } else {
-//        ui->statusbar->clearMessage();
-//    }
-//    ui->widget->SetVertexArr(obj.vertexes);
+   /*if (*/controller_obj_->ScaleObj('x', koff);/*) {*/
+   //     ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
+   // } else {
+   //     ui->statusbar->clearMessage();
+   // }
+    ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
     ui->widget->update();
 }
 
 void Viewer::on_pushButton_8_clicked() {
-//    s21::AffTransform transform;
     double koff = ui->lineEdit_2->text().toDouble();
-//    if (transform.ScaleY(&obj, koff)) {
-//        ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
-//    } else {
-//        ui->statusbar->clearMessage();
-//    }
-//    ui->widget->SetVertexArr(obj.vertexes);
+   /*if (*/controller_obj_->ScaleObj('y', koff);/*) {*/
+   //     ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
+   // } else {
+   //     ui->statusbar->clearMessage();
+   // }
+    ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
     ui->widget->update();
 }
 
 void Viewer::on_pushButton_9_clicked() {
-//    s21::AffTransform transform;
     double koff = ui->lineEdit_3->text().toDouble();
-//    if (transform.ScaleZ(&obj, koff)) {
-//        ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
-//    } else {
-//        ui->statusbar->clearMessage();
-//    }
-//    ui->widget->SetVertexArr(obj.vertexes);
+   /*if (*/controller_obj_->ScaleObj('z', koff);/*) {*/
+   //     ui->statusbar->showMessage("FAIL: Коэффициент масштаба равен 0!");
+   // } else {
+   //     ui->statusbar->clearMessage();
+   // }
+    ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
     ui->widget->update();
 }
 
 void Viewer::on_pushButton_10_clicked() {
-//    s21::AffTransform transform;
     double ax = ui->lineEdit_4->text().toDouble();
     double ay = ui->lineEdit_5->text().toDouble();
     double az = ui->lineEdit_6->text().toDouble();
-//    transform.TurnX(&obj, ax);
-//    transform.TurnY(&obj, ay);
-//    transform.TurnZ(&obj, az);
-//    ui->widget->SetVertexArr(obj.vertexes);
+    controller_obj_->RotateObj('x', ax);
+    controller_obj_->RotateObj('y', ay);
+    controller_obj_->RotateObj('z', az);
+    ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
     ui->widget->update();
 }
 
 void Viewer::on_pushButton_11_clicked() {
-//    s21::AffTransform transform;
     double angle = ui->lineEdit_4->text().toDouble();
-//    transform.TurnX(&obj, angle);
-//    ui->widget->SetVertexArr(obj.vertexes);
+    controller_obj_->RotateObj('x', angle);
+    ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
     ui->widget->update();
 }
 
 void Viewer::on_pushButton_12_clicked() {
-//    s21::AffTransform transform;
     double angle = ui->lineEdit_5->text().toDouble();
-//    transform.TurnY(&obj, angle);
-//    ui->widget->SetVertexArr(obj.vertexes);
+    controller_obj_->RotateObj('y', angle);
+    ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
     ui->widget->update();
 }
 
 void Viewer::on_pushButton_13_clicked() {
-//    s21::AffTransform transform;
     double angle = ui->lineEdit_6->text().toDouble();
-//    transform.TurnZ(&obj, angle);
-//    ui->widget->SetVertexArr(obj.vertexes);
+    controller_obj_->RotateObj('z', angle);
+    ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
     ui->widget->update();
 }
 
@@ -517,3 +502,98 @@ void Viewer::on_radioButton_6_toggled() {
     ui->widget->smooth = true;
     ui->widget->update();
 }
+
+// // viewer_strategy.h
+// #pragma once
+
+// class ViewerStrategy {
+// public:
+//     virtual void execute(Viewer* viewer) = 0;
+//     virtual ~ViewerStrategy() {}
+// };
+
+// // ortho_strategy.h
+// #pragma once
+// #include "viewer_strategy.h"
+
+// class OrthoStrategy : public ViewerStrategy {
+// public:
+//     void execute(Viewer* viewer) override {
+//         viewer->ui->widget->SetOrtho();
+//         viewer->ui->widget->update();
+//     }
+// };
+
+// // persp_strategy.h
+// #pragma once
+// #include "viewer_strategy.h"
+
+// class PerspStrategy : public ViewerStrategy {
+// public:
+//     void execute(Viewer* viewer) override {
+//         viewer->ui->widget->SetPersp();
+//         viewer->ui->widget->update();
+//     }
+// };
+
+// // points_strategy.h
+// #pragma once
+// #include "viewer_strategy.h"
+
+// class PointsStrategy : public ViewerStrategy {
+// public:
+//     void execute(Viewer* viewer) override {
+//         viewer->ui->widget->points = true;
+//         viewer->ui->widget->smooth = false;
+//         viewer->ui->widget->update();
+//     }
+// };
+
+// // viewer.h
+// #include "viewer_strategy.h"
+
+// class Viewer : public QMainWindow {
+//     // ...
+
+// private:
+//     ViewerStrategy* strategy_; // Добавьте поле для стратегии
+
+//     // ...
+// };
+
+// // viewer.cpp
+// #include "ortho_strategy.h"
+// #include "persp_strategy.h"
+// #include "points_strategy.h"
+
+// Viewer::Viewer(QWidget *parent) : QMainWindow(parent), ui(new Ui::Viewer) {
+//     // ...
+//     strategy_ = new PerspStrategy(); // Используйте конкретную стратегию по умолчанию
+// }
+
+// Viewer::~Viewer() {
+//     // ...
+//     delete strategy_;
+// }
+
+// // Добавьте метод для изменения стратегии
+// void Viewer::setStrategy(ViewerStrategy* strategy) {
+//     delete strategy_; // Освобождаем предыдущую стратегию
+//     strategy_ = strategy;
+// }
+
+// // Измените соответствующие методы для использования стратегии
+// void Viewer::on_radioButton_2_toggled() {
+//     setStrategy(new OrthoStrategy());
+//     strategy_->execute(this);
+// }
+
+// void Viewer::on_radioButton_toggled() {
+//     setStrategy(new PerspStrategy());
+//     strategy_->execute(this);
+// }
+
+// void Viewer::on_radioButton_5_toggled() {
+//     setStrategy(new PointsStrategy());
+//     strategy_->execute(this);
+// }
