@@ -1,5 +1,5 @@
-#ifndef SRC_VIEW_SRC_VIEWER_H_
-#define SRC_VIEW_SRC_VIEWER_H_
+#ifndef VIEW_SRC_VIEWER_H_
+#define VIEW_SRC_VIEWER_H_
 
 #include <QMainWindow>
 
@@ -120,4 +120,4 @@ private:
     void file_proccessing(QString file_name);
     void error_message(QString message);
 };
-#endif  // SRC_VIEW_SRC_VIEWER_H_
+#endif  // VIEW_SRC_VIEWER_H_
