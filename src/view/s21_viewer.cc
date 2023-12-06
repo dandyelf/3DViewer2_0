@@ -184,8 +184,8 @@ void Viewer::reset_obj() {
    // controller_obj_->GetObject().count_of_vertexes = 0;
    // controller_obj_->GetObject().count_of_facets = 0;
    // controller_obj_->GetObject().facet_elem = 0;
-   if (controller_obj_->GetObject().vertexes != NULL) free(controller_obj_->GetObject().vertexes);
-   if (controller_obj_->GetObject().polygons != NULL) free(controller_obj_->GetObject().polygons);
+//    if (controller_obj_->GetObject().vertexes != NULL) free(controller_obj_->GetObject().vertexes);
+//    if (controller_obj_->GetObject().polygons != NULL) free(controller_obj_->GetObject().polygons);
    // controller_obj_->GetObject().vertexes = NULL;
    // controller_obj_->GetObject().polygons = NULL;
 }
