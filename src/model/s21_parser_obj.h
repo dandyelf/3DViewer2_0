@@ -8,12 +8,13 @@
 #include <string>
 namespace s21 {
 
-typedef struct {
+typedef struct ObjT{
   int count_of_vertexes{};
   double* vertexes{};
   int count_of_facets{};
   int* polygons{};
   int facet_elem{};
+  friend class Facade;
 } ObjT;
 
 class ParserObj {
