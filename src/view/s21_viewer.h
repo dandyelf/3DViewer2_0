@@ -1,10 +1,14 @@
 #ifndef VIEW_SRC_VIEWER_H_
 #define VIEW_SRC_VIEWER_H_
 
+#pragma once
+
 #include <QMainWindow>
 
 #include "../controller/s21_controller_obj.h"
 #include "./qtgifimage/gifimage/qgifimage.h"
+#include "s21_strategy.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,6 +26,8 @@ public:
         controller_obj_ = controller_obj;
     }
 
+    Ui::Viewer *ui; //for the strategy
+
 private slots:
     void on_pushButton_clicked();
 
@@ -38,6 +44,8 @@ private slots:
     void on_horizontalScrollBar_3_valueChanged(int value);
 
     void on_horizontalScrollBar_7_valueChanged(int value);
+
+    void setStrategy(ViewerStrategy* strategy);
 
     void on_horizontalScrollBar_4_valueChanged(int value);
 
@@ -102,7 +110,7 @@ private slots:
     void on_radioButton_6_toggled();
 
 private:
-    Ui::Viewer *ui;
+    ViewerStrategy* strategy_;
     s21::Controller *controller_obj_;
     int dots_{}, lines_{};
     QString path_{};
