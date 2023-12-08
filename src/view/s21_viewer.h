@@ -1,9 +1,8 @@
-#ifndef VIEW_SRC_VIEWER_H_
-#define VIEW_SRC_VIEWER_H_
-
-#pragma once
+#ifndef CPP_S21_3DVIEWER_V2_SRC_VIEW_S21_VIEWER_H_
+#define CPP_S21_3DVIEWER_V2_SRC_VIEW_S21_VIEWER_H_
 
 #include <QMainWindow>
+#include <QMessageBox>
 
 #include "../controller/s21_controller_obj.h"
 #include "./qtgifimage/gifimage/qgifimage.h"
@@ -29,13 +28,10 @@ public:
     Ui::Viewer *ui; //for the strategy
 
 private slots:
-    void on_pushButton_clicked();
 
-    void on_pushButton_5_clicked();
+    void GifCreate();
 
-    void on_radioButton_4_toggled();
-
-    void on_radioButton_3_toggled();
+    void SetStrategy(ViewerStrategy* strategy);
 
     void on_horizontalScrollBar_valueChanged(int value);
 
@@ -43,43 +39,31 @@ private slots:
 
     void on_horizontalScrollBar_3_valueChanged(int value);
 
-    void on_horizontalScrollBar_7_valueChanged(int value);
-
-    void setStrategy(ViewerStrategy* strategy);
-
     void on_horizontalScrollBar_4_valueChanged(int value);
 
     void on_horizontalScrollBar_5_valueChanged(int value);
 
     void on_horizontalScrollBar_6_valueChanged(int value);
 
-    void on_pushButton_4_clicked();
-
-    void on_pushButton_2_clicked();
-
-    void on_pushButton_3_clicked();
+    void on_horizontalScrollBar_7_valueChanged(int value);
 
     void on_horizontalScrollBar_8_valueChanged(int value);
-
-    void on_horizontalScrollBar_11_valueChanged(int value);
 
     void on_horizontalScrollBar_9_valueChanged(int value);
 
     void on_horizontalScrollBar_10_valueChanged(int value);
 
-    void on_pushButton_16_clicked();
+    void on_horizontalScrollBar_11_valueChanged(int value);
 
-    void on_pushButton_20_clicked();
+    void on_pushButton_clicked();
 
-    void on_pushButton_19_clicked();
+    void on_pushButton_2_clicked();
 
-    void on_pushButton_14_clicked();
+    void on_pushButton_3_clicked();
 
-    void on_pushButton_18_clicked();
+    void on_pushButton_4_clicked();
 
-    void on_pushButton_17_clicked();
-
-    void on_pushButton_15_clicked();
+    void on_pushButton_5_clicked();
 
     void on_pushButton_6_clicked();
 
@@ -97,17 +81,35 @@ private slots:
 
     void on_pushButton_13_clicked();
 
-    void gif_create();
+    void on_pushButton_14_clicked();
 
-    void on_radioButton_2_toggled();
+    void on_pushButton_15_clicked();
+
+    void on_pushButton_16_clicked();
+
+    void on_pushButton_17_clicked();
+
+    void on_pushButton_18_clicked();
+
+    void on_pushButton_19_clicked();
+
+    void on_pushButton_20_clicked();
 
     void on_radioButton_toggled();
 
+    void on_radioButton_2_toggled();
+
+    void on_radioButton_3_toggled();
+
+    void on_radioButton_4_toggled();
+
     void on_radioButton_5_toggled();
+
+    void on_radioButton_6_toggled();
 
     void on_radioButton_7_toggled();
 
-    void on_radioButton_6_toggled();
+    void on_pushButton_21_clicked();
 
 private:
     ViewerStrategy* strategy_;
@@ -116,15 +118,25 @@ private:
     QString path_{};
     QTimer *gif_tmr_{};
     int time_{};
+    double max_el_;
+    QImage image_;
+    QMessageBox messageBox_;
     QGifImage *gif_img_{};
-    QString fileName;
+    QString file_name_;
     QString fname_gif_{};
 
-    void gif_timer();
-    void settings_load();
-    void settings_save();
-    void reset_obj();
-    void file_proccessing(QString file_name);
-    void error_message(QString message);
+    // void gif_timer_();
+    // void settings_load_();
+    // void settings_save_();
+    // void reset_obj_();
+    // void file_proccessing_(QString file_name);
+    // void error_message_(QString message);
+    //or ???????????????????????????????????????
+    void GifTimer();
+    void SettingsLoad();
+    void SettingsSave();
+    void ResetObj();
+    void FileProccessing(QString file_name);
+    void ErrorMessage(QString message);
 };
-#endif  // VIEW_SRC_VIEWER_H_
+#endif  // CPP_S21_3DVIEWER_V2_SRC_VIEW_S21_VIEWER_H_

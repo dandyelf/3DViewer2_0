@@ -1,5 +1,5 @@
-#ifndef CPP_S21_3DVIEWER_V2_SRC_MODEL_VIEWER_H_
-#define CPP_S21_3DVIEWER_V2_SRC_MODEL_VIEWER_H_
+#ifndef CPP_S21_3DVIEWER_V2_SRC_MODEL_S21_PARSER_OBJ_H_
+#define CPP_S21_3DVIEWER_V2_SRC_MODEL_S21_PARSER_OBJ_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,13 +31,12 @@ public:
     void CountFacets(char* buffer, ObjT* obj);
 
 private:
-    int err = 0;
-    int i = 0;
-    int countvertex = 0, v_count = 0, countfacets = 0, cur_index = 0;
-    char *temp_str, *token, *str1, *str2, *subtoken, *saveptr2, *tok;
-    int temp_f = 0, temp_ind = 0;
+    int err_ = 0;
+    int countvertex_ = 0, v_count_ = 0, countfacets_ = 0, cur_index_ = 0;
+    char *temp_str_, *token_, *str1_, *str2_, *subtoken_, *saveptr2_, *tok_;
+    int temp_f_ = 0, temp_ind_ = 0;
 };
 
 }  // namespace s21
 
-#endif // CPP_S21_3DVIEWER_V2_SRC_MODEL_VIEWER_H_
+#endif // CPP_S21_3DVIEWER_V2_SRC_MODEL_S21_PARSER_OBJ_H_

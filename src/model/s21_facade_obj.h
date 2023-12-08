@@ -1,6 +1,5 @@
-
-#ifndef SRC_S21_FACADE_H_
-#define SRC_S21_FACADE_H_
+#ifndef CPP_S21_3DVIEWER_V2_SRC_MODEL_S21_FACADE_H_
+#define CPP_S21_3DVIEWER_V2_SRC_MODEL_S21_FACADE_H_
 
 #include <string>
 #include "../model/s21_aff_transform.h"
@@ -32,4 +31,4 @@ private:
 };
 } // namespace s21
 
-#endif // SRC_S21_FACADE_H_
+#endif // CPP_S21_3DVIEWER_V2_SRC_MODEL_S21_FACADE_H_

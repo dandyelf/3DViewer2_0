@@ -1,5 +1,5 @@
-#ifndef VIEW_S21_STRA_H_
-#define VIEW_S21_STRA_H_
+#ifndef CPP_S21_3DVIEWER_V2_SRC_VIEW_S21_STRATEHY_H_
+#define CPP_S21_3DVIEWER_V2_SRC_VIEW_S21_STRATEHY_H_
 
 #include "s21_viewer.h"
 #include "ui_s21_viewer.h"
@@ -13,4 +13,4 @@ public:
     virtual ~ViewerStrategy() {}
 };
 
-#endif // VIEW_S21_STRA_H_
+#endif // CPP_S21_3DVIEWER_V2_SRC_VIEW_S21_STRATEHY_H_

@@ -1,5 +1,5 @@
-#ifndef CPP_S21_3DVIEWER_V2_SRC_MODEL_AFF_TRANSFORMATION_H_
-#define CPP_S21_3DVIEWER_V2_SRC_MODEL_AFF_TRANSFORMATION_H_
+#ifndef CPP_S21_3DVIEWER_V2_SRC_MODEL_S21_AFF_TRANSFORMATION_H_
+#define CPP_S21_3DVIEWER_V2_SRC_MODEL_S21_AFF_TRANSFORMATION_H_
 
 #include <cmath>
 #include "s21_parser_obj.h"
@@ -17,9 +17,9 @@ class AffTransform {
     AffTransform() = default;
     AffTransform(const AffTransform&) = delete;
     AffTransform(AffTransform&&) = delete;
-    AffTransform(ObjT* obj) : ObjT_(obj){};
+    AffTransform(ObjT* obj) : obj_t_(obj){};
     ~AffTransform() = default;
-    void InitObjStruct(ObjT* obj) { ObjT_ = obj; };
+    void InitObjStruct(ObjT* obj) { obj_t_ = obj; };
     int Scale(double koff);
     int ScaleX(double koff);
     int ScaleY(double koff);
@@ -33,7 +33,7 @@ class AffTransform {
     void clear();
 
   private:
-    ObjT* ObjT_;
+    ObjT* obj_t_;
     int res_ = OK;
     double temp_x_ = 0;
     double temp_y_ = 0;
@@ -41,4 +41,4 @@ class AffTransform {
 };
 }
 
-#endif  // CPP_S21_3DVIEWER_V2_SRC_MODEL_AFF_TRANSFORMATION_H_
+#endif  // CPP_S21_3DVIEWER_V2_SRC_MODEL_S21_AFF_TRANSFORMATION_H_

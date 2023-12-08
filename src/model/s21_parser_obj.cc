@@ -3,10 +3,10 @@
 namespace s21 {
 
 int ParserObj::ParseNumVertexFacets(const std::string &file_name, ObjT *obj) {
-  err = 0;
+  err_ = 0;
   FILE *fp = fopen(file_name.c_str(), "r");
   if (fp == NULL) {
-    err = 1;
+    err_ = 1;
   } else {
     char buffer[255];
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
@@ -21,7 +21,7 @@ int ParserObj::ParseNumVertexFacets(const std::string &file_name, ObjT *obj) {
     fclose(fp);
   }
   obj->facet_elem *= 2;
-  return err;
+  return err_;
 }
 
 void ParserObj::CountFacets(char *buffer, ObjT *obj) {
@@ -35,61 +35,59 @@ void ParserObj::CountFacets(char *buffer, ObjT *obj) {
 }
 
 int ParserObj::InitObjStruct(ObjT *obj) {
-  err = 0;
+  err_ = 0;
   obj->vertexes = new double[obj->count_of_vertexes * 3];
   if (obj->vertexes == nullptr) {
-    err = 1;
-    return err;
+    err_ = 1;
+    return err_;
   }
   obj->polygons = new int[obj->facet_elem];
   if (obj->polygons == nullptr) {
     delete[] obj->vertexes;  // Release memory allocated for vertexes
-    err = 1;
-    return err;
+    err_ = 1;
+    return err_;
   }
-  return err;
+  return err_;
 }
 
 int ParserObj::ParseFile(const std::string &file_name, ObjT *obj) {
-  err = 0;
+  err_ = 0;
   FILE *fp = fopen(file_name.c_str(), "r");
   if (fp == NULL) {
-    err = 1;
+    err_ = 1;
   } else {
     char buffer[255];
-    int countvertex = 0, v_count = 0, countfacets = 0, cur_index = 0;
-    int temp_f = 0, temp_ind = 0;
 
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
       if (buffer[0] == 'v' && buffer[1] == ' ') {
-        sscanf(buffer + 2, "%lf %lf %lf", &obj->vertexes[countvertex],
-               &obj->vertexes[countvertex + 1],
-               &obj->vertexes[countvertex + 2]);
-        countvertex += 3;
+        sscanf(buffer + 2, "%lf %lf %lf", &obj->vertexes[countvertex_],
+               &obj->vertexes[countvertex_ + 1],
+               &obj->vertexes[countvertex_ + 2]);
+        countvertex_ += 3;
       }
 
       if (buffer[0] == 'f' && buffer[1] == ' ') {
-        for (temp_ind = 0, str1 = buffer + 2;; str1 = NULL, temp_ind++) {
-          token = strtok_r(str1, " ", &temp_str);
-          if (token == NULL) {
-            obj->polygons[countfacets++] = temp_f;
+        for (temp_ind_ = 0, str1_ = buffer + 2;; str1_ = NULL, temp_ind_++) {
+          token_ = strtok_r(str1_, " ", &temp_str_);
+          if (token_ == NULL) {
+            obj->polygons[countfacets_++] = temp_f_;
             break;
           }
-          if (!strpbrk(token, "0123456789")) {
-            obj->polygons[countfacets++] = temp_f;
+          if (!strpbrk(token_, "0123456789")) {
+            obj->polygons[countfacets_++] = temp_f_;
             break;
           }
-          for (str2 = token, v_count = 0;; str2 = NULL, v_count++) {
-            subtoken = strtok_r(str2, "/", &saveptr2);
-            if (subtoken == NULL) {
+          for (str2_ = token_, v_count_ = 0;; str2_ = NULL, v_count_++) {
+            subtoken_ = strtok_r(str2_, "/", &saveptr2_);
+            if (subtoken_ == NULL) {
               break;
-            } else if (v_count == 0) {
-              cur_index = atoi(subtoken) - 1;
-              obj->polygons[countfacets++] = cur_index;
-              if (temp_ind == 0) {
-                temp_f = cur_index;
+            } else if (v_count_ == 0) {
+              cur_index_ = atoi(subtoken_) - 1;
+              obj->polygons[countfacets_++] = cur_index_;
+              if (temp_ind_ == 0) {
+                temp_f_ = cur_index_;
               } else {
-                obj->polygons[countfacets++] = cur_index;
+                obj->polygons[countfacets_++] = cur_index_;
               }
             }
           }
@@ -98,24 +96,24 @@ int ParserObj::ParseFile(const std::string &file_name, ObjT *obj) {
     }
     fclose(fp);
   }
-  return err;
+  return err_;
 }
 
 int ParserObj::StartPars(const std::string &file_name, ObjT *obj) {
-  err = 0;
+  err_ = 0;
   obj->count_of_vertexes = 0;
   obj->count_of_facets = 0;
   obj->facet_elem = 0;
 
-  err = ParseNumVertexFacets(file_name, obj);
+  err_ = ParseNumVertexFacets(file_name, obj);
 
-  if (!err) {
-    err = InitObjStruct(obj);
+  if (!err_) {
+    err_ = InitObjStruct(obj);
   }
-  if (!err) {
-    err = ParseFile(file_name, obj);
+  if (!err_) {
+    err_ = ParseFile(file_name, obj);
   }
-  return err;
+  return err_;
 }
 
 }  // namespace s21
