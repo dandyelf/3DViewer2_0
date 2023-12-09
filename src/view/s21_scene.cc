@@ -6,7 +6,7 @@
 #include "QMouseEvent"
 
 Scene::Scene(QWidget *parent) : QOpenGLWidget(parent) {
-  fon_r_ = 0.30, fon_g_ = 0.30, fon_b_ = 0.30;
+  fon_r_ = 1, fon_g_ = 1, fon_b_ = 1;
   perspective = true;
   stipple = false;
   points = true;
@@ -17,7 +17,7 @@ void Scene::initializeGL() { glEnable(GL_DEPTH_TEST); }
 void Scene::resizeGL(int w, int h) { glViewport(0, 0, w, h); }
 
 void Scene::paintGL() {
-  glClearColor(fon_r_, fon_g_, fon_b_, 0.0f);
+  glClearColor(fon_r_, fon_g_, fon_b_, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glMatrixMode(GL_PROJECTION);

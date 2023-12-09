@@ -24,11 +24,12 @@ Viewer::Viewer(QWidget *parent) : QMainWindow(parent), ui(new Ui::Viewer) {
 }
 
 Viewer::~Viewer() {
-    gif_tmr_->~QTimer();
+    delete gif_tmr_;
     SettingsSave();
     delete ui;
     delete strategy_;
 }
+
 
 void Viewer::SetStrategy(ViewerStrategy* strategy) {
     strategy_ = strategy;
@@ -46,7 +47,9 @@ void Viewer::GifCreate() {
         ui->pushButton_3->setText("Старт запись");
         ui->pushButton_3->setEnabled(true);
     }
+
     ++time_;
+
     if (!ui->pushButton_3->isEnabled())
         ui->pushButton_3->setText(QString::number(time_ / 10));
 }
@@ -271,6 +274,10 @@ void Viewer::on_radioButton_7_toggled() {
 }
 
 void Viewer::FileProccessing(QString file_name_) {
+    if (!QFile::exists(file_name_)) {
+        ErrorMessage("File does not exist.");
+        return;
+    }
     path_ = file_name_;
 
     this->setWindowTitle("3D Viewer ~ " + file_name_);

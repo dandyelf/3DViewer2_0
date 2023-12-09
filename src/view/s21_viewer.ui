@@ -141,6 +141,9 @@
           </item>
           <item>
            <widget class="QScrollBar" name="horizontalScrollBar">
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -165,6 +168,9 @@
           </item>
           <item>
            <widget class="QScrollBar" name="horizontalScrollBar_2">
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -189,6 +195,18 @@
           </item>
           <item>
            <widget class="QScrollBar" name="horizontalScrollBar_3">
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>99</number>
+            </property>
+            <property name="pageStep">
+             <number>8</number>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
