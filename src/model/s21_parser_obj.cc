@@ -8,6 +8,9 @@ int ParserObj::ParseNumVertexFacets(const std::string &file_name, ObjT *obj) {
   if (fp == NULL) {
     err_ = 1;
   } else {
+    obj->count_of_vertexes = 0;
+    obj->count_of_facets = 0;
+    obj->facet_elem = 0;
     char buffer[255];
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
       if (buffer[0] == 'v' && buffer[1] == ' ') {
@@ -73,7 +76,7 @@ int ParserObj::ParseFile(const std::string &file_name, ObjT *obj) {
             obj->polygons[countfacets_++] = temp_f_;
             break;
           }
-          if (!strpbrk(token_, "0123456789")) {
+          if (!strpbrk(token_, "-0123456789")) {
             obj->polygons[countfacets_++] = temp_f_;
             break;
           }
@@ -101,9 +104,7 @@ int ParserObj::ParseFile(const std::string &file_name, ObjT *obj) {
 
 int ParserObj::StartPars(const std::string &file_name, ObjT *obj) {
   err_ = 0;
-  obj->count_of_vertexes = 0;
-  obj->count_of_facets = 0;
-  obj->facet_elem = 0;
+
 
   err_ = ParseNumVertexFacets(file_name, obj);
 
