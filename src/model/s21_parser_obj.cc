@@ -39,7 +39,12 @@ void ParserObj::CountFacets(char *buffer, ObjT *obj) {
 
 int ParserObj::InitObjStruct(ObjT *obj) {
   err_ = 0;
-
+  if(obj->polygons != nullptr) {
+    delete [] obj->polygons;
+  }
+  if(obj->vertexes != nullptr) {
+    delete [] obj->vertexes;
+  }
   obj->vertexes = new double[obj->count_of_vertexes * 3];
   if (obj->vertexes == nullptr) {
     err_ = 1;
@@ -61,8 +66,6 @@ int ParserObj::ParseFile(const std::string &file_name, ObjT *obj) {
     err_ = 1;
   } else {
     char buffer[255];
-    int countvertex = 0, v_count = 0, countfacets = 0, cur_index = 0;
-    int temp_f = 0, temp_ind = 0;
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
       if (buffer[0] == 'v' && buffer[1] == ' ') {
         sscanf(buffer + 2, "%lf %lf %lf", &obj->vertexes[countvertex_],
@@ -70,7 +73,6 @@ int ParserObj::ParseFile(const std::string &file_name, ObjT *obj) {
                &obj->vertexes[countvertex_ + 2]);
         countvertex_ += 3;
       }
-
       if (buffer[0] == 'f' && buffer[1] == ' ') {
         for (temp_ind_ = 0, str1_ = buffer + 2;; str1_ = NULL, temp_ind_++) {
           token_ = strtok_r(str1_, " ", &temp_str_);
@@ -106,10 +108,7 @@ int ParserObj::ParseFile(const std::string &file_name, ObjT *obj) {
 
 int ParserObj::StartPars(const std::string &file_name, ObjT *obj) {
   err_ = 0;
-
-
   err_ = ParseNumVertexFacets(file_name, obj);
-
   if (!err_) {
     err_ = InitObjStruct(obj);
   }
