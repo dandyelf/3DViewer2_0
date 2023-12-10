@@ -39,6 +39,7 @@ void ParserObj::CountFacets(char *buffer, ObjT *obj) {
 
 int ParserObj::InitObjStruct(ObjT *obj) {
   err_ = 0;
+
   obj->vertexes = new double[obj->count_of_vertexes * 3];
   if (obj->vertexes == nullptr) {
     err_ = 1;
@@ -60,7 +61,8 @@ int ParserObj::ParseFile(const std::string &file_name, ObjT *obj) {
     err_ = 1;
   } else {
     char buffer[255];
-
+    int countvertex = 0, v_count = 0, countfacets = 0, cur_index = 0;
+    int temp_f = 0, temp_ind = 0;
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
       if (buffer[0] == 'v' && buffer[1] == ' ') {
         sscanf(buffer + 2, "%lf %lf %lf", &obj->vertexes[countvertex_],
