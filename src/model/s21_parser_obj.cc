@@ -113,6 +113,11 @@ int ParserObj::StartPars(const std::string &file_name, ObjT *obj) {
   if (!err_) {
     err_ = ParseFile(file_name, obj);
   }
+  for(int i = 0; i < obj->facet_elem; i++) {
+    if(obj->polygons[i] < 0) {
+      obj->polygons[i] = obj->count_of_facets + obj->polygons[i];
+    }
+  }
   return err_;
 }
 
