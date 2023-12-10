@@ -95,3 +95,9 @@ model_valgrind: model_tests
 # 	lcov -t "tests" -o tests.info -c -d .
 # 	genhtml -o report tests.info
 # 	open report/index.html
+
+skull:
+	mkdir -p $(BUILD_DIR)
+	$(CC) -std=c++17 -lstdc++ -Wall -Wextra $(GT_FLAGS) model/*.cc tests/s21_skull_tests.cc -o $(BUILD_DIR)/model_tests.out
+	./$(BUILD_DIR)/model_tests.out
+	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(BUILD_DIR)/model_tests.out

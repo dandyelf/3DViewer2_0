@@ -8,9 +8,6 @@ int ParserObj::ParseNumVertexFacets(const std::string &file_name, ObjT *obj) {
   if (fp == NULL) {
     err_ = 1;
   } else {
-    obj->count_of_vertexes = 0;
-    obj->count_of_facets = 0;
-    obj->facet_elem = 0;
     char buffer[255];
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
       if (buffer[0] == 'v' && buffer[1] == ' ') {
@@ -66,6 +63,8 @@ int ParserObj::ParseFile(const std::string &file_name, ObjT *obj) {
     err_ = 1;
   } else {
     char buffer[255];
+    countvertex_ = 0, v_count_ = 0, countfacets_ = 0, cur_index_ = 0;
+    temp_f_ = 0, temp_ind_ = 0;
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
       if (buffer[0] == 'v' && buffer[1] == ' ') {
         sscanf(buffer + 2, "%lf %lf %lf", &obj->vertexes[countvertex_],
@@ -101,6 +100,7 @@ int ParserObj::ParseFile(const std::string &file_name, ObjT *obj) {
         }
       }
     }
+    obj->facet_elem = countfacets_;
     fclose(fp);
   }
   return err_;
@@ -108,6 +108,9 @@ int ParserObj::ParseFile(const std::string &file_name, ObjT *obj) {
 
 int ParserObj::StartPars(const std::string &file_name, ObjT *obj) {
   err_ = 0;
+  obj->count_of_vertexes = 0;
+  obj->count_of_facets = 0;
+  obj->facet_elem = 0;
   err_ = ParseNumVertexFacets(file_name, obj);
   if (!err_) {
     err_ = InitObjStruct(obj);
