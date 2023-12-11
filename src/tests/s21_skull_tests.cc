@@ -6,8 +6,8 @@
 TEST(MainTest, Skull) {
   s21::ObjT obj;
   s21::ParserObj parser;
-  // const std::string file = "/home/leftrana/projects/3DViewer2_0/src/tests/obj/skull.obj";
-  const std::string file = "./tests/obj/skull.obj";
+  const std::string file = "/home/dandy/projects/3DViewer2_0/src/tests/obj/skull.obj";
+  // const std::string file = "./tests/obj/skull.obj";
   try
   {
     parser.StartParser(file, &obj);

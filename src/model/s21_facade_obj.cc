@@ -2,16 +2,17 @@
 
 namespace s21 {
 Facade::~Facade() {
-  if(main_obj_.polygons != nullptr) {
-    delete [] main_obj_.polygons;
-  }
-  if(main_obj_.vertexes != nullptr) {
-    delete [] main_obj_.vertexes;
-  }
+  // if(main_obj_.polygons != nullptr) {
+  //   delete [] main_obj_.polygons;
+  // }
+  // if(main_obj_.vertexes != nullptr) {
+  //   delete [] main_obj_.vertexes;
+  // }
 }
 
 void Facade::OpenObj(const std::string &file_name) {
-  parcer_obj_.StartPars(file_name, &main_obj_);
+  // parcer_obj_.StartPars(file_name, &main_obj_);
+  parcer_obj_.StartParser(file_name, &main_obj_);
 }
 
 void Facade::ResetObj() {

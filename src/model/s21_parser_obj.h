@@ -15,8 +15,8 @@ typedef struct ObjT{
   int count_of_facets{};
   int* polygons{};
   int facet_elem{};
-  std::vector<int> polygon_vector;
-  std::vector<double> vertex_vector;
+  std::vector<int> polygon_vector{};
+  std::vector<double> vertex_vector{};
   friend class Facade;
 } ObjT;
 

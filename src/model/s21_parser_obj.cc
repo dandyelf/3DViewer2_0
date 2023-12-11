@@ -129,24 +129,29 @@ int ParserObj::StartPars(const std::string &file_name, ObjT *obj) {
 }
 
 void ParserObj::StartParser(const std::string &file_name, ObjT *obj) {
-  ObjT tmp_obj = *obj_;
   obj_ = obj;
   file_.open(file_name);
   fp_ = fopen(file_name.c_str(), "r");
   if(!file_.is_open() || fp_ == NULL) {
-    *obj_ = tmp_obj;
     throw std::runtime_error("File fail");
   }
   obj->count_of_vertexes = 0;
   obj->count_of_facets = 0;
   obj->facet_elem = 0;
   ParsObj();
-  if(obj_->count_of_vertexes < 3 || obj_->count_of_facets < 1) {
-    *obj_ = tmp_obj;
+  if(obj_->vertex_vector.size() < 3 || obj_->polygon_vector.size() < 1) {
     fclose(fp_);
     throw std::runtime_error("Empty of fail file");
   }
   fclose(fp_);
+  obj_->count_of_vertexes =  obj_->vertex_vector.size() / 3;
+  obj_->count_of_facets = obj_->polygon_vector.size() / 3;
+  obj_->facet_elem = obj_->polygon_vector.size();
+  for (auto& value : obj_->polygon_vector) {
+    if(value < 1) value += obj_->count_of_vertexes-1;
+  }
+  obj_->polygons = obj_->polygon_vector.data();
+  obj_->vertexes = obj_->vertex_vector.data();
 }
 
 void ParserObj::ParsObj() {
@@ -169,12 +174,12 @@ void ParserObj::VertexLineCheck() {
 }
 
 void ParserObj::ParsLineVertex() {
-  std::vector<double>tmp_vertex(3);
   double x, y, z;
   int matches = fscanf(fp_, "%lf %lf %lf\n", &x, &y, &z);
   if(matches == 3) {
-    obj_->vertex_vector.push_back((x, y, z));
-    obj_->count_of_vertexes++;
+    obj_->vertex_vector.push_back(x);
+    obj_->vertex_vector.push_back(y);
+    obj_->vertex_vector.push_back(z);
   } else {
     fp_++;
   }
@@ -198,7 +203,7 @@ std::string ParserObj::LineCreator(const std::string &dictionary){
 
 void ParserObj::ParsLineFacet(std::string &str) {
   std::vector<std::string> tmp_vec;
-  int i{};
+  std::size_t i{};
   while(i < str.size()) {
   if(str[i] == ' ') {
     i++;
@@ -211,14 +216,14 @@ void ParserObj::ParsLineFacet(std::string &str) {
   tmp_vec.push_back(tmp);
   i++;
   }
-  if(tmp_vec.size() > 3) {
+  if(tmp_vec.size() > 2) {
     for (const auto& str : tmp_vec) {
       int a = std::stoi(str);
       if(a > 0) {
         obj_->polygon_vector.push_back(a-1);
       }
+      obj_->polygon_vector.push_back(a);
     }
-    obj_->count_of_facets++;
   }
   // std::cout << std::endl;
 }
