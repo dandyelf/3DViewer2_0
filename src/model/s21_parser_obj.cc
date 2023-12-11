@@ -128,4 +128,99 @@ int ParserObj::StartPars(const std::string &file_name, ObjT *obj) {
   return err_;
 }
 
+void ParserObj::StartParser(const std::string &file_name, ObjT *obj) {
+  ObjT tmp_obj = *obj_;
+  obj_ = obj;
+  file_.open(file_name);
+  fp_ = fopen(file_name.c_str(), "r");
+  if(!file_.is_open() || fp_ == NULL) {
+    *obj_ = tmp_obj;
+    throw std::runtime_error("File fail");
+  }
+  obj->count_of_vertexes = 0;
+  obj->count_of_facets = 0;
+  obj->facet_elem = 0;
+  ParsObj();
+  if(obj_->count_of_vertexes < 3 || obj_->count_of_facets < 1) {
+    *obj_ = tmp_obj;
+    fclose(fp_);
+    throw std::runtime_error("Empty of fail file");
+  }
+  fclose(fp_);
+}
+
+void ParserObj::ParsObj() {
+  while (1) {
+    char lineHeader[128];
+    // read the first word of the line
+    int res = fscanf(fp_, "%s", lineHeader);
+    if (res == EOF) break;  // EOF = End Of File. Quit the loop.
+    if (strcmp(lineHeader, "v") == 0) {
+      VertexLineCheck();
+    }
+    if (strcmp(lineHeader, "f") == 0) {
+      FacetLineCheck();
+    }
+  }
+}
+
+void ParserObj::VertexLineCheck() {
+  ParsLineVertex();
+}
+
+void ParserObj::ParsLineVertex() {
+  std::vector<double>tmp_vertex(3);
+  double x, y, z;
+  int matches = fscanf(fp_, "%lf %lf %lf\n", &x, &y, &z);
+  if(matches == 3) {
+    obj_->vertex_vector.push_back((x, y, z));
+    obj_->count_of_vertexes++;
+  } else {
+    fp_++;
+  }
+}
+
+void ParserObj::FacetLineCheck() {
+  std::string tmp = LineCreator("1234567890-/ ");
+  // std::cout << lineHeader << tmp << "Parse: " << std::endl;
+  ParsLineFacet(tmp);
+}
+
+std::string ParserObj::LineCreator(const std::string &dictionary){
+  std::string tmp;
+  char get = fgetc(fp_);
+  while(dictionary.find(get) != std::string::npos && get != EOF) {
+    tmp.push_back(get);
+    get = fgetc(fp_);
+  }
+  return tmp;
+}
+
+void ParserObj::ParsLineFacet(std::string &str) {
+  std::vector<std::string> tmp_vec;
+  int i{};
+  while(i < str.size()) {
+  if(str[i] == ' ') {
+    i++;
+    continue;
+  }
+  std::string tmp;
+  for(; i < str.size() && str[i] != ' '; i++) {
+    tmp.push_back(str[i]);
+  }
+  tmp_vec.push_back(tmp);
+  i++;
+  }
+  if(tmp_vec.size() > 3) {
+    for (const auto& str : tmp_vec) {
+      int a = std::stoi(str);
+      if(a > 0) {
+        obj_->polygon_vector.push_back(a-1);
+      }
+    }
+    obj_->count_of_facets++;
+  }
+  // std::cout << std::endl;
+}
+
 }  // namespace s21
