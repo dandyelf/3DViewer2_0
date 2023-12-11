@@ -217,6 +217,7 @@ void ParserObj::ParsLineFacet(std::string &str) {
   i++;
   }
   if(tmp_vec.size() > 2) {
+    tmp_vec.push_back(tmp_vec[0]);
     for (const auto& str : tmp_vec) {
       int a = std::stoi(str);
       if(a > 0) {
