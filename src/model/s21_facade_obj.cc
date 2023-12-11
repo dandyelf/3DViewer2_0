@@ -11,8 +11,8 @@ Facade::~Facade() {
 }
 
 void Facade::OpenObj(const std::string &file_name) {
-  // parcer_obj_.StartPars(file_name, &main_obj_);
-  parcer_obj_.StartParser(file_name, &main_obj_);
+  parcer_obj_.StartPars(file_name, &main_obj_);
+  // parcer_obj_.StartParser(file_name, &main_obj_);
 }
 
 void Facade::ResetObj() {

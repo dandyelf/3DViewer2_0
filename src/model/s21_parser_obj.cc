@@ -145,7 +145,7 @@ void ParserObj::StartParser(const std::string &file_name, ObjT *obj) {
   }
   fclose(fp_);
   obj_->count_of_vertexes =  obj_->vertex_vector.size() / 3;
-  obj_->count_of_facets = obj_->polygon_vector.size() / 3;
+  obj_->count_of_facets = obj_->polygon_vector.size() / 4;
   obj_->facet_elem = obj_->polygon_vector.size();
   for (auto& value : obj_->polygon_vector) {
     if(value < 1) value += obj_->count_of_vertexes-1;
@@ -201,6 +201,8 @@ std::string ParserObj::LineCreator(const std::string &dictionary){
   return tmp;
 }
 
+// !!!!!!! check differents in two parsers
+// !!!!!!!
 void ParserObj::ParsLineFacet(std::string &str) {
   std::vector<std::string> tmp_vec;
   std::size_t i{};
@@ -217,7 +219,6 @@ void ParserObj::ParsLineFacet(std::string &str) {
   i++;
   }
   if(tmp_vec.size() > 2) {
-    tmp_vec.push_back(tmp_vec[0]);
     for (const auto& str : tmp_vec) {
       int a = std::stoi(str);
       if(a > 0) {
@@ -225,6 +226,7 @@ void ParserObj::ParsLineFacet(std::string &str) {
       }
       obj_->polygon_vector.push_back(a);
     }
+    obj_->polygon_vector.push_back(obj_->polygon_vector[obj_->polygon_vector.size() - tmp_vec.size()-1]);
   }
   // std::cout << std::endl;
 }
