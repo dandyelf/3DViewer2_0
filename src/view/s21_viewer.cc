@@ -321,7 +321,6 @@ void Viewer::ErrorMessage(QString message) {
 void Viewer::ResetObj() {
   controller_obj_->ResetObj();
   qDebug() << "reset obj...";
-  // what here? or delete?
 }
 
 void Viewer::GifTimer() {
@@ -330,7 +329,6 @@ void Viewer::GifTimer() {
 }
 
 void Viewer::SettingsLoad() {
-  //  Загружаем настройки
   qDebug() << "load settings...";
   QSettings settings("s21_3d_viewer.conf", QSettings::IniFormat);
   settings.beginGroup("Main_Settings");

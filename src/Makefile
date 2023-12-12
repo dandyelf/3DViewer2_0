@@ -5,8 +5,6 @@ UNIT = model_tests.out
 STLIB = s21_viewer.a
 OS = $(shell uname -s)
 GT_FLAGS = -lgtest_main -lgtest -lm -lstdc++ -pthread -lm -g
-
-#  Project files and directories
 BUILD_DIR = build
 FOLDERS = controller/*.h model/*.cc tests/*.cc view/*.cc
 
@@ -89,15 +87,13 @@ model_valgrind: model_tests
 val:
 	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(BUILD_DIR)/$(APPLICATION)
 
-# если нужно проверить, то нужно в s21_3d_viewer_tests.cc раскоментировать main
-
-# gcov_report: $(STLIB) unit_tests.o
-# 	$(CC) $(CXXFLAGS) $(GCOV) s21_3d_viewer_tests.o model/s21_parser_obj.cc model/s21_aff_transform.cc -o $(UNIT) $(LIBS)
-# 	./$(UNIT)
-# 	gcov model/s21_parser_obj.cc model/s21_aff_transform.cc
-# 	lcov -t "tests" -o tests.info -c -d .
-# 	genhtml -o report tests.info
-# 	open report/index.html
+gcov_report: $(STLIB) unit_tests.o
+	$(CC) $(CXXFLAGS) $(GCOV) -lgtest_main s21_3d_viewer_tests.o model/s21_parser_obj.cc model/s21_aff_transform.cc -o $(UNIT) $(LIBS)
+	./$(UNIT)
+	gcov model/s21_parser_obj.cc model/s21_aff_transform.cc
+	lcov -t "tests" -o tests.info -c -d .
+	genhtml -o report tests.info
+	open report/index.html
 
 skull:
 	mkdir -p $(BUILD_DIR)

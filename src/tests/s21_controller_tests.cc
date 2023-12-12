@@ -10,8 +10,8 @@ TEST(ControllerTest, GetDataObj) {
   const char* file = "./tests/obj/tetrahedron.obj";
   controller_obj_->SetModel(&facade);
   controller_obj_->OpenObj(file);
-  EXPECT_EQ(controller_obj_->GetObject().count_of_vertexes, 38);
-  EXPECT_EQ(controller_obj_->GetObject().count_of_facets, 252);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().count_of_vertexes, 38);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().count_of_facets, 252);
 }
 
 TEST(ControllerTest, MoveX) {
@@ -21,11 +21,11 @@ TEST(ControllerTest, MoveX) {
   const char* file = "./tests/obj/Low-Poly-Racing-Car.obj";
   controller_obj_->SetModel(&facade);
   controller_obj_->OpenObj(file);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[1], 2.11894);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[2], -5.04223);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[1], 2.1189444065093999);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[2], -5.0422310829162598);
   controller_obj_->MoveObj('x', 5.0);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[1], 2.11894);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[2], -5.04223);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[1], 2.1189444065093999);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[2], -5.0422310829162598);
 }
 
 TEST(ControllerTest, TurnX) {
@@ -35,11 +35,11 @@ TEST(ControllerTest, TurnX) {
   const char* file = "./tests/obj/Low-Poly-Racing-Car.obj";
   controller_obj_->SetModel(&facade);
   controller_obj_->OpenObj(file);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[1], 2.11894);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[2], -5.04223);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[1], 2.1189444065093999);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[2], -5.0422310829162598);
   controller_obj_->RotateObj('x', 5.0);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[1], 1.67142);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[2], -5.20772);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[1], 1.6714217881790148);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[2], -5.207722044944874);
 }
 
 TEST(ControllerTest, ScaleX) {
@@ -49,11 +49,11 @@ TEST(ControllerTest, ScaleX) {
   const char* file = "./tests/obj/Low-Poly-Racing-Car.obj";
   controller_obj_->SetModel(&facade);
   controller_obj_->OpenObj(file);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[1], 2.11894);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[2], -5.04223);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[1], 2.1189444065093999);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[2], -5.0422310829162598);
   controller_obj_->ScaleObj('x', 5.0);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[1], 2.11894);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[2], -5.04223);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[1], 2.1189444065093999);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[2], -5.0422310829162598);
 }
 
 TEST(ControllerTest, ChangeSize) {
@@ -63,9 +63,9 @@ TEST(ControllerTest, ChangeSize) {
   const char* file = "./tests/obj/Low-Poly-Racing-Car.obj";
   controller_obj_->SetModel(&facade);
   controller_obj_->OpenObj(file);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[1], 2.11894);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[2], -5.04223);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[1], 2.1189444065093999);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[2], -5.0422310829162598);
   controller_obj_->ScaleObj('0', 5.0);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[1], 10.5947);
-  // EXPECT_EQ(controller_obj_->GetObject().vertexes[2], -25.2112);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[1], 10.594722032546999);
+  EXPECT_DOUBLE_EQ(controller_obj_->GetObject().vertexes[2], -25.211155414581299);
 }

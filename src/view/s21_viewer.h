@@ -125,13 +125,6 @@ private:
     QString file_name_;
     QString fname_gif_{};
 
-    // void gif_timer_();
-    // void settings_load_();
-    // void settings_save_();
-    // void reset_obj_();
-    // void file_proccessing_(QString file_name);
-    // void error_message_(QString message);
-    //or ???????????????????????????????????????
     void GifTimer();
     void SettingsLoad();
     void SettingsSave();

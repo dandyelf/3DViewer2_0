@@ -83,6 +83,4 @@ void Scene::draw() {
     if (smooth) glDisable(GL_POINT_SMOOTH);
   }
 
-  //    glDrawArrays(GL_TRIANGLES, 1, 12);  //  Данный вариант рисует
-  //    закрашенные треугольники. glEnableClientState(GL_INDEX_ARRAY);
 }
