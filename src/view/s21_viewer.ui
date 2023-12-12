@@ -141,6 +141,9 @@
           </item>
           <item>
            <widget class="QScrollBar" name="horizontalScrollBar">
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -165,6 +168,9 @@
           </item>
           <item>
            <widget class="QScrollBar" name="horizontalScrollBar_2">
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -189,6 +195,18 @@
           </item>
           <item>
            <widget class="QScrollBar" name="horizontalScrollBar_3">
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>99</number>
+            </property>
+            <property name="pageStep">
+             <number>8</number>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -848,7 +866,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>528</width>
+         <width>581</width>
          <height>32</height>
         </rect>
        </property>
@@ -857,13 +875,6 @@
          <widget class="QPushButton" name="pushButton">
           <property name="text">
            <string>Открыть</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="text">
-           <string>Сохранить JPEG</string>
           </property>
          </widget>
         </item>
@@ -885,6 +896,32 @@
          <widget class="QPushButton" name="pushButton_5">
           <property name="text">
            <string>Выход</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>551</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="text">
+           <string>Сохранить JPEG</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_21">
+          <property name="text">
+           <string>Сохранить BMP</string>
           </property>
          </widget>
         </item>

@@ -1,5 +1,5 @@
-#ifndef SCENE_H
-#define SCENE_H
+#ifndef CPP_S21_3DVIEWER_V2_SRC_VIEW_S21_SCENE_H_
+#define CPP_S21_3DVIEWER_V2_SRC_VIEW_S21_SCENE_H_
 
 #define GL_SILENCE_DEPRECATION
 
@@ -47,4 +47,4 @@ private:
     void draw();
 };
 
-#endif  // SCENE_H
+#endif  // CPP_S21_3DVIEWER_V2_SRC_VIEW_S21_SCENE_H_

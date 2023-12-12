@@ -1,6 +1,6 @@
 QT       += core gui opengl
 mac: QT += openglwidgets
-#linux: QT += opengl openglwidgets
+linux: QT += openglwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -23,6 +23,8 @@ SOURCES += \
 HEADERS += \
     s21_scene.h \
     s21_viewer.h \
+    s21_strategy.h \
+    s21_strategy_r.h \
     ../controller/s21_controller_obj.h \
     ../model/s21_aff_transform.h \
     ../model/s21_facade_obj.h \
