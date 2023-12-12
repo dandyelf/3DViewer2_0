@@ -36,11 +36,11 @@ void ParserObj::CountFacets(char *buffer, ObjT *obj) {
 
 int ParserObj::InitObjStruct(ObjT *obj) {
   err_ = 0;
-  if(obj->polygons != nullptr) {
-    delete [] obj->polygons;
+  if (obj->polygons != nullptr) {
+    delete[] obj->polygons;
   }
-  if(obj->vertexes != nullptr) {
-    delete [] obj->vertexes;
+  if (obj->vertexes != nullptr) {
+    delete[] obj->vertexes;
   }
   obj->vertexes = new double[obj->count_of_vertexes * 3];
   if (obj->vertexes == nullptr) {
@@ -119,9 +119,9 @@ int ParserObj::StartPars(const std::string &file_name, ObjT *obj) {
     err_ = ParseFile(file_name, obj);
   }
   if (!err_) {
-    for(int i = 0; i < obj->facet_elem; i++) {
-      if(obj->polygons[i] < 0) {
-        obj->polygons[i] = obj->count_of_facets + obj->polygons[i];
+    for (int i = 0; i < obj->facet_elem; i++) {
+      if (obj->polygons[i] < 0) {
+        obj->polygons[i] = obj->count_of_facets + obj->polygons[i] - 1;
       }
     }
   }
@@ -132,23 +132,22 @@ void ParserObj::StartParser(const std::string &file_name, ObjT *obj) {
   obj_ = obj;
   file_.open(file_name);
   fp_ = fopen(file_name.c_str(), "r");
-  if(!file_.is_open() || fp_ == NULL) {
+  if (!file_.is_open() || fp_ == NULL) {
     throw std::runtime_error("File fail");
   }
   obj->count_of_vertexes = 0;
   obj->count_of_facets = 0;
   obj->facet_elem = 0;
   ParsObj();
-  if(obj_->vertex_vector.size() < 3 || obj_->polygon_vector.size() < 1) {
+  if (obj_->vertex_vector.size() < 3 || obj_->polygon_vector.size() < 1) {
     fclose(fp_);
     throw std::runtime_error("Empty of fail file");
   }
   fclose(fp_);
-  obj_->count_of_vertexes =  obj_->vertex_vector.size() / 3;
-  obj_->count_of_facets = obj_->polygon_vector.size() / 4;
-  obj_->facet_elem = obj_->polygon_vector.size();
-  for (auto& value : obj_->polygon_vector) {
-    if(value < 1) value += obj_->count_of_vertexes-1;
+  obj_->count_of_vertexes = obj_->vertex_vector.size() / 3;
+  obj_->count_of_facets = obj_->polygon_vector.size() / 2;
+  for (auto &value : obj_->polygon_vector) {
+    if (value < 0) value += obj_->count_of_vertexes;
   }
   obj_->polygons = obj_->polygon_vector.data();
   obj_->vertexes = obj_->vertex_vector.data();
@@ -169,14 +168,12 @@ void ParserObj::ParsObj() {
   }
 }
 
-void ParserObj::VertexLineCheck() {
-  ParsLineVertex();
-}
+void ParserObj::VertexLineCheck() { ParsLineVertex(); }
 
 void ParserObj::ParsLineVertex() {
   double x, y, z;
   int matches = fscanf(fp_, "%lf %lf %lf\n", &x, &y, &z);
-  if(matches == 3) {
+  if (matches == 3) {
     obj_->vertex_vector.push_back(x);
     obj_->vertex_vector.push_back(y);
     obj_->vertex_vector.push_back(z);
@@ -191,10 +188,10 @@ void ParserObj::FacetLineCheck() {
   ParsLineFacet(tmp);
 }
 
-std::string ParserObj::LineCreator(const std::string &dictionary){
+std::string ParserObj::LineCreator(const std::string &dictionary) {
   std::string tmp;
   char get = fgetc(fp_);
-  while(dictionary.find(get) != std::string::npos && get != EOF) {
+  while (dictionary.find(get) != std::string::npos && get != EOF) {
     tmp.push_back(get);
     get = fgetc(fp_);
   }
@@ -204,31 +201,46 @@ std::string ParserObj::LineCreator(const std::string &dictionary){
 // !!!!!!! check differents in two parsers
 // !!!!!!!
 void ParserObj::ParsLineFacet(std::string &str) {
-  std::vector<std::string> tmp_vec;
+  std::vector<int> tmp_vec;
   std::size_t i{};
-  while(i < str.size()) {
-  if(str[i] == ' ') {
-    i++;
-    continue;
-  }
-  std::string tmp;
-  for(; i < str.size() && str[i] != ' '; i++) {
-    tmp.push_back(str[i]);
-  }
-  tmp_vec.push_back(tmp);
-  i++;
-  }
-  if(tmp_vec.size() > 2) {
-    for (const auto& str : tmp_vec) {
-      int a = std::stoi(str);
-      if(a > 0) {
-        obj_->polygon_vector.push_back(a-1);
-      }
-      obj_->polygon_vector.push_back(a);
+  while (i < str.size()) {
+    if (str[i] == ' ') {
+      i++;
+      continue;
     }
-    obj_->polygon_vector.push_back(obj_->polygon_vector[obj_->polygon_vector.size() - tmp_vec.size()-1]);
+    std::string tmp;
+    for (; i < str.size() && str[i] != ' '; i++) {
+      tmp.push_back(str[i]);
+    }
+    tmp_vec.push_back(std::stoi(tmp));
+    i++;
   }
-  // std::cout << std::endl;
+
+  if (tmp_vec.size() > 2) {
+    SortInsert(tmp_vec);
+  }
+}
+
+void ParserObj::SortInsert(const std::vector<int> &in) {
+  int last = 0;
+  for (int i = 0; i < in.size(); i++) {
+    for (int j = i; j <= i + 1 && (j + 1) <= in.size(); j++) {
+        // Перекладываем элементы A[i] в B
+      PutOutVector(in[j]);
+    }
+  }
+  PutOutVector(in[0]);
+  obj_->facet_elem += in.size() * 2;
+}
+
+void ParserObj::PutOutVector(int a) {
+  int b;
+  if(a < 0) {
+    b = (a + obj_->vertex_vector.size() / 3 + 1);
+  } else {
+    b = a;
+  }
+  obj_->polygon_vector.push_back(b - 1);
 }
 
 }  // namespace s21

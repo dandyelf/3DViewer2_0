@@ -11,8 +11,8 @@ TEST(MainTest, Cube) {
   parser.StartPars(file, &obj);
   EXPECT_EQ(obj.count_of_vertexes, 1485);
   EXPECT_EQ(obj.count_of_facets, 2718);
-  delete [] obj.vertexes;
-  delete [] obj.polygons;
+  delete[] obj.vertexes;
+  delete[] obj.polygons;
 }
 
 TEST(AffTransformTest, MoveX) {
@@ -20,7 +20,7 @@ TEST(AffTransformTest, MoveX) {
   s21::AffTransform transform(&obj);
   obj.count_of_vertexes = 2;
   obj.count_of_facets = 0;
-  obj.vertexes = new double[obj.count_of_vertexes*3];
+  obj.vertexes = new double[obj.count_of_vertexes * 3];
   obj.vertexes[0] = 1.0;
   obj.vertexes[1] = 2.0;
   obj.vertexes[2] = 3.0;
@@ -43,7 +43,7 @@ TEST(AffTransformTest, MoveY) {
   s21::AffTransform transform(&obj);
   obj.count_of_vertexes = 2;
   obj.count_of_facets = 0;
-  obj.vertexes = new double[obj.count_of_vertexes*3];
+  obj.vertexes = new double[obj.count_of_vertexes * 3];
   obj.vertexes[0] = 1.0;
   obj.vertexes[1] = 2.0;
   obj.vertexes[2] = 3.0;
@@ -66,7 +66,7 @@ TEST(AffTransformTest, MoveZ) {
   s21::AffTransform transform(&obj);
   obj.count_of_vertexes = 2;
   obj.count_of_facets = 0;
-  obj.vertexes = new double[obj.count_of_vertexes*3];
+  obj.vertexes = new double[obj.count_of_vertexes * 3];
   obj.vertexes[0] = 1.0;
   obj.vertexes[1] = 2.0;
   obj.vertexes[2] = 3.0;
@@ -89,7 +89,7 @@ TEST(AffTransformTest, TurnX) {
   s21::AffTransform transform(&obj);
   obj.count_of_vertexes = 2;
   obj.count_of_facets = 0;
-  obj.vertexes = new double[obj.count_of_vertexes*3];
+  obj.vertexes = new double[obj.count_of_vertexes * 3];
   obj.vertexes[0] = 1.0;
   obj.vertexes[1] = 0.0;
   obj.vertexes[2] = 0.0;
@@ -112,7 +112,7 @@ TEST(AffTransformTest, TurnY) {
   s21::AffTransform transform(&obj);
   obj.count_of_vertexes = 2;
   obj.count_of_facets = 0;
-  obj.vertexes = new double[obj.count_of_vertexes*3];
+  obj.vertexes = new double[obj.count_of_vertexes * 3];
   obj.vertexes[0] = 1.0;
   obj.vertexes[1] = 0.0;
   obj.vertexes[2] = 0.0;
@@ -135,7 +135,7 @@ TEST(AffTransformTest, TurnZ) {
   s21::AffTransform transform(&obj);
   obj.count_of_vertexes = 2;
   obj.count_of_facets = 0;
-  obj.vertexes = new double[obj.count_of_vertexes*3];
+  obj.vertexes = new double[obj.count_of_vertexes * 3];
   obj.vertexes[0] = 1.0;
   obj.vertexes[1] = 0.0;
   obj.vertexes[2] = 0.0;
@@ -158,7 +158,7 @@ TEST(AffTransformTest, ScaleX) {
   s21::AffTransform transform(&obj);
   obj.count_of_vertexes = 2;
   obj.count_of_facets = 0;
-  obj.vertexes = new double[obj.count_of_vertexes*3];
+  obj.vertexes = new double[obj.count_of_vertexes * 3];
   obj.vertexes[0] = 1.0;
   obj.vertexes[1] = 0.0;
   obj.vertexes[2] = 0.0;
@@ -181,7 +181,7 @@ TEST(AffTransformTest, ScaleY) {
   s21::AffTransform transform(&obj);
   obj.count_of_vertexes = 2;
   obj.count_of_facets = 0;
-  obj.vertexes = new double[obj.count_of_vertexes*3];
+  obj.vertexes = new double[obj.count_of_vertexes * 3];
   obj.vertexes[0] = 1.0;
   obj.vertexes[1] = 0.0;
   obj.vertexes[2] = 0.0;
@@ -204,7 +204,7 @@ TEST(AffTransformTest, ScaleZ) {
   s21::AffTransform transform(&obj);
   obj.count_of_vertexes = 3;
   obj.count_of_facets = 0;
-  obj.vertexes = new double[obj.count_of_vertexes*3];
+  obj.vertexes = new double[obj.count_of_vertexes * 3];
   obj.vertexes[0] = 1.0;
   obj.vertexes[1] = 0.0;
   obj.vertexes[2] = 0.0;
@@ -227,7 +227,7 @@ TEST(AffTransformTest, ChangeSize) {
   s21::AffTransform transform(&obj);
   obj.count_of_vertexes = 2;
   obj.count_of_facets = 0;
-  obj.vertexes = new double[obj.count_of_vertexes*3];
+  obj.vertexes = new double[obj.count_of_vertexes * 3];
   obj.vertexes[0] = 1.0;
   obj.vertexes[1] = 2.0;
   obj.vertexes[2] = 3.0;

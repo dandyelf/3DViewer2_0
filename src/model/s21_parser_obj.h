@@ -38,6 +38,8 @@ public:
     void FacetLineCheck();
     std::string LineCreator(const std::string& dictionary);
     void ParsLineFacet(std::string& str);
+    void SortInsert(const std::vector<int>& in);
+    void PutOutVector(int a);
     void CountFacets(char* buffer, ObjT* obj);
 
    private:

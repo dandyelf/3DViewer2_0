@@ -1,6 +1,6 @@
 #ifndef CPP_S21_3DVIEWER_V2_SRC_MODEL_S21_FACADE_H_
 #define CPP_S21_3DVIEWER_V2_SRC_MODEL_S21_FACADE_H_
-
+#include <iostream>
 #include <string>
 #include "../model/s21_aff_transform.h"
 #include "../model/s21_parser_obj.h"
@@ -12,7 +12,7 @@ public:
   Facade() = default;
   Facade(const Facade&) = delete;
   Facade(Facade&&) = delete;
-  ~Facade();
+  ~Facade(){};
   Facade& operator=(const Facade&) = delete;
   Facade& operator=(Facade&&) = delete;
   void OpenObj(const std::string &file_name);

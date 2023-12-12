@@ -1,22 +1,29 @@
 #include "s21_facade_obj.h"
 
 namespace s21 {
-Facade::~Facade() {
-  // if(main_obj_.polygons != nullptr) {
-  //   delete [] main_obj_.polygons;
-  // }
-  // if(main_obj_.vertexes != nullptr) {
-  //   delete [] main_obj_.vertexes;
-  // }
-}
 
 void Facade::OpenObj(const std::string &file_name) {
-  parcer_obj_.StartPars(file_name, &main_obj_);
-  // parcer_obj_.StartParser(file_name, &main_obj_);
+  ObjT tmp;
+  try
+  {
+    // parcer_obj_.StartPars(file_name, &rotate_obj_);
+    parcer_obj_.StartParser(file_name, &tmp);
+  }
+  catch(const std::exception& e)
+  {
+    std::cout << e.what() << std::endl;
+    throw;
+  }
+  main_obj_ = std::move(tmp);
+  rotate_obj_ = main_obj_;
+  rotate_obj_.vertexes = rotate_obj_.vertex_vector.data();
+  rotate_obj_.polygons = rotate_obj_.polygon_vector.data();
 }
 
 void Facade::ResetObj() {
-  // ??????????????????
+  main_obj_ = rotate_obj_;
+  main_obj_.vertexes = main_obj_.vertex_vector.data();
+  main_obj_.polygons = main_obj_.polygon_vector.data();
 }
 
 void Facade::RotateObj(char axis, double value) {
