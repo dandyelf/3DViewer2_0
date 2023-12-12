@@ -8,7 +8,7 @@ GT_FLAGS = -lgtest_main -lgtest -lm -lstdc++ -pthread -lm -g
 
 #  Project files and directories
 BUILD_DIR = build
-FOLDERS = controller/*.h model/*.cc tests/*.cc view/*.cc
+FOLDERS = controller/*.h model/*.h model/*.cc tests/*.cc view/*.h view/*.cc
 
 ifeq ($(OS), Darwin)
     LIBS := -lcheck 
