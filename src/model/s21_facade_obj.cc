@@ -2,14 +2,11 @@
 
 namespace s21 {
 
-void Facade::OpenObj(const std::string &file_name) {
+void Facade::OpenObj(const std::string& file_name) {
   ObjT tmp;
-  try
-  {
+  try {
     parcer_obj_.StartParser(file_name, &tmp);
-  }
-  catch(const std::exception& e)
-  {
+  } catch (const std::exception& e) {
     std::cout << e.what() << std::endl;
     throw;
   }

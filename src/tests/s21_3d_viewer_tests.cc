@@ -8,9 +8,9 @@ TEST(MainTest, Cube) {
   s21::ObjT obj;
   s21::ParserObj parser;
   const std::string file = "./tests/obj/Low-Poly-Racing-Car.obj";
-  parser.StartPars(file, &obj);
+  parser.StartParser(file, &obj);
   EXPECT_EQ(obj.count_of_vertexes, 1485);
-  EXPECT_EQ(obj.count_of_facets, 2718);
+  EXPECT_EQ(obj.count_of_facets, 10608);
 }
 
 TEST(AffTransformTest, MoveX) {

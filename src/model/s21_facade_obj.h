@@ -6,7 +6,7 @@
 #include "../model/s21_parser_obj.h"
 namespace s21 {
 
-// Фасад
+// Facade Singleton
 class Facade {
 public:
   Facade() = default;

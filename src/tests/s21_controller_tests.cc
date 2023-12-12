@@ -7,11 +7,11 @@ TEST(ControllerTest, GetDataObj) {
   s21::Controller* controller_obj_;
   controller_obj_ = s21::Controller::getInstance();
   s21::Facade facade;
-  const char* file = "./tests/obj/Low-Poly-Racing-Car.obj";
+  const char* file = "./tests/obj/tetrahedron.obj";
   controller_obj_->SetModel(&facade);
   controller_obj_->OpenObj(file);
-  EXPECT_EQ(controller_obj_->GetObject().count_of_vertexes, 1485);
-  EXPECT_EQ(controller_obj_->GetObject().count_of_facets, 2718);
+  EXPECT_EQ(controller_obj_->GetObject().count_of_vertexes, 38);
+  EXPECT_EQ(controller_obj_->GetObject().count_of_facets, 252);
 }
 
 TEST(ControllerTest, MoveX) {
