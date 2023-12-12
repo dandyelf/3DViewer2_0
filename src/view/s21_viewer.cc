@@ -319,6 +319,7 @@ void Viewer::ErrorMessage(QString message) {
 }
 
 void Viewer::ResetObj() {
+  controller_obj_->ResetObj();
   qDebug() << "reset obj...";
   // what here? or delete?
 }
