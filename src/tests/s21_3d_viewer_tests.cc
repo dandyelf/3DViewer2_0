@@ -11,8 +11,6 @@ TEST(MainTest, Cube) {
   parser.StartPars(file, &obj);
   EXPECT_EQ(obj.count_of_vertexes, 1485);
   EXPECT_EQ(obj.count_of_facets, 2718);
-  delete[] obj.vertexes;
-  delete[] obj.polygons;
 }
 
 TEST(AffTransformTest, MoveX) {

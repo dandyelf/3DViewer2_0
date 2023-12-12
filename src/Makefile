@@ -86,6 +86,9 @@ model_tests:
 model_valgrind: model_tests
 	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(BUILD_DIR)/model_tests.out
 
+val:
+	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(BUILD_DIR)/$(APPLICATION)
+
 # если нужно проверить, то нужно в s21_3d_viewer_tests.cc раскоментировать main
 
 # gcov_report: $(STLIB) unit_tests.o

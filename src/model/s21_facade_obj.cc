@@ -6,7 +6,6 @@ void Facade::OpenObj(const std::string &file_name) {
   ObjT tmp;
   try
   {
-    // parcer_obj_.StartPars(file_name, &rotate_obj_);
     parcer_obj_.StartParser(file_name, &tmp);
   }
   catch(const std::exception& e)
