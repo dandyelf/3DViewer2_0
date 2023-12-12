@@ -141,10 +141,7 @@ void Viewer::on_pushButton_3_clicked() {
   }
 }
 
-void Viewer::on_pushButton_4_clicked() {
-  ResetObj();
-  // FileProccessing(file_name_);
-}
+void Viewer::on_pushButton_4_clicked() { ResetObj(); }
 
 void Viewer::on_pushButton_5_clicked() { QApplication::quit(); }
 
@@ -285,20 +282,9 @@ void Viewer::FileProccessing(QString file_name_) {
   QByteArray tmp = file_name_.toLocal8Bit();
   char *file = tmp.data();
 
-  // ResetObj();
   controller_obj_->OpenObj(file);
 
   ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
-  max_el_ = 0.0;
-  for (int i = 0; i < controller_obj_->GetObject().count_of_vertexes; i++) {
-    if (max_el_ < controller_obj_->GetObject().vertexes[i])
-      max_el_ = controller_obj_->GetObject().vertexes[i];
-  }
-
-  for (int i = 0; i < (controller_obj_->GetObject().count_of_vertexes) * 3;
-       i++) {
-    controller_obj_->GetObject().vertexes[i] /= max_el_;
-  }
 
   ui->label_9->setText(
       QString::number(controller_obj_->GetObject().count_of_vertexes));
@@ -318,10 +304,6 @@ void Viewer::ErrorMessage(QString message) {
 
 void Viewer::ResetObj() {
   controller_obj_->ResetObj();
-  for (int i = 0; i < (controller_obj_->GetObject().count_of_vertexes) * 3;
-       i++) {
-    controller_obj_->GetObject().vertexes[i] /= max_el_;
-  }
   ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
   ui->widget->SetFacetsArr(controller_obj_->GetObject().polygons);
   ui->widget->SetLines(controller_obj_->GetObject().facet_elem);
