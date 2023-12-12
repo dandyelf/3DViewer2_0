@@ -1,6 +1,5 @@
 #include "s21_viewer.h"
 
-#include <QDebug>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
@@ -110,7 +109,6 @@ void Viewer::on_pushButton_clicked() {
   file_name_ = QFileDialog::getOpenFileName(this, tr("Open Obj File"), path_,
                                             tr("OBJ Files (*.obj)"));
   if (file_name_ != "") {
-    qDebug() << file_name_;
     // updates
     FileProccessing(file_name_);
   } else {
@@ -145,7 +143,7 @@ void Viewer::on_pushButton_3_clicked() {
 
 void Viewer::on_pushButton_4_clicked() {
   ResetObj();
-  FileProccessing(file_name_);
+  // FileProccessing(file_name_);
 }
 
 void Viewer::on_pushButton_5_clicked() { QApplication::quit(); }
@@ -287,7 +285,7 @@ void Viewer::FileProccessing(QString file_name_) {
   QByteArray tmp = file_name_.toLocal8Bit();
   char *file = tmp.data();
 
-  ResetObj();
+  // ResetObj();
   controller_obj_->OpenObj(file);
 
   ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
@@ -320,8 +318,15 @@ void Viewer::ErrorMessage(QString message) {
 
 void Viewer::ResetObj() {
   controller_obj_->ResetObj();
-  qDebug() << "reset obj...";
-  // what here? or delete?
+  for (int i = 0; i < (controller_obj_->GetObject().count_of_vertexes) * 3;
+       i++) {
+    controller_obj_->GetObject().vertexes[i] /= max_el_;
+  }
+  ui->widget->SetVertexArr(controller_obj_->GetObject().vertexes);
+  ui->widget->SetFacetsArr(controller_obj_->GetObject().polygons);
+  ui->widget->SetLines(controller_obj_->GetObject().facet_elem);
+  ui->widget->Set();
+  ui->widget->update();
 }
 
 void Viewer::GifTimer() {
@@ -331,7 +336,6 @@ void Viewer::GifTimer() {
 
 void Viewer::SettingsLoad() {
   //  Загружаем настройки
-  qDebug() << "load settings...";
   QSettings settings("s21_3d_viewer.conf", QSettings::IniFormat);
   settings.beginGroup("Main_Settings");
   path_ = settings.value("path").toString();
@@ -384,7 +388,6 @@ void Viewer::SettingsLoad() {
 
 void Viewer::SettingsSave() {
   //  Сохраняем настройки
-  qDebug() << "save settings...";
   QSettings settings("s21_3d_viewer.conf", QSettings::IniFormat);
   settings.beginGroup("Main_Settings");
   settings.setValue("path", path_);
