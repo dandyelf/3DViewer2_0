@@ -37,18 +37,18 @@ void Scene::paintGL() {
   draw();
 }
 
-void Scene::SetOrtho() {
+void Scene::SetOrtho() noexcept {
   perspective = false;
   update();
 }
-void Scene::SetPersp() {
+void Scene::SetPersp() noexcept {
   perspective = true;
   update();
 }
-void Scene::Set() { data_loaded_ = 1; }
-void Scene::SetVertexArr(double *arr) { vertex_arr_ = arr; }
-void Scene::SetFacetsArr(int *arr) { facets_arr_ = arr; }
-void Scene::SetLines(int lines) { lines_ = lines; }
+void Scene::Set() noexcept { data_loaded_ = 1; }
+void Scene::SetVertexArr(double *arr) noexcept { vertex_arr_ = arr; }
+void Scene::SetFacetsArr(int *arr) noexcept { facets_arr_ = arr; }
+void Scene::SetLines(int lines) noexcept { lines_ = lines; }
 void Scene::mousePressEvent(QMouseEvent *e) { mPos_ = e->pos(); }
 
 void Scene::mouseMoveEvent(QMouseEvent *e) {
