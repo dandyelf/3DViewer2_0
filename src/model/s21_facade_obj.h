@@ -17,11 +17,11 @@ class Facade {
   Facade& operator=(const Facade&) = delete;
   Facade& operator=(Facade&&) = delete;
   void OpenObj(const std::string& file_name);
-  void ResetObj();
-  void RotateObj(char axis, double value);
-  void ScaleObj(char axis, double value);
-  void MoveObj(char axis, double value);
-  const s21::ObjT& GetObject() {
+  void ResetObj() noexcept;
+  void RotateObj(char axis, double value) noexcept;
+  void ScaleObj(char axis, double value) noexcept;
+  void MoveObj(char axis, double value) noexcept;
+  const s21::ObjT& GetObject() const noexcept {
     const s21::ObjT& ref_obj = main_obj_;
     return ref_obj;
   }
