@@ -5,7 +5,7 @@ UNIT = model_tests.out
 STLIB = s21_viewer.a
 OS = $(shell uname -s)
 GT_FLAGS = -lgtest_main -lgtest -lm -lstdc++ -pthread -lm -g
-BUILD_DIR = build
+BUILD_DIR = 3dviewer
 FOLDERS = controller/*.h model/*.cc tests/*.cc view/*.cc
 
 ifeq ($(OS), Darwin)
