@@ -35,11 +35,13 @@ clean:
 dvi:
 	open dvi.html
 
-dist:
-	rm -rf Archive_3dviewer1.0/
-	mkdir -p Archive_3dviewer1.0/
-	mv ./3dviewer/$(APPLICATION) Archive_3dviewer1.0/src/
-	tar cvzf Archive_3dviewer1.0.tgz Archive_3dviewer1.0/
+dist: clean
+	mkdir -p Archive_3dviewer1.0/src
+	cp -r view/* Archive_3dviewer1.0/src/ 
+	cp -r model/* Archive_3dviewer1.0/src/
+	cp -r controller/* Archive_3dviewer1.0/src/ 
+	cp -r tests/* Archive_3dviewer1.0/src/
+	tar cvzf Archive_3dviewer1.0.tgz -C Archive_3dviewer1.0 .
 	rm -rf Archive_3dviewer1.0/
 
 s21_viewer.a: build_s21_viewer
