@@ -1,6 +1,5 @@
 #include "s21_scene.h"
 
-#include <QDebug>
 #include <QtMath>
 
 #include "QMouseEvent"

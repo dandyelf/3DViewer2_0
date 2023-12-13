@@ -6,7 +6,7 @@ STLIB = s21_viewer.a
 OS = $(shell uname -s)
 GT_FLAGS = -lgtest_main -lgtest -lm -lstdc++ -pthread -lm -g
 BUILD_DIR = 3dviewer
-FOLDERS = controller/*.h model/*.cc tests/*.cc view/*.cc
+FOLDERS = controller/*.h model/*.h model/*.cc tests/*.cc view/*.h view/*.cc
 
 ifeq ($(OS), Darwin)
     LIBS := -lcheck 

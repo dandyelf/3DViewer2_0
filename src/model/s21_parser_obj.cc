@@ -18,11 +18,18 @@ void ParserObj::StartParser(const std::string &file_name, ObjT *obj) {
   obj_->count_of_facets = obj_->polygon_vector.size() / 2;
   obj_->polygons = obj_->polygon_vector.data();
   obj_->vertexes = obj_->vertex_vector.data();
+  double max_el_ = 0.0;
+  for (int i = 0; i < obj_->count_of_vertexes; i++) {
+    if (max_el_ < obj_->vertexes[i]) max_el_ = obj_->vertexes[i];
+  }
+  for (int i = 0; i < (obj_->count_of_vertexes) * 3; i++) {
+    obj_->vertexes[i] /= max_el_;
+  }
 }
 
 void ParserObj::ParsObj() {
   while (1) {
-    char lineHeader[128]; 
+    char lineHeader[128];
     int res = fscanf(fp_, "%s", lineHeader);
     if (res == EOF) break;
     if (strcmp(lineHeader, "v") == 0) {
