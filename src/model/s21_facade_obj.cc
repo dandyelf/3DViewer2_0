@@ -16,20 +16,20 @@ void Facade::OpenObj(const std::string& file_name) {
   rotate_obj_.polygons = rotate_obj_.polygon_vector.data();
 }
 
-void Facade::ResetObj() {
+void Facade::ResetObj() noexcept {
   main_obj_ = rotate_obj_;
   main_obj_.vertexes = main_obj_.vertex_vector.data();
   main_obj_.polygons = main_obj_.polygon_vector.data();
 }
 
-void Facade::RotateObj(char axis, double value) {
+void Facade::RotateObj(char axis, double value) noexcept {
   s21::AffTransform aff_transform(&main_obj_);
   if (axis == 'x') aff_transform.TurnX(value);
   if (axis == 'y') aff_transform.TurnY(value);
   if (axis == 'z') aff_transform.TurnZ(value);
 }
 
-void Facade::ScaleObj(char axis, double value) {
+void Facade::ScaleObj(char axis, double value) noexcept {
   s21::AffTransform aff_transform(&main_obj_);
   if (axis == '0') aff_transform.Scale(value);
   if (axis == 'x') aff_transform.ScaleX(value);
@@ -37,7 +37,7 @@ void Facade::ScaleObj(char axis, double value) {
   if (axis == 'z') aff_transform.ScaleZ(value);
 }
 
-void Facade::MoveObj(char axis, double value) {
+void Facade::MoveObj(char axis, double value) noexcept {
   s21::AffTransform aff_transform(&main_obj_);
   if (axis == 'x') aff_transform.MoveX(value);
   if (axis == 'y') aff_transform.MoveY(value);

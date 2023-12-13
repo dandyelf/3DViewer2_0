@@ -11,13 +11,13 @@ class Scene : public QOpenGLWidget {
 public:
     Scene(QWidget *parent = nullptr);
 
-    void Set();
-    void SetOrtho();
-    void SetPersp();
+    void Set() noexcept;
+    void SetOrtho() noexcept;
+    void SetPersp() noexcept;
 
-    void SetVertexArr(double *);
-    void SetFacetsArr(int *);
-    void SetLines(int);
+    void SetVertexArr(double *) noexcept;
+    void SetFacetsArr(int *) noexcept;
+    void SetLines(int) noexcept;
 
     double fon_r_{}, fon_g_{}, fon_b_{};
     double line_r_{}, line_g_{}, line_b_{};

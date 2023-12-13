@@ -22,20 +22,20 @@ typedef struct ObjT{
 
 class ParserObj {
 public:
-    ParserObj() = default;
+    ParserObj() noexcept = default;
     ParserObj(const ParserObj&) = delete;
-    ParserObj(ParserObj&&) = delete;
-    ~ParserObj() = default;
+    ParserObj(ParserObj&&) noexcept = delete;
+    ~ParserObj() noexcept = default;
     void StartParser(const std::string& file_name, ObjT* obj);
-    void ParsObj();
-    void VertexLineCheck();
-    void ParsLineVertex();
-    void FacetLineCheck();
-    std::string LineCreator(const std::string& dictionary);
-    void ParsLineFacet(std::string& str);
-    void SortInsert(const std::vector<int>& in);
-    void PutOutVector(int a);
-   private:
+    void ParsObj() noexcept;
+    void VertexLineCheck() noexcept;
+    void ParsLineVertex() noexcept;
+    void FacetLineCheck() noexcept;
+    std::string LineCreator(const std::string& dictionary) const noexcept;
+    void ParsLineFacet(std::string& str) noexcept;
+    void SortInsert(const std::vector<int>& in) noexcept;
+    void PutOutVector(int a) noexcept;
+private:
     ObjT *obj_;
     FILE *fp_;
 };

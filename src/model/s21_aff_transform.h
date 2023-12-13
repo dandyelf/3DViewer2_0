@@ -9,28 +9,28 @@ namespace s21 {
 
 typedef enum RESULT {
   OK,
-  ERR_ZERO,  // масштаб с коэффициентом 0
+  ERR_ZERO,
 } RESULT;
 
 class AffTransform {
   public:
-    AffTransform() = default;
+    AffTransform() noexcept = default;
     AffTransform(const AffTransform&) = delete;
     AffTransform(AffTransform&&) = delete;
-    AffTransform(ObjT* obj) : obj_t_(obj){};
-    ~AffTransform() = default;
-    void InitObjStruct(ObjT* obj) { obj_t_ = obj; };
-    int Scale(double koff);
-    int ScaleX(double koff);
-    int ScaleY(double koff);
-    int ScaleZ(double koff);
-    void MoveX(double mv);
-    void MoveY(double mv);
-    void MoveZ(double mv);
-    void TurnX(double angle);
-    void TurnY(double angle);
-    void TurnZ(double angle);
-    void clear();
+    AffTransform(ObjT* obj) noexcept : obj_t_(obj){};
+    ~AffTransform() noexcept = default;
+    void InitObjStruct(ObjT* obj) noexcept { obj_t_ = obj; };
+    int Scale(double koff) noexcept;
+    int ScaleX(double koff) noexcept;
+    int ScaleY(double koff) noexcept;
+    int ScaleZ(double koff) noexcept;
+    void MoveX(double mv) noexcept;
+    void MoveY(double mv) noexcept;
+    void MoveZ(double mv) noexcept;
+    void TurnX(double angle) noexcept;
+    void TurnY(double angle) noexcept;
+    void TurnZ(double angle) noexcept;
+    void clear() noexcept;
 
   private:
     ObjT* obj_t_;

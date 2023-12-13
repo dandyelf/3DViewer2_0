@@ -82,5 +82,4 @@ void Scene::draw() {
     if (stipple) glDisable(GL_LINE_STIPPLE);
     if (smooth) glDisable(GL_POINT_SMOOTH);
   }
-
 }

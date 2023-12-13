@@ -19,9 +19,9 @@ class Viewer : public QMainWindow {
     Q_OBJECT
 
 public:
-    Viewer(QWidget *parent = nullptr);
-    ~Viewer();
-    void SetControllerObj(s21::Controller *controller_obj) {
+    explicit Viewer(QWidget *parent = nullptr);
+    ~Viewer() override;
+    void SetControllerObj(s21::Controller *controller_obj) noexcept {
         controller_obj_ = controller_obj;
     }
 

@@ -20,9 +20,9 @@ void ParserObj::StartParser(const std::string &file_name, ObjT *obj) {
   obj_->vertexes = obj_->vertex_vector.data();
 }
 
-void ParserObj::ParsObj() {
+void ParserObj::ParsObj() noexcept {
   while (1) {
-    char lineHeader[128]; 
+    char lineHeader[128];
     int res = fscanf(fp_, "%s", lineHeader);
     if (res == EOF) break;
     if (strcmp(lineHeader, "v") == 0) {
@@ -34,9 +34,9 @@ void ParserObj::ParsObj() {
   }
 }
 
-void ParserObj::VertexLineCheck() { ParsLineVertex(); }
+void ParserObj::VertexLineCheck() noexcept { ParsLineVertex(); }
 
-void ParserObj::ParsLineVertex() {
+void ParserObj::ParsLineVertex() noexcept {
   double x, y, z;
   int matches = fscanf(fp_, "%lf %lf %lf\n", &x, &y, &z);
   if (matches == 3) {
@@ -48,12 +48,12 @@ void ParserObj::ParsLineVertex() {
   }
 }
 
-void ParserObj::FacetLineCheck() {
+void ParserObj::FacetLineCheck() noexcept {
   std::string tmp = LineCreator("1234567890-/ ");
   ParsLineFacet(tmp);
 }
 
-std::string ParserObj::LineCreator(const std::string &dictionary) {
+std::string ParserObj::LineCreator(const std::string &dictionary) const noexcept {
   std::string tmp;
   char get = fgetc(fp_);
   while (dictionary.find(get) != std::string::npos && get != EOF) {
@@ -63,7 +63,7 @@ std::string ParserObj::LineCreator(const std::string &dictionary) {
   return tmp;
 }
 
-void ParserObj::ParsLineFacet(std::string &str) {
+void ParserObj::ParsLineFacet(std::string &str) noexcept {
   std::vector<int> tmp_vec;
   std::size_t i{};
   while (i < str.size()) {
@@ -83,7 +83,7 @@ void ParserObj::ParsLineFacet(std::string &str) {
   }
 }
 
-void ParserObj::SortInsert(const std::vector<int> &in) {
+void ParserObj::SortInsert(const std::vector<int> &in) noexcept {
   for (size_t i = 0; i < in.size(); i++) {
     for (size_t j = i; j <= i + 1 && (j + 1) <= in.size(); j++) {
       PutOutVector(in[j]);
@@ -93,7 +93,7 @@ void ParserObj::SortInsert(const std::vector<int> &in) {
   obj_->facet_elem += in.size() * 2;
 }
 
-void ParserObj::PutOutVector(int a) {
+void ParserObj::PutOutVector(int a) noexcept {
   int b;
   if (a < 0) {
     b = (a + obj_->vertex_vector.size() / 3 + 1);
