@@ -1,3 +1,4 @@
+.PHONY: install dvi dist s21_viewer.a clang gcov_report
 CC = gcc
 CXXFLAGS = -std=c++17 -Wall -Werror -Wextra
 GCOV = --coverage
