@@ -41,23 +41,12 @@ dist:
 	tar cvzf Archive_3dviewer1.0.tgz Archive_3dviewer1.0/
 	rm -rf Archive_3dviewer1.0/
 
-tests: $(STLIB)
-	mkdir -p $(BUILD_DIR)
-	$(CC) $(CXXFLAGS) tests/s21_3d_viewer_tests.cc $(STLIB) -o $(BUILD_DIR)/$(UNIT) $(LIBS)
-	./$(BUILD_DIR)/$(UNIT)
-
-valgrind: tests
-	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(UNIT)
-
 s21_viewer.a: build_s21_viewer
 
 build_s21_viewer:
 	$(CC) -c model/s21_parser_obj.cc model/s21_aff_transform.cc
 	ar rcs $(STLIB) s21_*.o s21_aff*.o
 	ranlib $(STLIB)
-
-unit_tests.o:
-	$(CC) $(CXXFLAGS) -c tests/s21_3d_viewer_tests.cc
 
 clang:
 	clang-format -style=file:../materials/linters/.clang-format -n ./*.cc $(FOLDERS)
@@ -69,18 +58,15 @@ open:
 coverage:
 	open report/index.html
 
-model_tests:
+test:
 	mkdir -p $(BUILD_DIR)
 	$(CC) $(CXXFLAGS) $(GT_FLAGS) model/*.cc tests/*.cc -o $(BUILD_DIR)/model_tests.out
 	./$(BUILD_DIR)/model_tests.out
 
-model_valgrind: model_tests
+valgrind: test
 	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(BUILD_DIR)/model_tests.out
 
-val:
-	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(BUILD_DIR)/$(APPLICATION)
-
-gcov_report: $(STLIB) model_tests
+gcov_report: $(STLIB) test
 	$(CC) $(CXXFLAGS) $(GCOV) -lgtest_main model/*.cc tests/*.cc -o $(UNIT) $(LIBS)
 	./$(UNIT)
 	gcov model/*.cc tests/*.cc
@@ -89,10 +75,3 @@ gcov_report: $(STLIB) model_tests
 	lcov --remove tests_filtered.info 'tests/*' --output-file tests_final.info 
 	genhtml -o report tests_final.info
 	open report/index.html
-
-
-skull:
-	mkdir -p $(BUILD_DIR)
-	$(CC) -std=c++17 -lstdc++ -Wall -Wextra $(GT_FLAGS) model/*.cc tests/s21_skull_tests.cc -o $(BUILD_DIR)/model_tests.out
-	./$(BUILD_DIR)/model_tests.out
-	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(BUILD_DIR)/model_tests.out
