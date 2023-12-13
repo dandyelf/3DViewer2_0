@@ -8,3 +8,4 @@ unit_tests
 build-3dviewer-Desktop_Qt_6_6_1_GCC_64bit-Debug
 src/build-3dviewer-Desktop-Debug/
 src/s21_3d_viewer.conf
+src/3dviewer
