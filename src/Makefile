@@ -56,13 +56,6 @@ build_s21_viewer:
 	ar rcs $(STLIB) s21_*.o s21_aff*.o
 	ranlib $(STLIB)
 
-gcov_report: $(STLIB) unit_tests.o
-	$(CC) $(CXXFLAGS) $(GCOV) s21_3d_viewer_tests.o model/s21_parser_obj.cc model/s21_aff_transform.cc -o $(UNIT) $(LIBS)
-	./$(UNIT)
-	lcov -t "tests" -o tests.info -c -d .
-	genhtml -o report tests.info
-	open report/index.html
-
 unit_tests.o:
 	$(CC) $(CXXFLAGS) -c tests/s21_3d_viewer_tests.cc
 
@@ -87,13 +80,16 @@ model_valgrind: model_tests
 val:
 	CK_FORK=no valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(BUILD_DIR)/$(APPLICATION)
 
-gcov_report: $(STLIB) unit_tests.o
-	$(CC) $(CXXFLAGS) $(GCOV) -lgtest_main s21_3d_viewer_tests.o model/s21_parser_obj.cc model/s21_aff_transform.cc -o $(UNIT) $(LIBS)
+gcov_report: $(STLIB) model_tests
+	$(CC) $(CXXFLAGS) $(GCOV) -lgtest_main model/*.cc tests/*.cc -o $(UNIT) $(LIBS)
 	./$(UNIT)
-	gcov model/s21_parser_obj.cc model/s21_aff_transform.cc
+	gcov model/*.cc tests/*.cc
 	lcov -t "tests" -o tests.info -c -d .
-	genhtml -o report tests.info
+	lcov --remove tests.info '/usr/*' --output-file tests_filtered.info
+	lcov --remove tests_filtered.info 'tests/*' --output-file tests_final.info 
+	genhtml -o report tests_final.info
 	open report/index.html
+
 
 skull:
 	mkdir -p $(BUILD_DIR)
